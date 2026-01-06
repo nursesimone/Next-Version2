@@ -449,6 +449,39 @@ export default function NewVisitPage() {
                   data-testid="visit-date-input"
                 />
               </div>
+              
+              {/* Visit Location - For nurse_visit only */}
+              {visitType === 'nurse_visit' && (
+                <div className="mt-4">
+                  <Label>Where did this visit take place?</Label>
+                  <Select
+                    value={visitData.visit_location}
+                    onValueChange={(value) => setVisitData(prev => ({ ...prev, visit_location: value, visit_location_other: value !== 'other' ? '' : prev.visit_location_other }))}
+                  >
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Select visit location..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="home">Patient's Home</SelectItem>
+                      <SelectItem value="day_program">Day Program</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  
+                  {/* Show text field if "Other" selected */}
+                  {visitData.visit_location === 'other' && (
+                    <div className="mt-3">
+                      <Label>Please specify location:</Label>
+                      <Input
+                        value={visitData.visit_location_other}
+                        onChange={(e) => setVisitData(prev => ({ ...prev, visit_location_other: e.target.value }))}
+                        placeholder="Describe the location..."
+                        className="mt-1"
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
             </CardContent>
           </Card>
 
