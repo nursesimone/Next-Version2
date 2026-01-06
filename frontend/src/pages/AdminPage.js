@@ -157,39 +157,22 @@ export default function AdminPage() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('nurse_token');
+      
+      // Update nurse profile
       await axios.put(`${API}/admin/nurses/${selectedNurse.id}`, editNurseData, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      toast.success('Nurse updated successfully');
-      setShowEditNurseDialog(false);
-      fetchData();
-    } catch (error) {
-      toast.error('Failed to update nurse');
-    }
-  };
-
-  const handleManageAssignments = (nurseItem) => {
-    setSelectedNurse(nurseItem);
-    setAssignmentData({
-      assigned_patients: nurseItem.assigned_patients || [],
-      assigned_organizations: nurseItem.assigned_organizations || [],
-      allowed_forms: nurseItem.allowed_forms || []
-    });
-    setShowAssignmentsDialog(true);
-  };
-
-  const handleUpdateAssignments = async (e) => {
-    e.preventDefault();
-    try {
-      const token = localStorage.getItem('nurse_token');
+      
+      // Update assignments
       await axios.post(`${API}/admin/nurses/${selectedNurse.id}/assignments`, assignmentData, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      toast.success('Assignments updated successfully');
-      setShowAssignmentsDialog(false);
+      
+      toast.success('Staff profile and assignments updated successfully');
+      setShowEditNurseDialog(false);
       fetchData();
     } catch (error) {
-      toast.error('Failed to update assignments');
+      toast.error('Failed to update staff profile');
     }
   };
 
