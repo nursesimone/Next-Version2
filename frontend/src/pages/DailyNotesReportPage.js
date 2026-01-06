@@ -119,10 +119,25 @@ export default function DailyNotesReportPage() {
         <Card className="print:shadow-none print:border-0">
           <CardHeader className="print:pb-4">
             <div className="text-center">
-              <CardTitle className="text-2xl mb-2">Daily Notes Journal</CardTitle>
+              <CardTitle className="text-2xl mb-2 text-teal-700">Daily Notes</CardTitle>
               <p className="text-lg font-semibold text-slate-700">{patient?.full_name}</p>
               <p className="text-slate-600">{getMonthYearLabel()}</p>
             </div>
+            
+            {/* Horizontal separator line */}
+            <div className="w-full h-1 bg-teal-600 mt-4"></div>
+            
+            {/* Organization (left) and Report Period (right) */}
+            {dailyNotes.length > 0 && (
+              <div className="flex justify-between items-center mt-4 text-sm">
+                <span className="text-slate-700">
+                  {patient?.permanent_info?.organization || 'N/A'}
+                </span>
+                <span className="text-slate-700">
+                  Report Period: {formatDate(dailyNotes[0].visit_date)} to {formatDate(dailyNotes[dailyNotes.length - 1].visit_date)}
+                </span>
+              </div>
+            )}
           </CardHeader>
           <CardContent className="space-y-1">
             {dailyNotes.length === 0 ? (
