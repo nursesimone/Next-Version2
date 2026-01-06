@@ -172,30 +172,50 @@ export default function AdminPage() {
   const handleSaveOrganization = async () => {
     try {
       const token = localStorage.getItem('nurse_token');
-      await axios.post(`${API}/admin/organizations`, organizationData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      toast.success('Organization added successfully');
+      if (editingOrganization) {
+        // Update existing
+        await axios.put(`${API}/admin/organizations/${editingOrganization.id}`, organizationData, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        toast.success('Organization updated successfully');
+      } else {
+        // Create new
+        await axios.post(`${API}/admin/organizations`, organizationData, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        toast.success('Organization added successfully');
+      }
       setShowOrganizationDialog(false);
       setOrganizationData({ name: '', address: '', contact_person: '', contact_phone: '' });
+      setEditingOrganization(null);
       fetchData();
     } catch (error) {
-      toast.error('Failed to add organization');
+      toast.error('Failed to save organization');
     }
   };
 
   const handleSaveDayProgram = async () => {
     try {
       const token = localStorage.getItem('nurse_token');
-      await axios.post(`${API}/admin/day-programs`, dayProgramData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      toast.success('Day program added successfully');
+      if (editingDayProgram) {
+        // Update existing
+        await axios.put(`${API}/admin/day-programs/${editingDayProgram.id}`, dayProgramData, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        toast.success('Day program updated successfully');
+      } else {
+        // Create new
+        await axios.post(`${API}/admin/day-programs`, dayProgramData, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        toast.success('Day program added successfully');
+      }
       setShowDayProgramDialog(false);
       setDayProgramData({ name: '', address: '', office_phone: '', contact_person: '' });
+      setEditingDayProgram(null);
       fetchData();
     } catch (error) {
-      toast.error('Failed to add day program');
+      toast.error('Failed to save day program');
     }
   };
 
