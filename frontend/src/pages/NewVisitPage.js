@@ -890,24 +890,192 @@ export default function NewVisitPage() {
                       />
                     </div>
                     <div>
-                      <Label>Eyes / Vision</Label>
-                      <Textarea
-                        value={visitData.head_to_toe.eyes_vision}
-                        onChange={(e) => updateHeadToToe('eyes_vision', e.target.value)}
-                        placeholder="Describe findings..."
-                        className="mt-1"
-                        rows={2}
-                      />
+                      <Label className="text-base font-semibold mb-3 block">Eyes / Vision</Label>
+                      <div className="space-y-2 pl-2">
+                        {[
+                          { id: 'normal', label: 'Normal' },
+                          { id: 'glasses', label: 'Wears Glasses' },
+                          { id: 'contacts', label: 'Wears Contact Lenses' },
+                          { id: 'cataracts', label: 'Cataracts' },
+                          { id: 'glaucoma', label: 'Glaucoma' },
+                          { id: 'blind', label: 'Blind' }
+                        ].map(option => (
+                          <div key={option.id} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={`eyes-${option.id}`}
+                              checked={visitData.head_to_toe.eyes_vision[option.id]}
+                              onCheckedChange={(checked) => 
+                                setVisitData(prev => ({
+                                  ...prev,
+                                  head_to_toe: {
+                                    ...prev.head_to_toe,
+                                    eyes_vision: {
+                                      ...prev.head_to_toe.eyes_vision,
+                                      [option.id]: checked
+                                    }
+                                  }
+                                }))
+                              }
+                            />
+                            <Label htmlFor={`eyes-${option.id}`} className="font-normal cursor-pointer">
+                              {option.label}
+                            </Label>
+                          </div>
+                        ))}
+                        
+                        {/* Blind Follow-up */}
+                        {visitData.head_to_toe.eyes_vision.blind && (
+                          <div className="ml-6 mt-2">
+                            <Label className="text-sm mb-2 block">Which eye(s)?</Label>
+                            <Select
+                              value={visitData.head_to_toe.eyes_vision.blind_which}
+                              onValueChange={(value) => 
+                                setVisitData(prev => ({
+                                  ...prev,
+                                  head_to_toe: {
+                                    ...prev.head_to_toe,
+                                    eyes_vision: {
+                                      ...prev.head_to_toe.eyes_vision,
+                                      blind_which: value
+                                    }
+                                  }
+                                }))
+                              }
+                            >
+                              <SelectTrigger className="mt-1">
+                                <SelectValue placeholder="Select..." />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="left">Left Eye</SelectItem>
+                                <SelectItem value="right">Right Eye</SelectItem>
+                                <SelectItem value="both">Both Eyes</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        )}
+                        
+                        <div className="flex items-start space-x-2 pt-2">
+                          <Checkbox
+                            id="eyes-other"
+                            checked={visitData.head_to_toe.eyes_vision.other}
+                            onCheckedChange={(checked) => 
+                              setVisitData(prev => ({
+                                ...prev,
+                                head_to_toe: {
+                                  ...prev.head_to_toe,
+                                  eyes_vision: {
+                                    ...prev.head_to_toe.eyes_vision,
+                                    other: checked
+                                  }
+                                }
+                              }))
+                            }
+                          />
+                          <div className="flex-1">
+                            <Label htmlFor="eyes-other" className="font-normal cursor-pointer">
+                              Other (specify)
+                            </Label>
+                            {visitData.head_to_toe.eyes_vision.other && (
+                              <Textarea
+                                value={visitData.head_to_toe.eyes_vision.other_notes}
+                                onChange={(e) => 
+                                  setVisitData(prev => ({
+                                    ...prev,
+                                    head_to_toe: {
+                                      ...prev.head_to_toe,
+                                      eyes_vision: {
+                                        ...prev.head_to_toe.eyes_vision,
+                                        other_notes: e.target.value
+                                      }
+                                    }
+                                  }))
+                                }
+                                placeholder="Describe other eye/vision findings..."
+                                className="mt-2"
+                                rows={2}
+                              />
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div>
-                      <Label>Ears / Hearing</Label>
-                      <Textarea
-                        value={visitData.head_to_toe.ears_hearing}
-                        onChange={(e) => updateHeadToToe('ears_hearing', e.target.value)}
-                        placeholder="Describe findings..."
-                        className="mt-1"
-                        rows={2}
-                      />
+                      <Label className="text-base font-semibold mb-3 block">Ears / Hearing</Label>
+                      <div className="space-y-2 pl-2">
+                        {[
+                          { id: 'normal', label: 'Normal' },
+                          { id: 'hearing_aid', label: 'Uses Hearing Aid' },
+                          { id: 'hard_of_hearing', label: 'Hard of Hearing' },
+                          { id: 'deaf', label: 'Deaf' },
+                          { id: 'ear_infection', label: 'Ear Infection' }
+                        ].map(option => (
+                          <div key={option.id} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={`hearing-${option.id}`}
+                              checked={visitData.head_to_toe.ears_hearing[option.id]}
+                              onCheckedChange={(checked) => 
+                                setVisitData(prev => ({
+                                  ...prev,
+                                  head_to_toe: {
+                                    ...prev.head_to_toe,
+                                    ears_hearing: {
+                                      ...prev.head_to_toe.ears_hearing,
+                                      [option.id]: checked
+                                    }
+                                  }
+                                }))
+                              }
+                            />
+                            <Label htmlFor={`hearing-${option.id}`} className="font-normal cursor-pointer">
+                              {option.label}
+                            </Label>
+                          </div>
+                        ))}
+                        
+                        <div className="flex items-start space-x-2 pt-2">
+                          <Checkbox
+                            id="hearing-other"
+                            checked={visitData.head_to_toe.ears_hearing.other}
+                            onCheckedChange={(checked) => 
+                              setVisitData(prev => ({
+                                ...prev,
+                                head_to_toe: {
+                                  ...prev.head_to_toe,
+                                  ears_hearing: {
+                                    ...prev.head_to_toe.ears_hearing,
+                                    other: checked
+                                  }
+                                }
+                              }))
+                            }
+                          />
+                          <div className="flex-1">
+                            <Label htmlFor="hearing-other" className="font-normal cursor-pointer">
+                              Other (specify)
+                            </Label>
+                            {visitData.head_to_toe.ears_hearing.other && (
+                              <Textarea
+                                value={visitData.head_to_toe.ears_hearing.other_notes}
+                                onChange={(e) => 
+                                  setVisitData(prev => ({
+                                    ...prev,
+                                    head_to_toe: {
+                                      ...prev.head_to_toe,
+                                      ears_hearing: {
+                                        ...prev.head_to_toe.ears_hearing,
+                                        other_notes: e.target.value
+                                      }
+                                    }
+                                  }))
+                                }
+                                placeholder="Describe other hearing findings..."
+                                className="mt-2"
+                                rows={2}
+                              />
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div>
                       <Label>Nose / Nasal Cavity</Label>
