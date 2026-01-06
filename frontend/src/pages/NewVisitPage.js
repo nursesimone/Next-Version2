@@ -1088,14 +1088,175 @@ export default function NewVisitPage() {
                       />
                     </div>
                     <div>
-                      <Label>Mouth / Teeth / Oral Cavity</Label>
-                      <Textarea
-                        value={visitData.head_to_toe.mouth_teeth_oral_cavity}
-                        onChange={(e) => updateHeadToToe('mouth_teeth_oral_cavity', e.target.value)}
-                        placeholder="Describe findings..."
-                        className="mt-1"
-                        rows={2}
-                      />
+                      <Label className="text-base font-semibold mb-3 block">Mouth / Teeth / Oral Cavity</Label>
+                      <div className="space-y-2 pl-2">
+                        {[
+                          { id: 'normal', label: 'Normal' },
+                          { id: 'dentures', label: 'Dentures' },
+                          { id: 'poor_dentition', label: 'Poor Dentition' },
+                          { id: 'mouth_sores', label: 'Mouth Sores / Lesions' },
+                          { id: 'dry_mouth', label: 'Dry Mouth' }
+                        ].map(option => (
+                          <div key={option.id} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={`mouth-${option.id}`}
+                              checked={visitData.head_to_toe.mouth_teeth_oral_cavity[option.id]}
+                              onCheckedChange={(checked) => 
+                                setVisitData(prev => ({
+                                  ...prev,
+                                  head_to_toe: {
+                                    ...prev.head_to_toe,
+                                    mouth_teeth_oral_cavity: {
+                                      ...prev.head_to_toe.mouth_teeth_oral_cavity,
+                                      [option.id]: checked
+                                    }
+                                  }
+                                }))
+                              }
+                            />
+                            <Label htmlFor={`mouth-${option.id}`} className="font-normal cursor-pointer">
+                              {option.label}
+                            </Label>
+                          </div>
+                        ))}
+                        
+                        {/* Dentures Follow-up */}
+                        {visitData.head_to_toe.mouth_teeth_oral_cavity.dentures && (
+                          <div className="ml-6 mt-2 space-y-2 p-3 bg-slate-50 rounded">
+                            <Label className="text-sm font-medium block">Denture Details:</Label>
+                            <div className="space-y-2">
+                              <div className="flex items-center space-x-2">
+                                <Checkbox
+                                  id="dentures-upper"
+                                  checked={visitData.head_to_toe.mouth_teeth_oral_cavity.dentures_upper}
+                                  onCheckedChange={(checked) => 
+                                    setVisitData(prev => ({
+                                      ...prev,
+                                      head_to_toe: {
+                                        ...prev.head_to_toe,
+                                        mouth_teeth_oral_cavity: {
+                                          ...prev.head_to_toe.mouth_teeth_oral_cavity,
+                                          dentures_upper: checked
+                                        }
+                                      }
+                                    }))
+                                  }
+                                />
+                                <Label htmlFor="dentures-upper" className="font-normal text-sm cursor-pointer">
+                                  Upper
+                                </Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <Checkbox
+                                  id="dentures-lower"
+                                  checked={visitData.head_to_toe.mouth_teeth_oral_cavity.dentures_lower}
+                                  onCheckedChange={(checked) => 
+                                    setVisitData(prev => ({
+                                      ...prev,
+                                      head_to_toe: {
+                                        ...prev.head_to_toe,
+                                        mouth_teeth_oral_cavity: {
+                                          ...prev.head_to_toe.mouth_teeth_oral_cavity,
+                                          dentures_lower: checked
+                                        }
+                                      }
+                                    }))
+                                  }
+                                />
+                                <Label htmlFor="dentures-lower" className="font-normal text-sm cursor-pointer">
+                                  Lower
+                                </Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <Checkbox
+                                  id="dentures-partial"
+                                  checked={visitData.head_to_toe.mouth_teeth_oral_cavity.dentures_partial}
+                                  onCheckedChange={(checked) => 
+                                    setVisitData(prev => ({
+                                      ...prev,
+                                      head_to_toe: {
+                                        ...prev.head_to_toe,
+                                        mouth_teeth_oral_cavity: {
+                                          ...prev.head_to_toe.mouth_teeth_oral_cavity,
+                                          dentures_partial: checked
+                                        }
+                                      }
+                                    }))
+                                  }
+                                />
+                                <Label htmlFor="dentures-partial" className="font-normal text-sm cursor-pointer">
+                                  Partial
+                                </Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <Checkbox
+                                  id="dentures-full"
+                                  checked={visitData.head_to_toe.mouth_teeth_oral_cavity.dentures_full}
+                                  onCheckedChange={(checked) => 
+                                    setVisitData(prev => ({
+                                      ...prev,
+                                      head_to_toe: {
+                                        ...prev.head_to_toe,
+                                        mouth_teeth_oral_cavity: {
+                                          ...prev.head_to_toe.mouth_teeth_oral_cavity,
+                                          dentures_full: checked
+                                        }
+                                      }
+                                    }))
+                                  }
+                                />
+                                <Label htmlFor="dentures-full" className="font-normal text-sm cursor-pointer">
+                                  Full
+                                </Label>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        
+                        <div className="flex items-start space-x-2 pt-2">
+                          <Checkbox
+                            id="mouth-other"
+                            checked={visitData.head_to_toe.mouth_teeth_oral_cavity.other}
+                            onCheckedChange={(checked) => 
+                              setVisitData(prev => ({
+                                ...prev,
+                                head_to_toe: {
+                                  ...prev.head_to_toe,
+                                  mouth_teeth_oral_cavity: {
+                                    ...prev.head_to_toe.mouth_teeth_oral_cavity,
+                                    other: checked
+                                  }
+                                }
+                              }))
+                            }
+                          />
+                          <div className="flex-1">
+                            <Label htmlFor="mouth-other" className="font-normal cursor-pointer">
+                              Other (specify)
+                            </Label>
+                            {visitData.head_to_toe.mouth_teeth_oral_cavity.other && (
+                              <Textarea
+                                value={visitData.head_to_toe.mouth_teeth_oral_cavity.other_notes}
+                                onChange={(e) => 
+                                  setVisitData(prev => ({
+                                    ...prev,
+                                    head_to_toe: {
+                                      ...prev.head_to_toe,
+                                      mouth_teeth_oral_cavity: {
+                                        ...prev.head_to_toe.mouth_teeth_oral_cavity,
+                                        other_notes: e.target.value
+                                      }
+                                    }
+                                  }))
+                                }
+                                placeholder="Describe other mouth/oral findings..."
+                                className="mt-2"
+                                rows={2}
+                              />
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
