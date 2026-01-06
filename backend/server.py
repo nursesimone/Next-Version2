@@ -703,6 +703,42 @@ async def create_day_program(data: DayProgramCreate, nurse: dict = Depends(get_c
     await db.day_programs.insert_one(program)
     return DayProgramResponse(**program)
 
+@api_router.put("/admin/organizations/{org_id}", response_model=OrganizationResponse)
+async def update_organization(org_id: str, data: OrganizationCreate, nurse: dict = Depends(get_current_nurse)):
+    if not nurse.get("is_admin"):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    existing = await db.organizations.find_one({"id": org_id})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Organization not found")
+    
+    update_data = {
+        "name": data.name,
+        "address": data.address,
+        "contact_person": data.contact_person,
+        "contact_phone": data.contact_phone
+    }
+    await db.organizations.update_one({"id": org_id}, {"$set": update_data})
+    return OrganizationResponse(**{**existing, **update_data})
+
+@api_router.put("/admin/day-programs/{program_id}", response_model=DayProgramResponse)
+async def update_day_program(program_id: str, data: DayProgramCreate, nurse: dict = Depends(get_current_nurse)):
+    if not nurse.get("is_admin"):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    existing = await db.day_programs.find_one({"id": program_id})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Day program not found")
+    
+    update_data = {
+        "name": data.name,
+        "address": data.address,
+        "office_phone": data.office_phone,
+        "contact_person": data.contact_person
+    }
+    await db.day_programs.update_one({"id": program_id}, {"$set": update_data})
+    return DayProgramResponse(**{**existing, **update_data})
+
 @api_router.delete("/admin/organizations/{org_id}")
 async def delete_organization(org_id: str, nurse: dict = Depends(get_current_nurse)):
     if not nurse.get("is_admin"):
