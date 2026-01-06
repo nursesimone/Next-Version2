@@ -591,6 +591,11 @@ async def update_nurse_assignments(nurse_id: str, data: NurseAssignmentRequest, 
     if not nurse.get("is_admin"):
         raise HTTPException(status_code=403, detail="Admin access required")
     
+    # Check if nurse exists first
+    existing_nurse = await db.nurses.find_one({"id": nurse_id})
+    if not existing_nurse:
+        raise HTTPException(status_code=404, detail="Nurse not found")
+    
     result = await db.nurses.update_one(
         {"id": nurse_id}, 
         {"$set": {
@@ -599,8 +604,6 @@ async def update_nurse_assignments(nurse_id: str, data: NurseAssignmentRequest, 
             "allowed_forms": data.allowed_forms
         }}
     )
-    if result.modified_count == 0:
-        raise HTTPException(status_code=404, detail="Nurse not found")
     return {"message": "Assignments updated successfully"}
 
 @api_router.post("/admin/patients/{patient_id}/assign")
