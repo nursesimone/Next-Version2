@@ -519,7 +519,7 @@ export default function NewVisitPage() {
                 <Heart className="w-5 h-5 text-rose-500" />
                 Vital Signs
               </CardTitle>
-              <CardDescription>Record the patient's current vital signs</CardDescription>
+              <CardDescription>Record the patient&apos;s current vital signs</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
