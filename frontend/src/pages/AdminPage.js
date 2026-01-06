@@ -734,8 +734,7 @@ export default function AdminPage() {
                   </form>
                 </DialogContent>
               </Dialog>
-                )}
-              </div>
+              )}
             </div>
           </CardHeader>
           {showStaffSection && (
