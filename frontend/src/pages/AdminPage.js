@@ -479,7 +479,7 @@ export default function AdminPage() {
               <div>
                 <CardTitle className="flex items-center gap-2">
                   <Building className="w-5 h-5" />
-                  Manage Day Programs (CAG's)
+                  Manage Day Programs (CAG&apos;s)
                 </CardTitle>
                 <CardDescription>
                   Add and manage adult day program centers
