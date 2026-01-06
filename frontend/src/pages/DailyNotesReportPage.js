@@ -140,6 +140,11 @@ export default function DailyNotesReportPage() {
             )}
           </CardHeader>
           <CardContent className="space-y-1">
+            {/* Visit Details heading */}
+            <div className="mb-6">
+              <h2 className="text-xl font-bold text-slate-900">Visit Details</h2>
+            </div>
+            
             {dailyNotes.length === 0 ? (
               <div className="text-center py-12 text-slate-500">
                 <FileText className="w-12 h-12 mx-auto mb-4 opacity-50" />
@@ -147,13 +152,13 @@ export default function DailyNotesReportPage() {
               </div>
             ) : (
               dailyNotes.map((note, index) => (
-                <div key={note.id} className="border-b border-slate-200 pb-4 mb-4 last:border-0 break-inside-avoid">
-                  <div className="flex justify-between items-start mb-2">
-                    <p className="font-medium text-slate-900">
+                <div key={note.id} className="border-b border-slate-200 pb-6 mb-6 last:border-0 break-inside-avoid">
+                  <div className="mb-3">
+                    <p className="font-bold text-slate-900 text-lg">
                       {formatDate(note.visit_date)}
                     </p>
                   </div>
-                  <div className="text-slate-700 whitespace-pre-wrap leading-relaxed">
+                  <div className="text-slate-700 whitespace-pre-wrap leading-relaxed pl-4">
                     {note.daily_note_content}
                   </div>
                 </div>
