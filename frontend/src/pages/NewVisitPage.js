@@ -35,6 +35,8 @@ const initialVisitData = {
   visit_date: new Date().toISOString().split('T')[0],
   visit_type: 'nurse_visit',
   organization: '',
+  visit_location: '', // 'home', 'day_program', 'other'
+  visit_location_other: '', // Details if 'other' selected
   vital_signs: {
     height: '',
     weight: '',
