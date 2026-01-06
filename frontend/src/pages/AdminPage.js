@@ -667,7 +667,16 @@ export default function AdminPage() {
                               size="sm"
                               variant="ghost"
                               className="h-8 w-8 p-0"
-                              onClick={() => {/* TODO: Edit program */}}
+                              onClick={() => {
+                                setEditingDayProgram(program);
+                                setDayProgramData({
+                                  name: program.name,
+                                  address: program.address,
+                                  office_phone: program.office_phone,
+                                  contact_person: program.contact_person || ''
+                                });
+                                setShowDayProgramDialog(true);
+                              }}
                             >
                               <Edit className="w-4 h-4" />
                             </Button>
