@@ -283,10 +283,7 @@ export default function PatientDetailPage() {
               <Button 
                 className="h-auto py-4 flex-col gap-2 bg-white hover:bg-eggplant-50 text-eggplant-700 border-2 border-eggplant-200 shadow-sm"
                 variant="outline"
-                onClick={() => {
-                  sessionStorage.setItem('visitType', 'nurse_visit');
-                  navigate(`/patients/${patientId}/new-visit`);
-                }}
+                onClick={() => handleVisitButtonClick('nurse_visit')}
                 data-testid="create-nurse-visit-btn"
               >
                 <Stethoscope className="w-6 h-6" />
@@ -309,10 +306,7 @@ export default function PatientDetailPage() {
               <Button 
                 className="h-auto py-4 flex-col gap-2 bg-white hover:bg-eggplant-50 text-eggplant-700 border-2 border-eggplant-200 shadow-sm"
                 variant="outline"
-                onClick={() => {
-                  sessionStorage.setItem('visitType', 'vitals_only');
-                  navigate(`/patients/${patientId}/new-visit`);
-                }}
+                onClick={() => handleVisitButtonClick('vitals_only')}
                 data-testid="create-vitals-only-btn"
               >
                 <Heart className="w-6 h-6" />
@@ -322,10 +316,7 @@ export default function PatientDetailPage() {
               <Button 
                 className="h-auto py-4 flex-col gap-2 bg-white hover:bg-navy-50 text-navy-700 border-2 border-navy-200 shadow-sm"
                 variant="outline"
-                onClick={() => {
-                  sessionStorage.setItem('visitType', 'daily_note');
-                  navigate(`/patients/${patientId}/new-visit`);
-                }}
+                onClick={() => handleVisitButtonClick('daily_note')}
                 data-testid="create-daily-note-btn"
               >
                 <FileText className="w-6 h-6" />
