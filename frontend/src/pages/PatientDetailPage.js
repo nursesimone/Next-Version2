@@ -135,6 +135,44 @@ export default function PatientDetailPage() {
     }
   };
 
+  const handleVisitButtonClick = async (visitType) => {
+    // Check for existing draft
+    try {
+      const visitsRes = await visitsAPI.list(patientId);
+      const draft = visitsRes.data.find(v => 
+        v.visit_type === visitType && v.status === 'draft'
+      );
+      
+      if (draft) {
+        setDraftVisit(draft);
+        setPendingVisitType(visitType);
+        setShowDraftDialog(true);
+      } else {
+        // No draft, proceed to new visit
+        sessionStorage.setItem('visitType', visitType);
+        navigate(`/patients/${patientId}/new-visit`);
+      }
+    } catch (error) {
+      // If error checking drafts, proceed anyway
+      sessionStorage.setItem('visitType', visitType);
+      navigate(`/patients/${patientId}/new-visit`);
+    }
+  };
+
+  const handleResumeDraft = () => {
+    sessionStorage.setItem('visitType', pendingVisitType);
+    sessionStorage.setItem('draftVisitId', draftVisit.id);
+    navigate(`/patients/${patientId}/new-visit`);
+    setShowDraftDialog(false);
+  };
+
+  const handleStartNewVisit = () => {
+    sessionStorage.setItem('visitType', pendingVisitType);
+    sessionStorage.removeItem('draftVisitId');
+    navigate(`/patients/${patientId}/new-visit`);
+    setShowDraftDialog(false);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
