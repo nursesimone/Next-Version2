@@ -185,15 +185,28 @@ Implemented checkbox-based assessments with conditional follow-ups:
 
 ## NEXT AGENT SHOULD:
 
-1. **Test the Enhanced Assessments:** Verify that the new checkbox-based Eyes, Ears, and Mouth/Oral assessments work correctly and save to database
-2. **Consider Phase 3 Implementation:** If "Copy from Last Visit" feature is priority, implement API endpoint to fetch previous visit data
-3. **Security Improvements:** Begin implementing security features per Option 1 list:
-   - Audit logging system
-   - Session timeouts
-   - Enhanced access controls
-   - Encrypted file storage
-   - Activity logs dashboard
-4. **Additional Enhancements:** Any other features or improvements requested by user
+1. **Complete UI Implementation for Enhanced Head-to-Toe Assessments:**
+   - Head/Neck: Render checkboxes (Within Normal Limits, Wounds, Masses, Alopecia, Other)
+   - Eyes/Vision: Add PERRLA yes/no question + update checkboxes (No issues, Glasses, Contacts, Blurred vision, Glaucoma, Prosthesis, Blind eyes with Left/Right/Both, Cataract Surgery, Infections)
+   - Ears/Hearing: Update checkboxes (No issues, Deaf with ear selection, Hard of Hearing, Hearing Aid, Vertigo, Tinnitus, Other)
+   - Nose/Nasal: Convert to checkboxes (No issues, Congestion, Loss of smell, Sinus issues, Runny nose, Nose bleeds, Other)
+   - Mouth/Oral: Update UI for new structure (No issues, No teeth, Dentures with type selection, Missing teeth, Toothaches, Gingivitis, Ulcerations, Other)
+   - Gastrointestinal: Add new fields for abdominal pain, stool issues, bowel frequency, and constipation control
+   
+2. **Implement Conditional Form Logic:**
+   - Suppress home-specific questions (Home visit logbook, Changes since last visit) when visit_location is NOT 'home'
+
+3. **Add Draft Visit Retrieval:**
+   - Create section on PatientDetailPage to display and access draft visits
+   - Allow users to continue editing drafts
+
+4. **Backend Model Updates:**
+   - Update HeadToToeAssessment models in server.py to match new checkbox structures
+   - Update GastrointestinalAssessment model with new fields
+
+5. **Test the Enhanced Assessments:** Verify all new checkboxes work correctly and save to database
+
+6. **Continue with user's remaining list items** (user is prioritizing while development continues)
 
 ---
 
