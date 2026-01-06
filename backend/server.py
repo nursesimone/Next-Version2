@@ -655,6 +655,54 @@ async def assign_nurses_to_patient(patient_id: str, nurse_ids: List[str], nurse:
         raise HTTPException(status_code=404, detail="Patient not found")
     return {"message": "Nurses assigned successfully"}
 
+# ==================== ORGANIZATIONS ====================
+@api_router.get("/admin/organizations", response_model=List[OrganizationResponse])
+async def list_organizations(nurse: dict = Depends(get_current_nurse)):
+    if not nurse.get("is_admin"):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    organizations = await db.organizations.find({}, {"_id": 0}).to_list(100)
+    return organizations
+
+@api_router.post("/admin/organizations", response_model=OrganizationResponse)
+async def create_organization(data: OrganizationCreate, nurse: dict = Depends(get_current_nurse)):
+    if not nurse.get("is_admin"):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    organization = {
+        "id": str(uuid.uuid4()),
+        "name": data.name,
+        "address": data.address,
+        "contact_person": data.contact_person,
+        "contact_phone": data.contact_phone,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    await db.organizations.insert_one(organization)
+    return OrganizationResponse(**organization)
+
+# ==================== DAY PROGRAMS ====================
+@api_router.get("/admin/day-programs", response_model=List[DayProgramResponse])
+async def list_day_programs(nurse: dict = Depends(get_current_nurse)):
+    if not nurse.get("is_admin"):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    programs = await db.day_programs.find({}, {"_id": 0}).to_list(100)
+    return programs
+
+@api_router.post("/admin/day-programs", response_model=DayProgramResponse)
+async def create_day_program(data: DayProgramCreate, nurse: dict = Depends(get_current_nurse)):
+    if not nurse.get("is_admin"):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    program = {
+        "id": str(uuid.uuid4()),
+        "name": data.name,
+        "address": data.address,
+        "office_phone": data.office_phone,
+        "contact_person": data.contact_person,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    await db.day_programs.insert_one(program)
+    return DayProgramResponse(**program)
+
 @api_router.post("/incident-reports")
 async def create_incident_report(data: dict, nurse: dict = Depends(get_current_nurse)):
     report = {
