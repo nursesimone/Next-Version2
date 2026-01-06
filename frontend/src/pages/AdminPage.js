@@ -429,9 +429,9 @@ export default function AdminPage() {
                       </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Add Organization</DialogTitle>
+                    <DialogTitle>{editingOrganization ? 'Edit Organization' : 'Add Organization'}</DialogTitle>
                     <DialogDescription>
-                      Add a new residential organization
+                      {editingOrganization ? 'Update organization information' : 'Add a new residential organization'}
                     </DialogDescription>
                   </DialogHeader>
                   <form onSubmit={(e) => { e.preventDefault(); handleSaveOrganization(); }} className="space-y-4">
