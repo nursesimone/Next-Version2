@@ -418,7 +418,7 @@ export default function DashboardPage() {
                         <PhoneOff className="w-3 h-3 text-amber-600" />
                         <span className="text-slate-600">
                           <span className="text-amber-600 font-medium">UTC</span>
-                          : {formatDate(patient.last_utc.date)} - 
+                          <span>: {formatDate(patient.last_utc.date)} - </span>
                           <button
                             type="button"
                             onClick={(e) => {
@@ -427,7 +427,7 @@ export default function DashboardPage() {
                               console.log('UTC clicked:', patient.last_utc.id);
                               navigate(`/utc/${patient.last_utc.id}`);
                             }}
-                            className="ml-1 text-amber-600 hover:text-amber-700 underline font-medium cursor-pointer"
+                            className="text-amber-600 hover:text-amber-700 underline font-medium cursor-pointer"
                           >
                             {patient.last_utc.reason}
                           </button>
