@@ -379,7 +379,14 @@ export default function AdminPage() {
                 </CardDescription>
               </div>
               <div className="flex items-center gap-2">
-                {showOrganizationsSection && (
+                {!showOrganizationsSection ? (
+                  <Button 
+                    onClick={() => setShowOrganizationsSection(true)}
+                    className="bg-eggplant-700 hover:bg-eggplant-600"
+                  >
+                    Launch
+                  </Button>
+                ) : (
                   <>
                     <Button
                       size="sm"
