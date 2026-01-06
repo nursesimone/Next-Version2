@@ -233,6 +233,26 @@ export default function NewVisitPage() {
     fetchPatient();
   }, [patientId]);
 
+  // Load draft if draftVisitId is set
+  useEffect(() => {
+    const draftVisitId = sessionStorage.getItem('draftVisitId');
+    if (draftVisitId) {
+      loadDraft(draftVisitId);
+      sessionStorage.removeItem('draftVisitId'); // Clear after loading
+    }
+  }, []);
+
+  const loadDraft = async (draftId) => {
+    try {
+      const response = await visitsAPI.getById(draftId);
+      const draft = response.data;
+      setVisitData(draft);
+      toast.success('Draft loaded successfully');
+    } catch (error) {
+      toast.error('Failed to load draft');
+    }
+  };
+
   useEffect(() => {
     const { blood_pressure_systolic, blood_pressure_diastolic } = visitData.vital_signs;
     const abnormal = isBloodPressureAbnormal(blood_pressure_systolic, blood_pressure_diastolic);
