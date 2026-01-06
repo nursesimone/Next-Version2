@@ -22,9 +22,11 @@ import {
   UserCog, 
   Shield,
   ChevronRight,
+  ChevronDown,
   Plus,
   Eye,
   Edit,
+  Trash2,
   Building,
   Building2
 } from 'lucide-react';
