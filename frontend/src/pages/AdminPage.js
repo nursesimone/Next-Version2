@@ -652,9 +652,10 @@ export default function AdminPage() {
               </Dialog>
             </div>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {nurses.map(nurseItem => (
+          {showStaffSection && (
+            <CardContent>
+              <div className="space-y-3">
+                {nurses.map(nurseItem => (
                 <div 
                   key={nurseItem.id}
                   className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-slate-100 hover:bg-slate-100 transition-colors"
