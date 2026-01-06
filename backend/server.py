@@ -374,12 +374,15 @@ class UnableToContactCreate(BaseModel):
     visit_type: str  # nurse_visit, vitals_only, daily_note - prefilled reason
     attempt_date: str
     attempt_time: Optional[str] = None
+    attempt_reason: Optional[str] = None  # NEW: routine_nurse_visit, patient_intervention, vitals_only, other
     attempt_location: str  # home, day_program, telephone, virtual, other
     attempt_location_other: Optional[str] = None
     spoke_with_anyone: Optional[bool] = False
     spoke_with_whom: Optional[str] = None
-    individual_location: str  # admitted, moved_temporarily, moved_permanently, vacation, deceased, other
+    individual_location: str  # admitted, medical_appointment, overnight_family, outing, moved_temporarily, moved_permanently, deceased, other
     individual_location_other: Optional[str] = None
+    moved_temporarily_where: Optional[str] = None  # NEW: for moved_temporarily
+    deceased_date: Optional[str] = None  # NEW: for deceased
     # Medical facility details (if admitted)
     facility_name: Optional[str] = None
     facility_city: Optional[str] = None
