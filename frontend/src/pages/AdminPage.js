@@ -503,7 +503,16 @@ export default function AdminPage() {
                               size="sm"
                               variant="ghost"
                               className="h-8 w-8 p-0"
-                              onClick={() => {/* TODO: Edit org */}}
+                              onClick={() => {
+                                setEditingOrganization(org);
+                                setOrganizationData({
+                                  name: org.name,
+                                  address: org.address,
+                                  contact_person: org.contact_person,
+                                  contact_phone: org.contact_phone
+                                });
+                                setShowOrganizationDialog(true);
+                              }}
                             >
                               <Edit className="w-4 h-4" />
                             </Button>
