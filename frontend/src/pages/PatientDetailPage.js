@@ -54,6 +54,9 @@ export default function PatientDetailPage() {
   const [savingProfile, setSavingProfile] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [customOrganization, setCustomOrganization] = useState('');
+  const [showDraftDialog, setShowDraftDialog] = useState(false);
+  const [draftVisit, setDraftVisit] = useState(null);
+  const [pendingVisitType, setPendingVisitType] = useState(null);
 
   useEffect(() => {
     fetchPatientData();
