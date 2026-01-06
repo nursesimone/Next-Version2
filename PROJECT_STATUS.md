@@ -6,9 +6,14 @@ Healthcare documentation application for in-home nurse visits
 - **Tech Stack:** FastAPI (Python) + React + MongoDB
 - **Organizations:** POSH Host Homes, Ebenezer Private HomeCare, Jericho
 
-## LOGIN CREDENTIALS
+## LOGIN CREDENTIALS ⚠️ IMPORTANT - THESE PERSIST!
+**Database:** test_database (MongoDB)
+**These credentials are saved and will work across all agent handoffs:**
+
 - **Admin:** demo@nursemed.com / demo123
-- **Test Nurses:** sarah.johnson@nursemed.com / nurse123, michael.chen@nursemed.com / nurse123
+- **Test Nurses:** 
+  - sarah.johnson@nursemed.com / nurse123
+  - michael.chen@nursemed.com / nurse123
 
 ---
 
