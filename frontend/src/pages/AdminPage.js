@@ -321,6 +321,205 @@ export default function AdminPage() {
           </Card>
         </div>
 
+        {/* Organizations Management */}
+        <Card className="mb-8">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="flex items-center gap-2">
+                  <Building2 className="w-5 h-5" />
+                  Manage Organizations
+                </CardTitle>
+                <CardDescription>
+                  Add and manage residential organizations
+                </CardDescription>
+              </div>
+              <Dialog open={showOrganizationDialog} onOpenChange={setShowOrganizationDialog}>
+                <DialogTrigger asChild>
+                  <Button className="bg-eggplant-700 hover:bg-eggplant-600">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Organization
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Add Organization</DialogTitle>
+                    <DialogDescription>
+                      Add a new residential organization
+                    </DialogDescription>
+                  </DialogHeader>
+                  <form onSubmit={(e) => { e.preventDefault(); handleSaveOrganization(); }} className="space-y-4">
+                    <div>
+                      <Label>Organization Name</Label>
+                      <Input
+                        value={organizationData.name}
+                        onChange={(e) => setOrganizationData({...organizationData, name: e.target.value})}
+                        placeholder="e.g., POSH Host Homes"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Label>Address</Label>
+                      <Input
+                        value={organizationData.address}
+                        onChange={(e) => setOrganizationData({...organizationData, address: e.target.value})}
+                        placeholder="Full address"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Label>Contact Person</Label>
+                      <Input
+                        value={organizationData.contact_person}
+                        onChange={(e) => setOrganizationData({...organizationData, contact_person: e.target.value})}
+                        placeholder="Name of contact person"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Label>Contact Phone Number</Label>
+                      <Input
+                        value={organizationData.contact_phone}
+                        onChange={(e) => setOrganizationData({...organizationData, contact_phone: e.target.value})}
+                        placeholder="Phone number"
+                        required
+                      />
+                    </div>
+                    <div className="flex justify-end gap-2 pt-4">
+                      <Button type="button" variant="outline" onClick={() => setShowOrganizationDialog(false)}>
+                        Cancel
+                      </Button>
+                      <Button type="submit" className="bg-eggplant-700 hover:bg-eggplant-600">
+                        Save Organization
+                      </Button>
+                    </div>
+                  </form>
+                </DialogContent>
+              </Dialog>
+            </div>
+          </CardHeader>
+          <CardContent>
+            {organizations.length === 0 ? (
+              <p className="text-slate-500 text-center py-8">No organizations added yet</p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {organizations.map(org => (
+                  <Card key={org.id} className="border-slate-200">
+                    <CardContent className="pt-6">
+                      <h3 className="font-semibold text-lg mb-2">{org.name}</h3>
+                      <div className="space-y-1 text-sm text-slate-600">
+                        <p><strong>Address:</strong> {org.address}</p>
+                        <p><strong>Contact:</strong> {org.contact_person}</p>
+                        <p><strong>Phone:</strong> {org.contact_phone}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Day Programs Management */}
+        <Card className="mb-8">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="flex items-center gap-2">
+                  <Building className="w-5 h-5" />
+                  Manage Day Programs (CAG's)
+                </CardTitle>
+                <CardDescription>
+                  Add and manage adult day program centers
+                </CardDescription>
+              </div>
+              <Dialog open={showDayProgramDialog} onOpenChange={setShowDayProgramDialog}>
+                <DialogTrigger asChild>
+                  <Button className="bg-blue-600 hover:bg-blue-500">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Day Program
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Add Day Program</DialogTitle>
+                    <DialogDescription>
+                      Add a new adult day program center
+                    </DialogDescription>
+                  </DialogHeader>
+                  <form onSubmit={(e) => { e.preventDefault(); handleSaveDayProgram(); }} className="space-y-4">
+                    <div>
+                      <Label>Center Name</Label>
+                      <Input
+                        value={dayProgramData.name}
+                        onChange={(e) => setDayProgramData({...dayProgramData, name: e.target.value})}
+                        placeholder="Name of day program"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Label>Address</Label>
+                      <Input
+                        value={dayProgramData.address}
+                        onChange={(e) => setDayProgramData({...dayProgramData, address: e.target.value})}
+                        placeholder="Full address"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Label>Office Telephone Number</Label>
+                      <Input
+                        value={dayProgramData.office_phone}
+                        onChange={(e) => setDayProgramData({...dayProgramData, office_phone: e.target.value})}
+                        placeholder="Office phone number"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Label>Contact Person (Optional)</Label>
+                      <Input
+                        value={dayProgramData.contact_person}
+                        onChange={(e) => setDayProgramData({...dayProgramData, contact_person: e.target.value})}
+                        placeholder="Name of contact person"
+                      />
+                    </div>
+                    <div className="flex justify-end gap-2 pt-4">
+                      <Button type="button" variant="outline" onClick={() => setShowDayProgramDialog(false)}>
+                        Cancel
+                      </Button>
+                      <Button type="submit" className="bg-blue-600 hover:bg-blue-500">
+                        Save Day Program
+                      </Button>
+                    </div>
+                  </form>
+                </DialogContent>
+              </Dialog>
+            </div>
+          </CardHeader>
+          <CardContent>
+            {dayPrograms.length === 0 ? (
+              <p className="text-slate-500 text-center py-8">No day programs added yet</p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {dayPrograms.map(program => (
+                  <Card key={program.id} className="border-slate-200">
+                    <CardContent className="pt-6">
+                      <h3 className="font-semibold text-lg mb-2">{program.name}</h3>
+                      <div className="space-y-1 text-sm text-slate-600">
+                        <p><strong>Address:</strong> {program.address}</p>
+                        <p><strong>Office Phone:</strong> {program.office_phone}</p>
+                        {program.contact_person && (
+                          <p><strong>Contact:</strong> {program.contact_person}</p>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
         {/* Nurses Management */}
         <Card>
           <CardHeader>
