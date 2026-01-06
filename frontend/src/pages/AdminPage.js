@@ -63,6 +63,18 @@ export default function AdminPage() {
     title: 'RN',
     license_number: ''
   });
+  const [organizationData, setOrganizationData] = useState({
+    name: '',
+    address: '',
+    contact_person: '',
+    contact_phone: ''
+  });
+  const [dayProgramData, setDayProgramData] = useState({
+    name: '',
+    address: '',
+    office_phone: '',
+    contact_person: ''
+  });
 
   useEffect(() => {
     if (!nurse?.is_admin) {
