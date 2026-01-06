@@ -28,7 +28,8 @@ import {
   Edit,
   Trash2,
   Building,
-  Building2
+  Building2,
+  Cross
 } from 'lucide-react';
 import { toast } from 'sonner';
 
