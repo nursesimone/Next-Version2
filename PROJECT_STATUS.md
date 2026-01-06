@@ -100,8 +100,9 @@ Implemented checkbox-based assessments with conditional follow-ups:
   - ✅ Follow-up when "Dentures" selected: Upper/Lower, Partial/Full checkboxes
   - ✅ "Other" option with text area for additional notes
 
-### Phase 3: Copy from Last Visit (NOT STARTED)
-- Add "Copy from Last Visit" button for each head-to-toe section
+### Phase 3: Copy from Last Visit (DEFERRED)
+- Functionality to copy data from previous visit for each head-to-toe section
+- **Note:** This feature requires retrieving previous visit data from the backend, which would need additional API endpoints and complex state management. Can be implemented in a future iteration if needed.
 
 ---
 
