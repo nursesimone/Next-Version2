@@ -594,9 +594,9 @@ export default function AdminPage() {
                       </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Add Day Program</DialogTitle>
+                    <DialogTitle>{editingDayProgram ? 'Edit Day Program' : 'Add Day Program'}</DialogTitle>
                     <DialogDescription>
-                      Add a new adult day program center
+                      {editingDayProgram ? 'Update day program information' : 'Add a new adult day program center'}
                     </DialogDescription>
                   </DialogHeader>
                   <form onSubmit={(e) => { e.preventDefault(); handleSaveDayProgram(); }} className="space-y-4">
