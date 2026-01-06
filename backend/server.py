@@ -717,9 +717,11 @@ async def list_patients(nurse: dict = Depends(get_current_nurse)):
         if last_utc:
             location_map = {
                 "admitted": "Hospitalized",
+                "medical_appointment": "Medical Appt",
+                "overnight_family": "Overnight w/Family",
+                "outing": "Outing",
                 "moved_temporarily": "Temp Move",
                 "moved_permanently": "Perm Move",
-                "vacation": "Vacation",
                 "deceased": "Deceased",
                 "other": last_utc.get("individual_location_other", "Other")
             }
