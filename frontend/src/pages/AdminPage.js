@@ -150,6 +150,11 @@ export default function AdminPage() {
       license_number: nurseItem.license_number || '',
       email: nurseItem.email
     });
+    setAssignmentData({
+      assigned_patients: nurseItem.assigned_patients || [],
+      assigned_organizations: nurseItem.assigned_organizations || [],
+      allowed_forms: nurseItem.allowed_forms || []
+    });
     setShowEditNurseDialog(true);
   };
 
