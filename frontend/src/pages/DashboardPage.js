@@ -417,7 +417,17 @@ export default function DashboardPage() {
                       <div className="flex items-center gap-2 text-xs">
                         <PhoneOff className="w-3 h-3 text-amber-600" />
                         <span className="text-slate-600">
-                          <span className="text-amber-600 font-medium">UTC</span>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              navigate(`/utc/${patient.last_utc.id}`);
+                            }}
+                            className="text-amber-600 font-medium hover:text-amber-700 cursor-pointer"
+                          >
+                            UTC
+                          </button>
                           <span>: {formatDate(patient.last_utc.date)} - </span>
                           <button
                             type="button"
