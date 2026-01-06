@@ -44,12 +44,15 @@ export default function UnableToContactPage() {
     visit_type: visitType,
     attempt_date: new Date().toISOString().split('T')[0],
     attempt_time: new Date().toTimeString().slice(0, 5),
+    attempt_reason: '', // New field: reason for attempted visit
     attempt_location: '',
     attempt_location_other: '',
     spoke_with_anyone: false,
     spoke_with_whom: '',
     individual_location: '',
     individual_location_other: '',
+    moved_temporarily_where: '', // New field for moved temporarily
+    deceased_date: '', // New field for deceased date
     facility_name: '',
     facility_city: '',
     facility_state: '',
