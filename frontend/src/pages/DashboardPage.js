@@ -420,11 +420,14 @@ export default function DashboardPage() {
                           <span className="text-amber-600 font-medium">UTC</span>
                           : {formatDate(patient.last_utc.date)} - 
                           <button
+                            type="button"
                             onClick={(e) => {
+                              e.preventDefault();
                               e.stopPropagation();
+                              console.log('UTC clicked:', patient.last_utc.id);
                               navigate(`/utc/${patient.last_utc.id}`);
                             }}
-                            className="ml-1 text-amber-600 hover:text-amber-700 underline font-medium"
+                            className="ml-1 text-amber-600 hover:text-amber-700 underline font-medium cursor-pointer"
                           >
                             {patient.last_utc.reason}
                           </button>
