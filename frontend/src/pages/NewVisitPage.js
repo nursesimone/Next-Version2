@@ -53,7 +53,21 @@ const initialVisitData = {
   physical_assessment: {
     general_appearance: '',
     general_appearance_from_last: false,
-    skin_assessment: '',
+    skin_assessment: {
+      skin_turgor: '', // 'poor', 'good', 'well_hydrated'
+      integrity_wnl: false,
+      integrity_rash: false,
+      integrity_discolored: false,
+      integrity_bruised: false,
+      integrity_burns: false,
+      integrity_open_areas: false,
+      integrity_lacerations: false,
+      integrity_thick: false,
+      integrity_thin: false,
+      integrity_lesions_flat: false,
+      integrity_lesions_raised: false,
+      other_notes: ''
+    },
     skin_assessment_from_last: false,
     mobility_level: '',
     mobility_level_from_last: false,
