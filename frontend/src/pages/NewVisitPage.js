@@ -488,7 +488,7 @@ export default function NewVisitPage() {
                       <SelectValue placeholder="Select visit location..." />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="home">Patient's Home</SelectItem>
+                      <SelectItem value="home">Patient&apos;s Home</SelectItem>
                       <SelectItem value="day_program">Day Program</SelectItem>
                       <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
