@@ -703,6 +703,24 @@ async def create_day_program(data: DayProgramCreate, nurse: dict = Depends(get_c
     await db.day_programs.insert_one(program)
     return DayProgramResponse(**program)
 
+@api_router.delete("/admin/organizations/{org_id}")
+async def delete_organization(org_id: str, nurse: dict = Depends(get_current_nurse)):
+    if not nurse.get("is_admin"):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    result = await db.organizations.delete_one({"id": org_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Organization not found")
+    return {"message": "Organization deleted successfully"}
+
+@api_router.delete("/admin/day-programs/{program_id}")
+async def delete_day_program(program_id: str, nurse: dict = Depends(get_current_nurse)):
+    if not nurse.get("is_admin"):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    result = await db.day_programs.delete_one({"id": program_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Day program not found")
+    return {"message": "Day program deleted successfully"}
+
 @api_router.post("/incident-reports")
 async def create_incident_report(data: dict, nurse: dict = Depends(get_current_nurse)):
     report = {
