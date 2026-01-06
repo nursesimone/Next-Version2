@@ -801,7 +801,7 @@ export default function NewVisitPage() {
                   </div>
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <Label>Skin Assessment</Label>
+                      <Label className="text-base font-semibold">Skin Assessment</Label>
                       {lastVisit && (
                         <Button 
                           type="button"
