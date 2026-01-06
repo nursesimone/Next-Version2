@@ -1329,7 +1329,7 @@ async def get_monthly_report(data: MonthlyReportRequest, nurse: dict = Depends(g
     }
 
 # ==================== DEMO DATA SETUP ====================
-@api_router.post("/setup-demo-data")
+@api_router.get("/setup-demo-data")
 async def setup_demo_data():
     """
     Creates demo data for testing after deployment.
