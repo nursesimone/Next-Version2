@@ -1008,7 +1008,7 @@ async def get_unable_to_contact(record_id: str, nurse: dict = Depends(get_curren
     if not (is_assigned or is_admin or has_org_access):
         raise HTTPException(status_code=403, detail="Not authorized to view this record")
     
-    record["patient"] = {"full_name": patient.get("full_name", "Unknown")}
+    record["patient_name"] = patient.get("full_name", "Unknown")
     return UnableToContactResponse(**record)
 
 @api_router.delete("/unable-to-contact/{record_id}")
