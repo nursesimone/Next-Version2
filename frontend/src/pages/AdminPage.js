@@ -682,7 +682,7 @@ export default function AdminPage() {
         <Card className="mb-8">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <div>
+              <div className="flex-1">
                 <CardTitle className="flex items-center gap-2">
                   <UserCog className="w-5 h-5" />
                   Manage Staff
@@ -691,21 +691,32 @@ export default function AdminPage() {
                   View all staff members and manage access permissions
                 </CardDescription>
               </div>
-              {!showStaffSection ? (
-                <Button 
-                  onClick={() => setShowStaffSection(true)}
-                  className="bg-purple-600 hover:bg-purple-500"
-                >
-                  Launch
-                </Button>
-              ) : (
-                <Dialog open={showAddNurseDialog} onOpenChange={setShowAddNurseDialog}>
-                  <DialogTrigger asChild>
-                    <Button className="bg-purple-600 hover:bg-purple-500">
-                      <Plus className="w-4 h-4 mr-2" />
-                      Add Staff
+              <div className="flex items-center gap-2">
+                {!showStaffSection ? (
+                  <Button 
+                    onClick={() => setShowStaffSection(true)}
+                    className="bg-purple-600 hover:bg-purple-500"
+                  >
+                    Launch
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setShowStaffSection(false)}
+                      className="text-slate-500"
+                    >
+                      <ChevronDown className="w-4 h-4 mr-1" />
+                      Collapse
                     </Button>
-                  </DialogTrigger>
+                    <Dialog open={showAddNurseDialog} onOpenChange={setShowAddNurseDialog}>
+                      <DialogTrigger asChild>
+                        <Button className="bg-purple-600 hover:bg-purple-500">
+                          <Plus className="w-4 h-4 mr-2" />
+                          Add Staff
+                        </Button>
+                      </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Add New Staff Member</DialogTitle>
