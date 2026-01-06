@@ -562,7 +562,7 @@ export default function AdminPage() {
         </Card>
 
         {/* Nurses Management */}
-        <Card>
+        <Card className="mb-8">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
@@ -574,13 +574,21 @@ export default function AdminPage() {
                   View all staff members and manage access permissions
                 </CardDescription>
               </div>
-              <Dialog open={showAddNurseDialog} onOpenChange={setShowAddNurseDialog}>
-                <DialogTrigger asChild>
-                  <Button className="bg-purple-600 hover:bg-purple-500">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add Staff
-                  </Button>
-                </DialogTrigger>
+              {!showStaffSection ? (
+                <Button 
+                  onClick={() => setShowStaffSection(true)}
+                  className="bg-purple-600 hover:bg-purple-500"
+                >
+                  Launch
+                </Button>
+              ) : (
+                <Dialog open={showAddNurseDialog} onOpenChange={setShowAddNurseDialog}>
+                  <DialogTrigger asChild>
+                    <Button className="bg-purple-600 hover:bg-purple-500">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Staff
+                    </Button>
+                  </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Add New Staff Member</DialogTitle>
