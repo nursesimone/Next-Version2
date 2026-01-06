@@ -990,11 +990,25 @@ async def list_unable_to_contact(patient_id: str, nurse: dict = Depends(get_curr
 
 @api_router.get("/unable-to-contact/{record_id}", response_model=UnableToContactResponse)
 async def get_unable_to_contact(record_id: str, nurse: dict = Depends(get_current_nurse)):
-    record = await db.unable_to_contact.find_one({"id": record_id, "nurse_id": nurse["id"]}, {"_id": 0})
+    # Find the UTC record (don't filter by nurse_id - allow all authorized users to view)
+    record = await db.unable_to_contact.find_one({"id": record_id}, {"_id": 0})
     if not record:
         raise HTTPException(status_code=404, detail="Record not found")
+    
+    # Get patient info
     patient = await db.patients.find_one({"id": record["patient_id"]}, {"_id": 0})
-    record["patient_name"] = patient.get("full_name") if patient else "Unknown"
+    if not patient:
+        raise HTTPException(status_code=404, detail="Patient not found")
+    
+    # Check if current nurse has access to this patient
+    is_assigned = nurse["id"] in patient.get("assigned_nurses", [])
+    is_admin = nurse.get("is_admin", False)
+    has_org_access = patient.get("permanent_info", {}).get("organization") in nurse.get("assigned_organizations", [])
+    
+    if not (is_assigned or is_admin or has_org_access):
+        raise HTTPException(status_code=403, detail="Not authorized to view this record")
+    
+    record["patient"] = {"full_name": patient.get("full_name", "Unknown")}
     return UnableToContactResponse(**record)
 
 @api_router.delete("/unable-to-contact/{record_id}")
