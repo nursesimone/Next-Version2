@@ -155,24 +155,18 @@ export default function UnableToContactPage() {
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Reason for Visit (Prefilled) */}
+          {/* Organization Info */}
           <Card className="bg-white border-slate-100">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
-                <Stethoscope className="w-5 h-5 text-eggplant-700" />
-                Reason for Visit
+                <Building2 className="w-5 h-5 text-eggplant-700" />
+                Organization
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="bg-eggplant-50 border border-eggplant-200 rounded-lg p-4">
-                <p className="text-eggplant-800 font-medium">{getVisitTypeLabel()}</p>
-                <p className="text-sm text-eggplant-600 mt-1">
-                  {patient?.permanent_info?.organization && (
-                    <span className="flex items-center gap-1">
-                      <Building2 className="w-4 h-4" />
-                      {patient.permanent_info.organization}
-                    </span>
-                  )}
+                <p className="text-eggplant-800 font-medium">
+                  {patient?.permanent_info?.organization || 'Not specified'}
                 </p>
               </div>
             </CardContent>
@@ -210,6 +204,32 @@ export default function UnableToContactPage() {
                   />
                 </div>
               </div>
+            </CardContent>
+          </Card>
+
+          {/* NEW: What was the reason for your attempted visit */}
+          <Card className="bg-white border-slate-100">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Stethoscope className="w-5 h-5 text-eggplant-700" />
+                What was the reason for your attempted visit?
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Select
+                value={formData.attempt_reason}
+                onValueChange={(value) => updateField('attempt_reason', value)}
+              >
+                <SelectTrigger data-testid="attempt-reason-select">
+                  <SelectValue placeholder="Select reason..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="routine_nurse_visit">Routine nurse visit</SelectItem>
+                  <SelectItem value="patient_intervention">Patient Intervention</SelectItem>
+                  <SelectItem value="vitals_only">Vital Signs Only</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
             </CardContent>
           </Card>
 
