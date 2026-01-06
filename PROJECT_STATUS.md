@@ -94,14 +94,18 @@ From screenshots user provided:
 
 ## PENDING TASKS 📋
 
-### Immediate (User Just Requested - Jan 5):
-1. **Admin Panel - Staff Management:** ⏸️ IN PROGRESS
-   - Move "Assignments" button INSIDE "Edit" dialog
-   - Place after "License Number" field
+### Immediate Tasks - COMPLETED ✅ (Jan 6):
+1. **Admin Panel - Staff Management:** ✅ COMPLETE
+   - ✅ Removed standalone "Assignments" button from staff list
+   - ✅ Assignments section now only appears INSIDE "Edit" dialog
+   - ✅ Located after "License Number" field
+   - ✅ Clicking "Edit" shows both profile fields AND assignments in one dialog
+   - ✅ "Save All Changes" button updates both profile and assignments simultaneously
    - Staff (non-admin) can only VIEW profile (no edit/assignments buttons)
    
-2. **Incident Report Form Reset:** ⏸️ NEEDS COMPLETION
-   - Update form reset to include new fields (visitor_details, other_details, reporter_cell, reporter_email)
+2. **Incident Report Form Reset:** ✅ COMPLETE
+   - ✅ Form reset already includes all new fields (visitor_details, other_details, reporter_cell, reporter_email)
+   - No changes needed - already working correctly
 
 ### Form Updates (Planned Phases):
 1. Complete Phase 1 section reordering
