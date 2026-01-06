@@ -1324,6 +1324,199 @@ async def get_monthly_report(data: MonthlyReportRequest, nurse: dict = Depends(g
         "visits_by_type": visits_by_type
     }
 
+# ==================== DEMO DATA SETUP ====================
+@api_router.post("/setup-demo-data")
+async def setup_demo_data():
+    """
+    Creates demo data for testing after deployment.
+    Call this endpoint once after deployment to populate test data.
+    """
+    try:
+        # Check if data already exists
+        existing_nurses = await db.nurses.count_documents({})
+        if existing_nurses > 0:
+            return {
+                "message": "Demo data already exists",
+                "nurses_count": existing_nurses,
+                "status": "skipped"
+            }
+        
+        # Create Organizations
+        organizations = [
+            {
+                "id": str(uuid.uuid4()),
+                "name": "POSH Host Homes",
+                "address": "123 Main St, Seattle, WA 98101",
+                "contact_person": "Jane Smith",
+                "contact_phone": "(206) 555-0100"
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "name": "Ebenezer Private HomeCare",
+                "address": "456 Oak Ave, Seattle, WA 98102",
+                "contact_person": "John Davis",
+                "contact_phone": "(206) 555-0200"
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "name": "Jericho",
+                "address": "789 Pine St, Seattle, WA 98103",
+                "contact_person": "Mary Wilson",
+                "contact_phone": "(206) 555-0300"
+            }
+        ]
+        
+        for org in organizations:
+            await db.organizations.insert_one(org)
+        
+        # Create Nurses
+        nurses = [
+            {
+                "id": str(uuid.uuid4()),
+                "email": "demo@nursemed.com",
+                "password_hash": hash_password("demo123"),
+                "full_name": "Demo Admin",
+                "title": "Administrator",
+                "license_number": "ADMIN001",
+                "is_admin": True,
+                "form_access": {
+                    "nurse_visit": True,
+                    "vitals_only": True,
+                    "daily_note": True
+                },
+                "assigned_patients": [],
+                "assigned_organizations": [org["id"] for org in organizations],
+                "created_at": datetime.utcnow().isoformat()
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "email": "sarah.johnson@nursemed.com",
+                "password_hash": hash_password("nurse123"),
+                "full_name": "Sarah Johnson",
+                "title": "Registered Nurse (RN)",
+                "license_number": "RN123456",
+                "is_admin": False,
+                "form_access": {
+                    "nurse_visit": True,
+                    "vitals_only": True,
+                    "daily_note": True
+                },
+                "assigned_patients": [],
+                "assigned_organizations": [organizations[0]["id"]],
+                "created_at": datetime.utcnow().isoformat()
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "email": "michael.chen@nursemed.com",
+                "password_hash": hash_password("nurse123"),
+                "full_name": "Michael Chen",
+                "title": "Licensed Practical Nurse (LPN)",
+                "license_number": "LPN789012",
+                "is_admin": False,
+                "form_access": {
+                    "nurse_visit": False,
+                    "vitals_only": True,
+                    "daily_note": True
+                },
+                "assigned_patients": [],
+                "assigned_organizations": [organizations[1]["id"]],
+                "created_at": datetime.utcnow().isoformat()
+            }
+        ]
+        
+        for nurse in nurses:
+            await db.nurses.insert_one(nurse)
+        
+        # Create Patients
+        patients = [
+            {
+                "id": str(uuid.uuid4()),
+                "full_name": "Margaret Williams",
+                "permanent_info": {
+                    "organization": organizations[0]["id"],
+                    "gender": "Female",
+                    "date_of_birth": "1945-03-15",
+                    "living_situation": "host_home",
+                    "home_address": "1234 Maple Drive, Seattle, WA 98104",
+                    "caregiver_name": "Betty Williams (Daughter)",
+                    "caregiver_phone": "(206) 555-1002",
+                    "medications": ["Lisinopril 10mg daily", "Metformin 500mg twice daily", "Aspirin 81mg daily"],
+                    "allergies": ["Penicillin", "Shellfish"],
+                    "medical_diagnoses": ["Hypertension", "Type 2 Diabetes", "Osteoarthritis"],
+                    "psychiatric_diagnoses": [],
+                    "visit_frequency": "Monthly"
+                },
+                "nurse_id": nurses[1]["id"],
+                "assigned_nurses": [nurses[1]["id"]],
+                "created_at": datetime.utcnow().isoformat(),
+                "updated_at": datetime.utcnow().isoformat()
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "full_name": "Robert Johnson",
+                "permanent_info": {
+                    "organization": organizations[1]["id"],
+                    "gender": "Male",
+                    "date_of_birth": "1938-07-22",
+                    "living_situation": "private_home",
+                    "home_address": "5678 Cedar Lane, Seattle, WA 98105",
+                    "caregiver_name": "Linda Johnson (Wife)",
+                    "caregiver_phone": "(206) 555-2002",
+                    "medications": ["Furosemide 40mg daily", "Carvedilol 25mg twice daily", "Sertraline 50mg daily"],
+                    "allergies": ["Latex"],
+                    "medical_diagnoses": ["CHF", "COPD"],
+                    "psychiatric_diagnoses": ["Depression"],
+                    "visit_frequency": "Weekly"
+                },
+                "nurse_id": nurses[2]["id"],
+                "assigned_nurses": [nurses[2]["id"]],
+                "created_at": datetime.utcnow().isoformat(),
+                "updated_at": datetime.utcnow().isoformat()
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "full_name": "Dorothy Martinez",
+                "permanent_info": {
+                    "organization": organizations[2]["id"],
+                    "gender": "Female",
+                    "date_of_birth": "1952-11-08",
+                    "living_situation": "group_home",
+                    "home_address": "9012 Birch Avenue, Seattle, WA 98106",
+                    "caregiver_name": "Carlos Martinez (Son)",
+                    "caregiver_phone": "(206) 555-3002",
+                    "medications": ["Donepezil 10mg daily", "Amlodipine 5mg daily", "Memantine 10mg twice daily"],
+                    "allergies": [],
+                    "medical_diagnoses": ["Hypertension"],
+                    "psychiatric_diagnoses": ["Alzheimer's Disease"],
+                    "visit_frequency": "Bi-weekly"
+                },
+                "nurse_id": nurses[0]["id"],
+                "assigned_nurses": [nurses[0]["id"]],
+                "created_at": datetime.utcnow().isoformat(),
+                "updated_at": datetime.utcnow().isoformat()
+            }
+        ]
+        
+        for patient in patients:
+            await db.patients.insert_one(patient)
+        
+        return {
+            "message": "Demo data created successfully!",
+            "organizations_created": len(organizations),
+            "nurses_created": len(nurses),
+            "patients_created": len(patients),
+            "login_credentials": {
+                "admin": "demo@nursemed.com / demo123",
+                "nurses": [
+                    "sarah.johnson@nursemed.com / nurse123",
+                    "michael.chen@nursemed.com / nurse123"
+                ]
+            },
+            "status": "success"
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 # ==================== HEALTH CHECK ====================
 @api_router.get("/")
 async def root():
