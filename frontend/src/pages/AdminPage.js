@@ -41,6 +41,9 @@ export default function AdminPage() {
   const [organizations, setOrganizations] = useState([]);
   const [dayPrograms, setDayPrograms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showStaffSection, setShowStaffSection] = useState(false);
+  const [showOrganizationsSection, setShowOrganizationsSection] = useState(false);
+  const [showDayProgramsSection, setShowDayProgramsSection] = useState(false);
   const [showAddNurseDialog, setShowAddNurseDialog] = useState(false);
   const [showNurseProfileDialog, setShowNurseProfileDialog] = useState(false);
   const [showEditNurseDialog, setShowEditNurseDialog] = useState(false);
