@@ -33,6 +33,111 @@ export default function UTCDetailPage() {
     }
   };
 
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    const margin = 20;
+    let y = margin;
+
+    // Header
+    doc.setFontSize(18);
+    doc.setFont(undefined, 'bold');
+    doc.text('POSH-Able Living', margin, y);
+    y += 10;
+    doc.setFontSize(14);
+    doc.text('Unable to Contact Report', margin, y);
+    y += 15;
+
+    // Patient Info
+    doc.setFontSize(11);
+    doc.setFont(undefined, 'bold');
+    doc.text('Patient:', margin, y);
+    doc.setFont(undefined, 'normal');
+    doc.text(utc.patient?.full_name || 'N/A', margin + 30, y);
+    y += 7;
+
+    // Date & Time
+    doc.setFont(undefined, 'bold');
+    doc.text('Attempt Date:', margin, y);
+    doc.setFont(undefined, 'normal');
+    doc.text(formatDate(utc.attempt_date), margin + 35, y);
+    y += 7;
+
+    doc.setFont(undefined, 'bold');
+    doc.text('Attempt Time:', margin, y);
+    doc.setFont(undefined, 'normal');
+    doc.text(utc.attempt_time || 'N/A', margin + 35, y);
+    y += 7;
+
+    // Location of Attempt
+    doc.setFont(undefined, 'bold');
+    doc.text('Location:', margin, y);
+    doc.setFont(undefined, 'normal');
+    doc.text(utc.attempt_location === 'other' ? utc.attempt_location_other : utc.attempt_location, margin + 30, y);
+    y += 7;
+
+    // Spoke with Anyone
+    doc.setFont(undefined, 'bold');
+    doc.text('Spoke with:', margin, y);
+    doc.setFont(undefined, 'normal');
+    doc.text(utc.spoke_with_anyone ? `Yes - ${utc.spoke_with_whom}` : 'No', margin + 35, y);
+    y += 10;
+
+    // Individual Location
+    doc.setFont(undefined, 'bold');
+    doc.text('Individual Location:', margin, y);
+    y += 7;
+    doc.setFont(undefined, 'normal');
+    const locationMap = {
+      admitted: 'Admitted to Medical Facility',
+      moved_temporarily: 'Moved Temporarily',
+      moved_permanently: 'Moved Permanently',
+      vacation: 'On Vacation',
+      deceased: 'Deceased',
+      other: utc.individual_location_other || 'Other'
+    };
+    doc.text(locationMap[utc.individual_location] || utc.individual_location, margin + 5, y);
+    y += 10;
+
+    // Facility Details
+    if (utc.individual_location === 'admitted' && utc.facility_name) {
+      doc.setFont(undefined, 'bold');
+      doc.text('Facility Name:', margin, y);
+      doc.setFont(undefined, 'normal');
+      doc.text(utc.facility_name, margin + 35, y);
+      y += 7;
+
+      if (utc.admission_date) {
+        doc.setFont(undefined, 'bold');
+        doc.text('Admission Date:', margin, y);
+        doc.setFont(undefined, 'normal');
+        doc.text(formatDate(utc.admission_date), margin + 40, y);
+        y += 7;
+      }
+    }
+
+    // Reason for visit
+    if (utc.reason) {
+      y += 5;
+      doc.setFont(undefined, 'bold');
+      doc.text('Reason for Visit:', margin, y);
+      y += 7;
+      doc.setFont(undefined, 'normal');
+      const reasonLines = doc.splitTextToSize(utc.reason, 170);
+      doc.text(reasonLines, margin + 5, y);
+      y += reasonLines.length * 7;
+    }
+
+    // Footer
+    y += 10;
+    doc.setFontSize(9);
+    doc.setTextColor(100);
+    doc.text(`Generated: ${new Date().toLocaleDateString()}`, margin, y);
+
+    // Save PDF
+    const fileName = `UTC_${utc.patient?.full_name?.replace(/\s+/g, '_')}_${formatDate(utc.attempt_date)}.pdf`;
+    doc.save(fileName);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
