@@ -23,7 +23,11 @@ client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
 # JWT Configuration
-JWT_SECRET = os.environ.get('JWT_SECRET', 'nurse-visit-secret-key-2024')
+try:
+    JWT_SECRET = os.environ['JWT_SECRET']
+except KeyError:
+    JWT_SECRET = 'nurse-visit-secret-key-2024'  # Fallback for development only
+    logger.warning("JWT_SECRET not found in environment variables, using default (NOT SECURE FOR PRODUCTION)")
 JWT_ALGORITHM = "HS256"
 
 app = FastAPI()
