@@ -349,6 +349,20 @@ export default function UnableToContactPage() {
                 </div>
               )}
               
+              {/* If overnight with family - ask when returning */}
+              {formData.individual_location === 'overnight_family' && (
+                <div className="animate-fade-in">
+                  <Label>When will they be returning?</Label>
+                  <Input
+                    type="date"
+                    value={formData.expected_return_date}
+                    onChange={(e) => updateField('expected_return_date', e.target.value)}
+                    className="mt-1"
+                    data-testid="overnight-return-date-input"
+                  />
+                </div>
+              )}
+              
               {/* If deceased - ask date */}
               {formData.individual_location === 'deceased' && (
                 <div className="animate-fade-in">
