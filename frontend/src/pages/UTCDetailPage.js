@@ -134,7 +134,7 @@ export default function UTCDetailPage() {
     doc.text(`Generated: ${new Date().toLocaleDateString()}`, margin, y);
 
     // Save PDF
-    const fileName = `UTC_${utc.patient?.full_name?.replace(/\s+/g, '_')}_${formatDate(utc.attempt_date)}.pdf`;
+    const fileName = `UTC_${utc.patient_name?.replace(/\s+/g, '_')}_${formatDate(utc.attempt_date)}.pdf`;
     doc.save(fileName);
   };
 
