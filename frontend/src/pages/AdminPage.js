@@ -240,6 +240,25 @@ export default function AdminPage() {
                 </div>
               </div>
             </div>
+            
+            {/* Top Right Buttons */}
+            <div className="flex items-center gap-2">
+              <Button 
+                onClick={() => navigate('/dashboard')}
+                variant="outline"
+                size="sm"
+              >
+                <Users className="w-4 h-4 mr-2" />
+                Patient List
+              </Button>
+              <Button 
+                onClick={() => navigate('/reports')}
+                className="bg-eggplant-700 hover:bg-eggplant-600"
+                size="sm"
+              >
+                Monthly Reports
+              </Button>
+            </div>
           </div>
         </div>
       </header>
