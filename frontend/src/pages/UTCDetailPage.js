@@ -156,9 +156,11 @@ export default function UTCDetailPage() {
 
   const locationMap = {
     admitted: 'Admitted to Medical Facility',
+    medical_appointment: 'Medical Appointment',
+    overnight_family: 'Overnight with Family',
+    outing: 'Outing/Shopping/Run Errands',
     moved_temporarily: 'Moved Temporarily',
     moved_permanently: 'Moved Permanently',
-    vacation: 'On Vacation',
     deceased: 'Deceased',
     other: utc.individual_location_other || 'Other'
   };
