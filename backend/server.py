@@ -569,13 +569,16 @@ async def update_nurse(nurse_id: str, data: NurseUpdateRequest, nurse: dict = De
     if not nurse.get("is_admin"):
         raise HTTPException(status_code=403, detail="Admin access required")
     
+    # Check if nurse exists first
+    existing_nurse = await db.nurses.find_one({"id": nurse_id})
+    if not existing_nurse:
+        raise HTTPException(status_code=404, detail="Nurse not found")
+    
     update_data = {k: v for k, v in data.dict().items() if v is not None}
     if not update_data:
         raise HTTPException(status_code=400, detail="No data to update")
     
     result = await db.nurses.update_one({"id": nurse_id}, {"$set": update_data})
-    if result.modified_count == 0:
-        raise HTTPException(status_code=404, detail="Nurse not found")
     return {"message": "Nurse updated successfully"}
 
 class NurseAssignmentRequest(BaseModel):
