@@ -333,7 +333,7 @@ export default function AdminPage() {
                 <div className="text-center">
                   <p className="text-sm text-slate-500 mb-1">Total Staff</p>
                   <div className="flex items-center justify-center gap-2">
-                    <Users className="w-5 h-5 text-purple-600" />
+                    <Cross className="w-5 h-5 text-red-600" />
                     <p className="text-3xl font-bold text-slate-900">{nurses.length}</p>
                   </div>
                 </div>
