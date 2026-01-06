@@ -1529,6 +1529,29 @@ async def root():
 # Include router and middleware
 app.include_router(api_router)
 
+# Health check endpoint for Kubernetes (must be at root, not under /api)
+@app.get("/health")
+async def health_check():
+    """
+    Kubernetes health check endpoint.
+    Returns 200 OK if the application is running.
+    """
+    try:
+        # Optionally check database connectivity
+        await db.command('ping')
+        return {
+            "status": "healthy",
+            "service": "POSH-Able Living API",
+            "database": "connected"
+        }
+    except Exception as e:
+        return {
+            "status": "unhealthy",
+            "service": "POSH-Able Living API",
+            "database": "disconnected",
+            "error": str(e)
+        }
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
