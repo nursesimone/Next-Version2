@@ -305,32 +305,6 @@ export default function AdminPage() {
           </Card>
         </div>
 
-        {/* Quick Actions */}
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Button 
-                onClick={() => navigate('/reports')}
-                className="h-16 bg-eggplant-700 hover:bg-eggplant-600 justify-between"
-              >
-                <span className="text-lg">Monthly Reports</span>
-                <ChevronRight className="w-5 h-5" />
-              </Button>
-              <Button 
-                onClick={() => navigate('/dashboard')}
-                variant="outline"
-                className="h-16 justify-between"
-              >
-                <span className="text-lg">Manage Patients</span>
-                <ChevronRight className="w-5 h-5" />
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Nurses Management */}
         <Card>
           <CardHeader>
