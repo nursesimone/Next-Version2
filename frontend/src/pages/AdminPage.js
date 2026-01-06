@@ -447,26 +447,28 @@ export default function AdminPage() {
               </Dialog>
             </div>
           </CardHeader>
-          <CardContent>
-            {organizations.length === 0 ? (
-              <p className="text-slate-500 text-center py-8">No organizations added yet</p>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {organizations.map(org => (
-                  <Card key={org.id} className="border-slate-200">
-                    <CardContent className="pt-6">
-                      <h3 className="font-semibold text-lg mb-2">{org.name}</h3>
-                      <div className="space-y-1 text-sm text-slate-600">
-                        <p><strong>Address:</strong> {org.address}</p>
-                        <p><strong>Contact:</strong> {org.contact_person}</p>
-                        <p><strong>Phone:</strong> {org.contact_phone}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </CardContent>
+          {showOrganizationsSection && (
+            <CardContent>
+              {organizations.length === 0 ? (
+                <p className="text-slate-500 text-center py-8">No organizations added yet</p>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {organizations.map(org => (
+                    <Card key={org.id} className="border-slate-200">
+                      <CardContent className="pt-6">
+                        <h3 className="font-semibold text-lg mb-2">{org.name}</h3>
+                        <div className="space-y-1 text-sm text-slate-600">
+                          <p><strong>Address:</strong> {org.address}</p>
+                          <p><strong>Contact:</strong> {org.contact_person}</p>
+                          <p><strong>Phone:</strong> {org.contact_phone}</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          )}
         </Card>
 
         {/* Day Programs Management */}
