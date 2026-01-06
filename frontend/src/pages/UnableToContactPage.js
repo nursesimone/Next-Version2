@@ -325,13 +325,43 @@ export default function UnableToContactPage() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="admitted">Admitted to Medical Facility</SelectItem>
+                  <SelectItem value="medical_appointment">Medical Appointment</SelectItem>
+                  <SelectItem value="overnight_family">Overnight with Family</SelectItem>
+                  <SelectItem value="outing">Outing/Shopping/Run Errands</SelectItem>
                   <SelectItem value="moved_temporarily">Moved Temporarily</SelectItem>
                   <SelectItem value="moved_permanently">Moved Permanently</SelectItem>
-                  <SelectItem value="vacation">On Vacation with Family</SelectItem>
                   <SelectItem value="deceased">Deceased</SelectItem>
                   <SelectItem value="other">Other</SelectItem>
                 </SelectContent>
               </Select>
+              
+              {/* If moved temporarily - ask where */}
+              {formData.individual_location === 'moved_temporarily' && (
+                <div className="animate-fade-in">
+                  <Label>Where?</Label>
+                  <Input
+                    value={formData.moved_temporarily_where}
+                    onChange={(e) => updateField('moved_temporarily_where', e.target.value)}
+                    placeholder="Enter location"
+                    className="mt-1"
+                    data-testid="moved-temporarily-where-input"
+                  />
+                </div>
+              )}
+              
+              {/* If deceased - ask date */}
+              {formData.individual_location === 'deceased' && (
+                <div className="animate-fade-in">
+                  <Label>Date of Death</Label>
+                  <Input
+                    type="date"
+                    value={formData.deceased_date}
+                    onChange={(e) => updateField('deceased_date', e.target.value)}
+                    className="mt-1"
+                    data-testid="deceased-date-input"
+                  />
+                </div>
+              )}
               
               {formData.individual_location === 'other' && (
                 <div className="animate-fade-in">
