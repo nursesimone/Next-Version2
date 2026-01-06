@@ -89,11 +89,16 @@ Healthcare documentation application for in-home nurse visits
 7. Overall Assessment (Overall Health Status + Nurse Documentation)
 8. Certification
 
-### Phase 2: Enhanced Body Assessments (NOT STARTED)
-From screenshots user provided:
-- **Mouth/Oral:** Multiple checkboxes + follow-up for dentures (upper/lower, partial/full)
-- **Hearing:** Multiple checkboxes
-- **Eyes:** Multiple checkboxes + follow-up if blind (left/right/both)
+### Phase 2: Enhanced Body Assessments ✅ COMPLETE (Jan 6)
+Implemented checkbox-based assessments with conditional follow-ups:
+- **Eyes/Vision:** ✅ Multiple checkboxes (Normal, Glasses, Contacts, Cataracts, Glaucoma, Blind)
+  - ✅ Follow-up question when "Blind" selected: dropdown for Left/Right/Both eyes
+  - ✅ "Other" option with text area for additional notes
+- **Ears/Hearing:** ✅ Multiple checkboxes (Normal, Hearing Aid, Hard of Hearing, Deaf, Ear Infection)
+  - ✅ "Other" option with text area for additional notes
+- **Mouth/Teeth/Oral Cavity:** ✅ Multiple checkboxes (Normal, Dentures, Poor Dentition, Mouth Sores, Dry Mouth)
+  - ✅ Follow-up when "Dentures" selected: Upper/Lower, Partial/Full checkboxes
+  - ✅ "Other" option with text area for additional notes
 
 ### Phase 3: Copy from Last Visit (NOT STARTED)
 - Add "Copy from Last Visit" button for each head-to-toe section
