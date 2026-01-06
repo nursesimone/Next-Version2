@@ -628,7 +628,40 @@ export default function AdminPage() {
                   {dayPrograms.map(program => (
                     <Card key={program.id} className="border-slate-200">
                       <CardContent className="pt-6">
-                        <h3 className="font-semibold text-lg mb-2">{program.name}</h3>
+                        <div className="flex items-start justify-between mb-2">
+                          <h3 className="font-semibold text-lg">{program.name}</h3>
+                          <div className="flex gap-1">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="h-8 w-8 p-0"
+                              onClick={() => {/* TODO: Edit program */}}
+                            >
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+                              onClick={async () => {
+                                if (window.confirm('Delete this day program?')) {
+                                  try {
+                                    const token = localStorage.getItem('nurse_token');
+                                    await axios.delete(`${API}/admin/day-programs/${program.id}`, {
+                                      headers: { Authorization: `Bearer ${token}` }
+                                    });
+                                    toast.success('Day program deleted');
+                                    fetchData();
+                                  } catch (error) {
+                                    toast.error('Failed to delete day program');
+                                  }
+                                }
+                              }}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
                         <div className="space-y-1 text-sm text-slate-600">
                           <p><strong>Address:</strong> {program.address}</p>
                           <p><strong>Office Phone:</strong> {program.office_phone}</p>
