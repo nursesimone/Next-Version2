@@ -525,7 +525,7 @@ export default function AdminPage() {
         <Card className="mb-8">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <div>
+              <div className="flex-1">
                 <CardTitle className="flex items-center gap-2">
                   <Building className="w-5 h-5" />
                   Manage Day Programs (CAG&apos;s)
@@ -534,21 +534,32 @@ export default function AdminPage() {
                   Add and manage adult day program centers
                 </CardDescription>
               </div>
-              {!showDayProgramsSection ? (
-                <Button 
-                  onClick={() => setShowDayProgramsSection(true)}
-                  className="bg-blue-600 hover:bg-blue-500"
-                >
-                  Launch
-                </Button>
-              ) : (
-                <Dialog open={showDayProgramDialog} onOpenChange={setShowDayProgramDialog}>
-                  <DialogTrigger asChild>
-                    <Button className="bg-blue-600 hover:bg-blue-500">
-                      <Plus className="w-4 h-4 mr-2" />
-                      Add Day Program
+              <div className="flex items-center gap-2">
+                {!showDayProgramsSection ? (
+                  <Button 
+                    onClick={() => setShowDayProgramsSection(true)}
+                    className="bg-blue-600 hover:bg-blue-500"
+                  >
+                    Launch
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setShowDayProgramsSection(false)}
+                      className="text-slate-500"
+                    >
+                      <ChevronDown className="w-4 h-4 mr-1" />
+                      Collapse
                     </Button>
-                  </DialogTrigger>
+                    <Dialog open={showDayProgramDialog} onOpenChange={setShowDayProgramDialog}>
+                      <DialogTrigger asChild>
+                        <Button className="bg-blue-600 hover:bg-blue-500">
+                          <Plus className="w-4 h-4 mr-2" />
+                          Add Day Program
+                        </Button>
+                      </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Add Day Program</DialogTitle>
