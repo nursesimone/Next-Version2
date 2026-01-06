@@ -437,15 +437,6 @@ export default function AdminPage() {
                       <Edit className="w-4 h-4 mr-2" />
                       Edit
                     </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleManageAssignments(nurseItem)}
-                      className="text-blue-600 border-blue-200 hover:bg-blue-50"
-                    >
-                      <UserCog className="w-4 h-4 mr-2" />
-                      Assignments
-                    </Button>
                     {nurseItem.is_admin && nurseItem.id !== nurse?.id && (
                       <Button
                         size="sm"
