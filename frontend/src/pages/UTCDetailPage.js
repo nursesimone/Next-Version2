@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { ArrowLeft, PhoneOff, MapPin, Calendar, Clock, User } from 'lucide-react';
+import { ArrowLeft, PhoneOff, MapPin, Calendar, Clock, User, Download } from 'lucide-react';
 import { formatDate } from '../lib/utils';
 import axios from 'axios';
+import jsPDF from 'jspdf';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
