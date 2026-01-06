@@ -130,7 +130,12 @@ const initialVisitData = {
   gastrointestinal: {
     last_bowel_movement: '',
     bowel_sounds: '',
-    nutritional_diet: ''
+    nutritional_diet: '',
+    abdominal_pain: false,
+    diarrhea: false,
+    hard_stool: false,
+    bowel_frequency: '', // 'regular', 'occasional_slowdown', 'irregular'
+    constipation_control: '' // 'well_controlled', 'moderately_controlled', 'poorly_controlled'
   },
   genito_urinary: {
     toileting_level: ''
