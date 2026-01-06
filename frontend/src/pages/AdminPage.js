@@ -40,7 +40,6 @@ export default function AdminPage() {
   const [showAddNurseDialog, setShowAddNurseDialog] = useState(false);
   const [showNurseProfileDialog, setShowNurseProfileDialog] = useState(false);
   const [showEditNurseDialog, setShowEditNurseDialog] = useState(false);
-  const [showAssignmentsDialog, setShowAssignmentsDialog] = useState(false);
   const [selectedNurse, setSelectedNurse] = useState(null);
   const [editNurseData, setEditNurseData] = useState({
     full_name: '',
