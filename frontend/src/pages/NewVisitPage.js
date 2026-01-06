@@ -1399,6 +1399,124 @@ export default function NewVisitPage() {
                         </SelectContent>
                       </Select>
                     </div>
+                    
+                    {/* New Bowel Movement Questions */}
+                    <div className="border-t pt-4 mt-4">
+                      <Label className="text-base font-semibold mb-3 block">Bowel Movement Management</Label>
+                      
+                      {/* Symptoms Checkboxes */}
+                      <div className="mb-4">
+                        <Label className="text-sm mb-2 block">Has the individual experienced: (Select all that apply)</Label>
+                        <div className="space-y-2 pl-2">
+                          <div className="flex items-center space-x-2">
+                            <Checkbox
+                              id="abdominal-pain"
+                              checked={visitData.gastrointestinal.abdominal_pain}
+                              onCheckedChange={(checked) => 
+                                setVisitData(prev => ({
+                                  ...prev,
+                                  gastrointestinal: {
+                                    ...prev.gastrointestinal,
+                                    abdominal_pain: checked
+                                  }
+                                }))
+                              }
+                            />
+                            <Label htmlFor="abdominal-pain" className="font-normal cursor-pointer">
+                              Abdominal Pain
+                            </Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Checkbox
+                              id="diarrhea"
+                              checked={visitData.gastrointestinal.diarrhea}
+                              onCheckedChange={(checked) => 
+                                setVisitData(prev => ({
+                                  ...prev,
+                                  gastrointestinal: {
+                                    ...prev.gastrointestinal,
+                                    diarrhea: checked
+                                  }
+                                }))
+                              }
+                            />
+                            <Label htmlFor="diarrhea" className="font-normal cursor-pointer">
+                              Diarrhea observed
+                            </Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Checkbox
+                              id="hard-stool"
+                              checked={visitData.gastrointestinal.hard_stool}
+                              onCheckedChange={(checked) => 
+                                setVisitData(prev => ({
+                                  ...prev,
+                                  gastrointestinal: {
+                                    ...prev.gastrointestinal,
+                                    hard_stool: checked
+                                  }
+                                }))
+                              }
+                            />
+                            <Label htmlFor="hard-stool" className="font-normal cursor-pointer">
+                              Hard stool observed
+                            </Label>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Bowel Movement Frequency */}
+                      <div className="mb-4">
+                        <Label>Bowel Movement Frequency</Label>
+                        <Select
+                          value={visitData.gastrointestinal.bowel_frequency}
+                          onValueChange={(value) => 
+                            setVisitData(prev => ({
+                              ...prev,
+                              gastrointestinal: {
+                                ...prev.gastrointestinal,
+                                bowel_frequency: value
+                              }
+                            }))
+                          }
+                        >
+                          <SelectTrigger className="mt-1">
+                            <SelectValue placeholder="Select frequency..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="regular">Regular</SelectItem>
+                            <SelectItem value="occasional_slowdown">Occasional slowdown</SelectItem>
+                            <SelectItem value="irregular">Irregular with increased frequency of constipation</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      {/* Constipation Control */}
+                      <div>
+                        <Label>Constipation has been:</Label>
+                        <Select
+                          value={visitData.gastrointestinal.constipation_control}
+                          onValueChange={(value) => 
+                            setVisitData(prev => ({
+                              ...prev,
+                              gastrointestinal: {
+                                ...prev.gastrointestinal,
+                                constipation_control: value
+                              }
+                            }))
+                          }
+                        >
+                          <SelectTrigger className="mt-1">
+                            <SelectValue placeholder="Select control level..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="well_controlled">Well controlled with no exacerbation</SelectItem>
+                            <SelectItem value="moderately_controlled">Moderately controlled with diet</SelectItem>
+                            <SelectItem value="poorly_controlled">Poorly controlled with exacerbation</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
 
