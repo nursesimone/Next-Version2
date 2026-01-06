@@ -814,14 +814,101 @@ export default function NewVisitPage() {
                         </Button>
                       )}
                     </div>
-                    <Textarea
-                      value={visitData.physical_assessment.skin_assessment}
-                      onChange={(e) => updatePhysicalAssessment('skin_assessment', e.target.value)}
-                      placeholder="Describe skin condition, integrity, wounds..."
-                      className="mt-1"
-                      rows={2}
-                      data-testid="skin-assessment-input"
-                    />
+                    <div className="space-y-4">
+                      {/* Skin Turgor */}
+                      <div>
+                        <Label>Skin Turgor (Pinch test near clavicle)</Label>
+                        <Select
+                          value={visitData.physical_assessment.skin_assessment.skin_turgor}
+                          onValueChange={(value) => 
+                            setVisitData(prev => ({
+                              ...prev,
+                              physical_assessment: {
+                                ...prev.physical_assessment,
+                                skin_assessment: {
+                                  ...prev.physical_assessment.skin_assessment,
+                                  skin_turgor: value
+                                }
+                              }
+                            }))
+                          }
+                        >
+                          <SelectTrigger className="mt-1" data-testid="skin-turgor-select">
+                            <SelectValue placeholder="Select turgor..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="poor">Poor</SelectItem>
+                            <SelectItem value="good">Good</SelectItem>
+                            <SelectItem value="well_hydrated">Well Hydrated</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      {/* Skin Integrity */}
+                      <div>
+                        <Label className="text-base font-semibold mb-2 block">Skin Integrity (Select all that apply)</Label>
+                        <div className="space-y-2 pl-2">
+                          {[
+                            { id: 'integrity_wnl', label: 'WNL/Intact' },
+                            { id: 'integrity_rash', label: 'Rash' },
+                            { id: 'integrity_discolored', label: 'Discolored' },
+                            { id: 'integrity_bruised', label: 'Bruised' },
+                            { id: 'integrity_burns', label: 'Burns' },
+                            { id: 'integrity_open_areas', label: 'Open areas' },
+                            { id: 'integrity_lacerations', label: 'Lacerations' },
+                            { id: 'integrity_thick', label: 'Thick' },
+                            { id: 'integrity_thin', label: 'Thin' },
+                            { id: 'integrity_lesions_flat', label: 'Lesions (flat)' },
+                            { id: 'integrity_lesions_raised', label: 'Lesions (raised)' }
+                          ].map(option => (
+                            <div key={option.id} className="flex items-center space-x-2">
+                              <Checkbox
+                                id={option.id}
+                                checked={visitData.physical_assessment.skin_assessment[option.id]}
+                                onCheckedChange={(checked) => 
+                                  setVisitData(prev => ({
+                                    ...prev,
+                                    physical_assessment: {
+                                      ...prev.physical_assessment,
+                                      skin_assessment: {
+                                        ...prev.physical_assessment.skin_assessment,
+                                        [option.id]: checked
+                                      }
+                                    }
+                                  }))
+                                }
+                              />
+                              <Label htmlFor={option.id} className="font-normal cursor-pointer">
+                                {option.label}
+                              </Label>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {/* Other notes */}
+                      <div>
+                        <Label>Additional Notes</Label>
+                        <Textarea
+                          value={visitData.physical_assessment.skin_assessment.other_notes}
+                          onChange={(e) => 
+                            setVisitData(prev => ({
+                              ...prev,
+                              physical_assessment: {
+                                ...prev.physical_assessment,
+                                skin_assessment: {
+                                  ...prev.physical_assessment.skin_assessment,
+                                  other_notes: e.target.value
+                                }
+                              }
+                            }))
+                          }
+                          placeholder="Any additional skin observations..."
+                          className="mt-1"
+                          rows={2}
+                        />
+                      </div>
+                    </div>
                   </div>
                   
                   {/* Mobility, Speech, Orientation */}
