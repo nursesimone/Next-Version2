@@ -52,7 +52,7 @@ export default function UTCDetailPage() {
     doc.setFont(undefined, 'bold');
     doc.text('Patient:', margin, y);
     doc.setFont(undefined, 'normal');
-    doc.text(utc.patient?.full_name || 'N/A', margin + 30, y);
+    doc.text(utc.patient_name || 'N/A', margin + 30, y);
     y += 7;
 
     // Date & Time
