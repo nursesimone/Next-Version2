@@ -21,7 +21,7 @@ export default function UTCDetailPage() {
 
   const fetchUTC = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('nurse_token');
       const response = await axios.get(`${BACKEND_URL}/api/unable-to-contact/${utcId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
