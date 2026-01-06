@@ -54,16 +54,23 @@ Password: nurse123
 
 ---
 
-## If Login Doesn't Work
+## If Login Doesn't Work OR "Failed to load patients" Error
 
-Run this command to recreate all users and patients:
+Run this command to recreate all users and patients with correct structure:
 ```bash
-python3 /tmp/create_users_correct_db.py
+python3 /tmp/setup_database.py
 ```
+
+This script:
+- Clears existing data
+- Creates users with correct password hashes
+- Creates patients with proper data structure (lists for allergies, medications, diagnoses)
+- Ensures all required fields (nurse_id, assigned_nurses) are present
 
 Or manually verify database:
 ```bash
 mongosh mongodb://localhost:27017/test_database --eval "db.nurses.find({email: 'demo@nursemed.com'})"
+mongosh mongodb://localhost:27017/test_database --eval "db.patients.countDocuments()"
 ```
 
 ---
