@@ -36,10 +36,14 @@ export default function AdminPage() {
   const { nurse } = useAuth();
   const [nurses, setNurses] = useState([]);
   const [patients, setPatients] = useState([]);
+  const [organizations, setOrganizations] = useState([]);
+  const [dayPrograms, setDayPrograms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddNurseDialog, setShowAddNurseDialog] = useState(false);
   const [showNurseProfileDialog, setShowNurseProfileDialog] = useState(false);
   const [showEditNurseDialog, setShowEditNurseDialog] = useState(false);
+  const [showOrganizationDialog, setShowOrganizationDialog] = useState(false);
+  const [showDayProgramDialog, setShowDayProgramDialog] = useState(false);
   const [selectedNurse, setSelectedNurse] = useState(null);
   const [editNurseData, setEditNurseData] = useState({
     full_name: '',
