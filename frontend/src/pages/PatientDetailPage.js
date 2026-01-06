@@ -977,6 +977,35 @@ export default function PatientDetailPage() {
         </div>
       </main>
 
+      {/* Draft Confirmation Dialog */}
+      <AlertDialog open={showDraftDialog} onOpenChange={setShowDraftDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Draft Found</AlertDialogTitle>
+            <AlertDialogDescription>
+              You have an existing draft for this visit type from {draftVisit ? formatDate(draftVisit.visit_date) : ''}. Would you like to continue editing the draft or start a new visit?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setShowDraftDialog(false)}>
+              Cancel
+            </AlertDialogCancel>
+            <Button
+              variant="outline"
+              onClick={handleStartNewVisit}
+            >
+              Start New Visit
+            </Button>
+            <AlertDialogAction 
+              onClick={handleResumeDraft}
+              className="bg-eggplant-700 hover:bg-eggplant-600"
+            >
+              Continue Draft
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
