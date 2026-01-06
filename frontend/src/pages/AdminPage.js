@@ -321,46 +321,47 @@ export default function AdminPage() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-slate-500">Total Staff</p>
-                  <p className="text-3xl font-bold text-slate-900">{nurses.length}</p>
+        {/* Quick Stats - All in One Line */}
+        <Card className="mb-8">
+          <CardContent className="pt-6">
+            <div className="grid grid-cols-3 divide-x divide-slate-200">
+              {/* Total Staff */}
+              <div className="flex items-center justify-center">
+                <div className="text-center">
+                  <p className="text-sm text-slate-500 mb-1">Total Staff</p>
+                  <div className="flex items-center justify-center gap-2">
+                    <Users className="w-5 h-5 text-purple-600" />
+                    <p className="text-3xl font-bold text-slate-900">{nurses.length}</p>
+                  </div>
                 </div>
-                <Users className="w-10 h-10 text-purple-600" />
               </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-slate-500">Total Patients</p>
-                  <p className="text-3xl font-bold text-slate-900">{patients.length}</p>
+              
+              {/* Total Patients */}
+              <div className="flex items-center justify-center">
+                <div className="text-center">
+                  <p className="text-sm text-slate-500 mb-1">Total Patients</p>
+                  <div className="flex items-center justify-center gap-2">
+                    <Users className="w-5 h-5 text-eggplant-600" />
+                    <p className="text-3xl font-bold text-slate-900">{patients.length}</p>
+                  </div>
                 </div>
-                <Users className="w-10 h-10 text-eggplant-600" />
               </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-slate-500">Admins</p>
-                  <p className="text-3xl font-bold text-slate-900">
-                    {nurses.filter(n => n.is_admin).length}
-                  </p>
+              
+              {/* Admins */}
+              <div className="flex items-center justify-center">
+                <div className="text-center">
+                  <p className="text-sm text-slate-500 mb-1">Admins</p>
+                  <div className="flex items-center justify-center gap-2">
+                    <Shield className="w-5 h-5 text-amber-600" />
+                    <p className="text-3xl font-bold text-slate-900">
+                      {nurses.filter(n => n.is_admin).length}
+                    </p>
+                  </div>
                 </div>
-                <Shield className="w-10 h-10 text-amber-600" />
               </div>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Organizations Management */}
         <Card className="mb-8">
