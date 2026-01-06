@@ -153,9 +153,13 @@ export default function PatientDetailPage() {
                 <ArrowLeft className="w-5 h-5" />
               </Button>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-eggplant-700 rounded-xl flex items-center justify-center">
+                <button 
+                  onClick={() => navigate('/dashboard')}
+                  className="w-10 h-10 bg-eggplant-700 rounded-xl flex items-center justify-center hover:bg-eggplant-600 transition-colors cursor-pointer"
+                  title="Back to Dashboard"
+                >
                   <Stethoscope className="w-6 h-6 text-white" />
-                </div>
+                </button>
                 <span className="text-xl font-bold text-slate-900">POSH-Able Living</span>
               </div>
               <Button 
