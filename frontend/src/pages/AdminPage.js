@@ -375,13 +375,21 @@ export default function AdminPage() {
                   Add and manage residential organizations
                 </CardDescription>
               </div>
-              <Dialog open={showOrganizationDialog} onOpenChange={setShowOrganizationDialog}>
-                <DialogTrigger asChild>
-                  <Button className="bg-eggplant-700 hover:bg-eggplant-600">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add Organization
-                  </Button>
-                </DialogTrigger>
+              {!showOrganizationsSection ? (
+                <Button 
+                  onClick={() => setShowOrganizationsSection(true)}
+                  className="bg-eggplant-700 hover:bg-eggplant-600"
+                >
+                  Launch
+                </Button>
+              ) : (
+                <Dialog open={showOrganizationDialog} onOpenChange={setShowOrganizationDialog}>
+                  <DialogTrigger asChild>
+                    <Button className="bg-eggplant-700 hover:bg-eggplant-600">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Organization
+                    </Button>
+                  </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Add Organization</DialogTitle>
