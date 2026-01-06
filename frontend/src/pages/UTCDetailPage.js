@@ -167,16 +167,25 @@ export default function UTCDetailPage() {
     <div className="min-h-screen bg-slate-50">
       <main className="max-w-4xl mx-auto p-6">
         {/* Header */}
-        <div className="mb-6">
+        <div className="mb-6 flex items-start justify-between">
+          <div>
+            <Button
+              variant="ghost"
+              onClick={() => navigate(-1)}
+              className="mb-4"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Button>
+            <h1 className="text-3xl font-bold text-slate-900">Unable to Contact Details</h1>
+          </div>
           <Button
-            variant="ghost"
-            onClick={() => navigate(-1)}
-            className="mb-4"
+            onClick={generatePDF}
+            className="bg-eggplant-700 hover:bg-eggplant-600"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
+            <Download className="w-4 h-4 mr-2" />
+            Download PDF
           </Button>
-          <h1 className="text-3xl font-bold text-slate-900">Unable to Contact Details</h1>
         </div>
 
         {/* UTC Info Card */}
