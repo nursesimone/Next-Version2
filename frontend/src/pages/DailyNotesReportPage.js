@@ -9,6 +9,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Label } from '../components/ui/label';
 import { ArrowLeft, FileText, Printer, Calendar } from 'lucide-react';
 import { toast } from 'sonner';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
 
 export default function DailyNotesReportPage() {
   const navigate = useNavigate();
@@ -20,6 +24,7 @@ export default function DailyNotesReportPage() {
   const [dailyNotes, setDailyNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().substring(0, 7));
+  const [organizationName, setOrganizationName] = useState('');
 
   useEffect(() => {
     if (patientId) {
@@ -33,6 +38,21 @@ export default function DailyNotesReportPage() {
     try {
       const patientRes = await patientsAPI.get(patientId);
       setPatient(patientRes.data);
+
+      // Fetch organization name
+      const orgId = patientRes.data.permanent_info?.organization;
+      if (orgId) {
+        try {
+          const token = localStorage.getItem('nurse_token');
+          const orgRes = await axios.get(`${API}/admin/organizations`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          const org = orgRes.data.find(o => o.id === orgId);
+          setOrganizationName(org?.name || 'N/A');
+        } catch (err) {
+          setOrganizationName('N/A');
+        }
+      }
 
       const visitsRes = await visitsAPI.list(patientId);
       const notes = visitsRes.data
