@@ -401,12 +401,15 @@ class UnableToContactResponse(BaseModel):
     visit_type: str
     attempt_date: str
     attempt_time: Optional[str] = None
+    attempt_reason: Optional[str] = None  # NEW
     attempt_location: str
     attempt_location_other: Optional[str] = None
     spoke_with_anyone: Optional[bool] = False
     spoke_with_whom: Optional[str] = None
     individual_location: str
     individual_location_other: Optional[str] = None
+    moved_temporarily_where: Optional[str] = None  # NEW
+    deceased_date: Optional[str] = None  # NEW
     facility_name: Optional[str] = None
     facility_city: Optional[str] = None
     facility_state: Optional[str] = None
