@@ -71,15 +71,23 @@ Healthcare documentation application for in-home nurse visits
 
 ## IN-PROGRESS WORK 🔄
 
-### Phase 1: Nurse Visit Form Updates (PARTIALLY COMPLETE)
+### Phase 1: Nurse Visit Form Updates ✅ COMPLETE (Jan 6)
 ✅ **Completed:**
 - Miscellaneous Information → checkboxes (select all that apply)
 - Concerns/Actions → already checkboxes
-
-⏸️ **Pending:**
 - **Section Reordering:**
-  - Move "Medication Compliance" after "Changes Since Last Visit"
-  - Move "Overall Health Status" & "Nurse Documentation" before "Certification"
+  - ✅ Moved "Medication Compliance" after "Changes Since Last Visit"
+  - ✅ Moved "Overall Health Status" & "Nurse Documentation" before "Certification"
+
+**New Form Order:**
+1. Changes Since Last Visit
+2. Medication Compliance
+3. Concerns/Actions
+4. Miscellaneous Information
+5. Additional Notes
+6. Pictures/Documents Upload
+7. Overall Assessment (Overall Health Status + Nurse Documentation)
+8. Certification
 
 ### Phase 2: Enhanced Body Assessments (NOT STARTED)
 From screenshots user provided:
