@@ -1369,6 +1369,48 @@ export default function NewVisitPage() {
             </Card>
           )}
 
+          {/* Overall Status - For nurse_visit and vitals_only */}
+          {(visitType === 'nurse_visit' || visitType === 'vitals_only') && (
+            <Card className="bg-white border-slate-100">
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Brain className="w-5 h-5 text-eggplant-700" />
+                  Overall Assessment
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label>Current Overall Health Condition</Label>
+                  <Select
+                    value={visitData.overall_health_status}
+                    onValueChange={(value) => setVisitData(prev => ({ ...prev, overall_health_status: value }))}
+                  >
+                    <SelectTrigger className="mt-1" data-testid="health-status-select">
+                      <SelectValue placeholder="Select health status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Stable">Stable</SelectItem>
+                      <SelectItem value="Unstable">Unstable</SelectItem>
+                      <SelectItem value="Deteriorating">Deteriorating</SelectItem>
+                      <SelectItem value="Needs Immediate Attention">Needs Immediate Medical Attention at Hospital</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label>Nurse Documentation</Label>
+                  <Textarea
+                    value={visitData.nurse_notes}
+                    onChange={(e) => setVisitData(prev => ({ ...prev, nurse_notes: e.target.value }))}
+                    placeholder="Additional observations, recommendations, or concerns..."
+                    className="mt-1"
+                    rows={4}
+                    data-testid="nurse-notes-input"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Signature Section - For nurse_visit */}
           {visitType === 'nurse_visit' && (
             <Card className="bg-white border-slate-100">
