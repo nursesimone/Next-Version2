@@ -24,7 +24,9 @@ import {
   ChevronRight,
   Plus,
   Eye,
-  Edit
+  Edit,
+  Building,
+  Building2
 } from 'lucide-react';
 import { toast } from 'sonner';
 
