@@ -484,13 +484,21 @@ export default function AdminPage() {
                   Add and manage adult day program centers
                 </CardDescription>
               </div>
-              <Dialog open={showDayProgramDialog} onOpenChange={setShowDayProgramDialog}>
-                <DialogTrigger asChild>
-                  <Button className="bg-blue-600 hover:bg-blue-500">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add Day Program
-                  </Button>
-                </DialogTrigger>
+              {!showDayProgramsSection ? (
+                <Button 
+                  onClick={() => setShowDayProgramsSection(true)}
+                  className="bg-blue-600 hover:bg-blue-500"
+                >
+                  Launch
+                </Button>
+              ) : (
+                <Dialog open={showDayProgramDialog} onOpenChange={setShowDayProgramDialog}>
+                  <DialogTrigger asChild>
+                    <Button className="bg-blue-600 hover:bg-blue-500">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Day Program
+                    </Button>
+                  </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Add Day Program</DialogTitle>
