@@ -1,158 +1,189 @@
-# Project Status Report
+# POSH-Able Living Nurse Documentation System - Development Status
 
-## 📊 Current State Overview
+## PROJECT OVERVIEW
+Healthcare documentation application for in-home nurse visits
+- **App Name:** POSH-Able Living
+- **Tech Stack:** FastAPI (Python) + React + MongoDB
+- **Organizations:** POSH Host Homes, Ebenezer Private HomeCare, Jericho
 
-### Infrastructure Status ✅
-All core services are running successfully:
-- **Backend**: FastAPI server on port 8001 (RUNNING)
-- **Frontend**: React 19 application on port 3000 (RUNNING)
-- **Database**: MongoDB on port 27017 (RUNNING)
-- **Environment**: Production-ready with hot reload enabled
-
----
-
-## 🏗️ Technical Stack
-
-### Backend
-- **Framework**: FastAPI 0.110.1
-- **Database**: MongoDB with Motor (async driver)
-- **Authentication Ready**: JWT, bcrypt, python-jose installed
-- **API Prefix**: All routes prefixed with `/api`
-
-### Frontend
-- **Framework**: React 19.0.0
-- **Router**: React Router DOM 7.5.1
-- **UI Library**: Shadcn/UI (40+ components installed)
-- **Styling**: Tailwind CSS 3.4.17
-- **Build Tool**: CRACO with custom configuration
+## LOGIN CREDENTIALS
+- **Admin:** demo@nursemed.com / demo123
+- **Test Nurses:** sarah.johnson@nursemed.com / nurse123, michael.chen@nursemed.com / nurse123
 
 ---
 
-## 🔌 Current API Endpoints
+## COMPLETED FEATURES ✅
 
-| Method | Endpoint | Status | Description |
-|--------|----------|--------|-------------|
-| GET | `/api/` | ✅ Working | Returns "Hello World" |
-| POST | `/api/status` | ✅ Working | Creates status check entry |
-| GET | `/api/status` | ✅ Working | Retrieves all status checks |
+### 1. Staff Management System
+- Renamed from "Nurses" to "Staff" (includes RN, LPN, CNA, DSP, Med Tech)
+- Add/Edit/View staff profiles
+- **Assignment System with 3 sections:**
+  - Organization Access (POSH Host Homes, Ebenezer, Jericho)
+  - Individual Patient Access (select specific patients)
+  - Form Access (Nurse Visit, Vitals, Daily Note, Intervention)
+- Promote/Demote admin privileges
+- Staff can only view their own profile (not edit)
+- **PENDING:** Move "Assignments" button inside "Edit" dialog after License Number field
 
----
+### 2. Visit Types (4 total)
+1. **Nurse Visit** - Comprehensive assessment
+2. **Vital Signs** - Quick vitals check
+3. **Daily Note** - Daily observations (with auto-appended initials)
+4. **Intervention** - Procedures (injections, tests, treatments)
 
-## 📁 Project Structure
+### 3. PDF Reports
+- **Nurse Visit PDF:** Special header with patient info box (name, DOB, gender, race, address, caregiver, allergies, diagnoses, medications)
+- **Daily Notes Report:** Monthly journal-style report (filterable by month)
+- **Vital Signs Report:** Monthly report
+- All PDFs: Professional headers with organization name
 
-```
-/app/
-├── backend/
-│   ├── .env (configured)
-│   ├── requirements.txt (all dependencies installed)
-│   └── server.py (FastAPI app with MongoDB)
-├── frontend/
-│   ├── .env (configured with backend URL)
-│   ├── package.json (all dependencies installed)
-│   ├── src/
-│   │   ├── App.js (basic routing setup)
-│   │   ├── components/ui/ (40+ Shadcn components)
-│   │   └── hooks/ (toast hook included)
-│   └── tailwind.config.js
-└── tests/
-```
+### 4. Incident Report Form ✅ COMPLETE
+- Located in Reports section (red "Safety First" card)
+- **Fields:**
+  - Organization, Date, Time
+  - **Involved Parties:** 
+    - Resident/Patient → Shows dropdown of patients in that org
+    - Staff Member → Shows dropdown of ALL staff in that org (combines employee/management)
+    - Visitor → Shows detail form (name, visiting whom, phone)
+    - Other → Shows detail form (name, reason, contact)
+    - Did not involve people
+  - Type of Incident (dropdown - 9 types)
+  - Location, Description, Severity slider (1-5)
+  - Officials Called (checkboxes)
+  - Attachments, Witnesses, Notifications
+  - Outcome, Additional Info
+  - Reporter: Name, Cell Phone, Email (auto-populated)
+- **Latest Updates (Jan 5):** 
+  - ✅ Combined Employee & Management into single "Staff Member" option
+  - ✅ Added visitor details form (name, visiting whom, phone)
+  - ✅ Added other details form (name, reason, contact)
+  - ✅ Changed to dropdown for Type of Incident (saves space)
+  - ✅ Fixed "Removal" to "removal" in placeholder
+  - ✅ Reporter contact fields added (cell + email)
 
----
-
-## 🎯 Current Implementation
-
-### What's Built:
-1. ✅ Full-stack infrastructure setup
-2. ✅ FastAPI backend with MongoDB integration
-3. ✅ React frontend with routing
-4. ✅ Shadcn/UI component library fully installed
-5. ✅ Environment variables configured
-6. ✅ CORS properly configured
-7. ✅ API communication working (frontend → backend)
-8. ✅ Database models with UUID implementation
-
-### What's Available:
-- **40+ UI Components**: Forms, dialogs, cards, buttons, inputs, calendars, dropdowns, etc.
-- **State Management Ready**: React hooks, context available
-- **Form Handling**: React Hook Form + Zod validation installed
-- **Date Handling**: date-fns library available
-- **Icons**: Lucide React icons library
-- **Animations**: Tailwind animate and Framer Motion ready
-
-### What Needs Implementation:
-- **No specific application features** - This is a blank canvas ready for development
-- The current app shows only a placeholder "Building something incredible ~!" message
-- No authentication system implemented (but dependencies are installed)
-- No specific business logic or features
+### 5. Form Signatures
+- **Nurse Visit:** Full certification section
+- **Vitals Only:** "Completed by: [Name, Title]"
+- **Interventions:** "Completed by: [Name, Title]"
+- **Daily Notes:** Auto-appends initials (-DN format)
 
 ---
 
-## 🔧 Environment Configuration
+## IN-PROGRESS WORK 🔄
 
-### Backend (.env)
-```
-MONGO_URL=mongodb://localhost:27017
-DB_NAME=test_database
-CORS_ORIGINS=*
-```
+### Phase 1: Nurse Visit Form Updates (PARTIALLY COMPLETE)
+✅ **Completed:**
+- Miscellaneous Information → checkboxes (select all that apply)
+- Concerns/Actions → already checkboxes
 
-### Frontend (.env)
-```
-REACT_APP_BACKEND_URL=https://nurseflow-5.preview.emergentagent.com
-WDS_SOCKET_PORT=443
-ENABLE_HEALTH_CHECK=false
-```
+⏸️ **Pending:**
+- **Section Reordering:**
+  - Move "Medication Compliance" after "Changes Since Last Visit"
+  - Move "Overall Health Status" & "Nurse Documentation" before "Certification"
 
----
+### Phase 2: Enhanced Body Assessments (NOT STARTED)
+From screenshots user provided:
+- **Mouth/Oral:** Multiple checkboxes + follow-up for dentures (upper/lower, partial/full)
+- **Hearing:** Multiple checkboxes
+- **Eyes:** Multiple checkboxes + follow-up if blind (left/right/both)
 
-## 📝 Database Schema
-
-### StatusCheck Collection
-```javascript
-{
-  id: String (UUID),
-  client_name: String,
-  timestamp: DateTime (ISO string in DB)
-}
-```
+### Phase 3: Copy from Last Visit (NOT STARTED)
+- Add "Copy from Last Visit" button for each head-to-toe section
 
 ---
 
-## 🚀 Next Steps
+## PENDING TASKS 📋
 
-The infrastructure is **100% ready** for building any application. This is a production-ready foundation with:
-- Modern React 19 with all latest features
-- FastAPI backend optimized for async operations
-- Complete UI component library
-- Database integration working
-- All services healthy and running
+### Immediate (User Just Requested - Jan 5):
+1. **Admin Panel - Staff Management:** ⏸️ IN PROGRESS
+   - Move "Assignments" button INSIDE "Edit" dialog
+   - Place after "License Number" field
+   - Staff (non-admin) can only VIEW profile (no edit/assignments buttons)
+   
+2. **Incident Report Form Reset:** ⏸️ NEEDS COMPLETION
+   - Update form reset to include new fields (visitor_details, other_details, reporter_cell, reporter_email)
 
-**Ready to build your application! What would you like to create?**
+### Form Updates (Planned Phases):
+1. Complete Phase 1 section reordering
+2. Implement Phase 2 enhanced assessments
+3. Implement Phase 3 copy from last visit
 
----
-
-## 📊 Service Health Check
-
-Last Checked: Just now
-
-| Service | Status | Port | Uptime |
-|---------|--------|------|---------|
-| Backend | 🟢 RUNNING | 8001 | 4+ minutes |
-| Frontend | 🟢 RUNNING | 3000 | 4+ minutes |
-| MongoDB | 🟢 RUNNING | 27017 | 4+ minutes |
-
----
-
-## 💡 Notes
-
-1. **Hot Reload**: Both frontend and backend have hot reload enabled
-2. **UUID Implementation**: Using UUIDs instead of MongoDB ObjectIDs for JSON serialization
-3. **CORS**: Currently set to allow all origins (can be restricted for production)
-4. **API Prefix**: All backend routes must use `/api` prefix for Kubernetes ingress routing
-5. **Environment Variables**: Never hardcode URLs - always use environment variables
+### Security Improvements (Planned After Forms):
+1. Audit logging system
+2. Session timeouts
+3. Enhanced access controls
+4. Encrypted file storage
+5. Activity logs dashboard
 
 ---
 
-**Status**: Ready for Feature Development 🚀
-**Last Updated**: Now
-**Previous Agent**: Left the project in a clean, ready-to-build state
+## IMPORTANT TECHNICAL DETAILS 🔧
+
+### Environment Variables (DO NOT MODIFY):
+- **Frontend:** `REACT_APP_BACKEND_URL` - configured for production
+- **Backend:** `MONGO_URL` - configured for local MongoDB
+- All backend routes MUST use `/api` prefix for Kubernetes routing
+
+### Database:
+- MongoDB @ localhost:27017
+- Database: nurserounds_db
+- Collections: nurses, patients, visits, utc_records, interventions, incident_reports
+
+### File Structure:
+- `/app/backend/server.py` - Main FastAPI app
+- `/app/frontend/src/pages/` - All page components
+- Key files: NewVisitPage.js (Nurse Visit form), AdminPage.js, IncidentReportPage.js
+
+### Test Data:
+- 3 patients created (Margaret Williams, Robert Johnson, Dorothy Martinez)
+- 2 visits per patient (mix of types)
+- Organizations updated in database (POSH-Able Living → POSH Host Homes)
+
+---
+
+## USER PREFERENCES & DECISIONS 🎯
+
+1. **Terminology:** "Staff" not "Nurses" (inclusive of all roles)
+2. **Forms:** Prefer checkboxes over radio buttons (select all that apply)
+3. **Reports:** Only Daily Notes & Vital Signs need monthly reports
+4. **PDFs:** Nurse Visit & Intervention get individual PDFs per visit
+5. **Implementation:** Phased approach (test incrementally)
+6. **Priority Order:** Complete forms first, then security improvements
+
+---
+
+## KNOWN ISSUES ⚠️
+
+1. Section reordering in NewVisitPage.js not complete (complex, large file)
+2. Some React Hook warnings (non-breaking, related to useEffect dependencies)
+3. No HIPAA compliance measures yet (planned for later)
+
+---
+
+## NEXT AGENT SHOULD:
+
+1. **Immediate:** Fix staff management (move Assignments button into Edit dialog)
+2. **Then:** Complete Phase 1 section reordering
+3. **Then:** Implement Phase 2 & 3 per user's screenshots
+4. **Finally:** Security improvements per Option 1 list
+
+---
+
+## FILE LOCATIONS 📁
+
+### Key Files Modified Today:
+- `/app/frontend/src/pages/AdminPage.js` - Staff management
+- `/app/frontend/src/pages/IncidentReportPage.js` - Incident reports
+- `/app/frontend/src/pages/NewVisitPage.js` - Nurse visit form
+- `/app/frontend/src/pages/ReportsPage.js` - Reports page
+- `/app/frontend/src/pages/VisitDetailPage.js` - PDF generation
+- `/app/backend/server.py` - Backend endpoints
+
+### Important Context:
+- User provided 4 screenshots with detailed form requirements
+- Screenshots show mouth/hearing/eyes assessments with checkboxes and follow-ups
+- User wants professional, clean UI (removed redundant elements)
+
+---
+
+**SAVE THIS DOCUMENT FOR NEXT SESSION!**
