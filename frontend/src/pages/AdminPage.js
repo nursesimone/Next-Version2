@@ -77,12 +77,14 @@ export default function AdminPage() {
     contact_person: '',
     contact_phone: ''
   });
+  const [editingOrganization, setEditingOrganization] = useState(null);
   const [dayProgramData, setDayProgramData] = useState({
     name: '',
     address: '',
     office_phone: '',
     contact_person: ''
   });
+  const [editingDayProgram, setEditingDayProgram] = useState(null);
 
   useEffect(() => {
     if (!nurse?.is_admin) {
