@@ -150,8 +150,8 @@ export default function DailyNotesReportPage() {
             {/* Organization (left) and Report Period (right) */}
             {dailyNotes.length > 0 && (
               <div className="flex justify-between items-center mt-4 text-sm">
-                <span className="text-slate-700">
-                  {patient?.permanent_info?.organization || 'N/A'}
+                <span className="text-slate-700 font-medium">
+                  {organizationName}
                 </span>
                 <span className="text-slate-700">
                   Report Period: {formatDate(dailyNotes[0].visit_date)} to {formatDate(dailyNotes[dailyNotes.length - 1].visit_date)}
