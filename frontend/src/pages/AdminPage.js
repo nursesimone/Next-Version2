@@ -155,6 +155,36 @@ export default function AdminPage() {
     }
   };
 
+  const handleSaveOrganization = async () => {
+    try {
+      const token = localStorage.getItem('nurse_token');
+      await axios.post(`${API}/admin/organizations`, organizationData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      toast.success('Organization added successfully');
+      setShowOrganizationDialog(false);
+      setOrganizationData({ name: '', address: '', contact_person: '', contact_phone: '' });
+      fetchData();
+    } catch (error) {
+      toast.error('Failed to add organization');
+    }
+  };
+
+  const handleSaveDayProgram = async () => {
+    try {
+      const token = localStorage.getItem('nurse_token');
+      await axios.post(`${API}/admin/day-programs`, dayProgramData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      toast.success('Day program added successfully');
+      setShowDayProgramDialog(false);
+      setDayProgramData({ name: '', address: '', office_phone: '', contact_person: '' });
+      fetchData();
+    } catch (error) {
+      toast.error('Failed to add day program');
+    }
+  };
+
   const handleViewNurseProfile = (nurseItem) => {
     setSelectedNurse(nurseItem);
     setShowNurseProfileDialog(true);
