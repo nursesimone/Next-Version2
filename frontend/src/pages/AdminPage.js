@@ -555,28 +555,30 @@ export default function AdminPage() {
               </Dialog>
             </div>
           </CardHeader>
-          <CardContent>
-            {dayPrograms.length === 0 ? (
-              <p className="text-slate-500 text-center py-8">No day programs added yet</p>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {dayPrograms.map(program => (
-                  <Card key={program.id} className="border-slate-200">
-                    <CardContent className="pt-6">
-                      <h3 className="font-semibold text-lg mb-2">{program.name}</h3>
-                      <div className="space-y-1 text-sm text-slate-600">
-                        <p><strong>Address:</strong> {program.address}</p>
-                        <p><strong>Office Phone:</strong> {program.office_phone}</p>
-                        {program.contact_person && (
-                          <p><strong>Contact:</strong> {program.contact_person}</p>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </CardContent>
+          {showDayProgramsSection && (
+            <CardContent>
+              {dayPrograms.length === 0 ? (
+                <p className="text-slate-500 text-center py-8">No day programs added yet</p>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {dayPrograms.map(program => (
+                    <Card key={program.id} className="border-slate-200">
+                      <CardContent className="pt-6">
+                        <h3 className="font-semibold text-lg mb-2">{program.name}</h3>
+                        <div className="space-y-1 text-sm text-slate-600">
+                          <p><strong>Address:</strong> {program.address}</p>
+                          <p><strong>Office Phone:</strong> {program.office_phone}</p>
+                          {program.contact_person && (
+                            <p><strong>Contact:</strong> {program.contact_person}</p>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          )}
         </Card>
 
         {/* Nurses Management */}
