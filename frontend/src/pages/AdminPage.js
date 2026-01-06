@@ -778,6 +778,7 @@ export default function AdminPage() {
                   </form>
                 </DialogContent>
               </Dialog>
+              </>
               )}
             </div>
           </CardHeader>
