@@ -473,7 +473,40 @@ export default function AdminPage() {
                   {organizations.map(org => (
                     <Card key={org.id} className="border-slate-200">
                       <CardContent className="pt-6">
-                        <h3 className="font-semibold text-lg mb-2">{org.name}</h3>
+                        <div className="flex items-start justify-between mb-2">
+                          <h3 className="font-semibold text-lg">{org.name}</h3>
+                          <div className="flex gap-1">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="h-8 w-8 p-0"
+                              onClick={() => {/* TODO: Edit org */}}
+                            >
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+                              onClick={async () => {
+                                if (window.confirm('Delete this organization?')) {
+                                  try {
+                                    const token = localStorage.getItem('nurse_token');
+                                    await axios.delete(`${API}/admin/organizations/${org.id}`, {
+                                      headers: { Authorization: `Bearer ${token}` }
+                                    });
+                                    toast.success('Organization deleted');
+                                    fetchData();
+                                  } catch (error) {
+                                    toast.error('Failed to delete organization');
+                                  }
+                                }
+                              }}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
                         <div className="space-y-1 text-sm text-slate-600">
                           <p><strong>Address:</strong> {org.address}</p>
                           <p><strong>Contact:</strong> {org.contact_person}</p>
