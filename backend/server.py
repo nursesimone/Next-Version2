@@ -419,6 +419,36 @@ class UnableToContactResponse(BaseModel):
     additional_info: Optional[str] = None
     created_at: str
 
+# Organization models
+class OrganizationCreate(BaseModel):
+    name: str
+    address: str
+    contact_person: str
+    contact_phone: str
+
+class OrganizationResponse(BaseModel):
+    id: str
+    name: str
+    address: str
+    contact_person: str
+    contact_phone: str
+    created_at: str
+
+# Day Program models  
+class DayProgramCreate(BaseModel):
+    name: str
+    address: str
+    office_phone: str
+    contact_person: Optional[str] = None
+
+class DayProgramResponse(BaseModel):
+    id: str
+    name: str
+    address: str
+    office_phone: str
+    contact_person: Optional[str] = None
+    created_at: str
+
 # ==================== AUTH HELPERS ====================
 def hash_password(password: str) -> str:
     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
