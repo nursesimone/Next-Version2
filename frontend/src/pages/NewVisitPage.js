@@ -65,42 +65,63 @@ const initialVisitData = {
     fall_incidence_since_last_visit: ''
   },
   head_to_toe: {
-    head_neck: '',
+    head_neck: {
+      within_normal_limits: false,
+      wounds: false,
+      masses: false,
+      alopecia: false,
+      other: false,
+      other_notes: ''
+    },
     head_neck_from_last: false,
     eyes_vision: {
-      normal: false,
+      pupils_perrla: '', // 'yes' or 'no'
+      no_issues: false,
       glasses: false,
       contacts: false,
-      cataracts: false,
+      blurred_vision: false,
       glaucoma: false,
-      blind: false,
+      prosthesis: false,
+      blind_eyes: false,
       blind_which: '', // 'left', 'right', 'both'
+      cataract_surgery: false,
+      infections: false,
       other: false,
       other_notes: ''
     },
     eyes_vision_from_last: false,
     ears_hearing: {
-      normal: false,
-      hearing_aid: false,
-      hard_of_hearing: false,
+      no_issues: false,
       deaf: false,
-      ear_infection: false,
+      deaf_which: '', // 'left', 'right', 'both'
+      hard_of_hearing: false,
+      hearing_aid: false,
+      vertigo: false,
+      tinnitus: false,
       other: false,
       other_notes: ''
     },
     ears_hearing_from_last: false,
-    nose_nasal_cavity: '',
+    nose_nasal_cavity: {
+      no_issues: false,
+      congestion: false,
+      loss_of_smell: false,
+      sinus_issues: false,
+      runny_nose: false,
+      nose_bleeds: false,
+      other: false,
+      other_notes: ''
+    },
     nose_nasal_cavity_from_last: false,
     mouth_teeth_oral_cavity: {
-      normal: false,
+      no_issues: false,
+      no_teeth: false,
       dentures: false,
-      dentures_upper: false,
-      dentures_lower: false,
-      dentures_partial: false,
-      dentures_full: false,
-      poor_dentition: false,
-      mouth_sores: false,
-      dry_mouth: false,
+      dentures_type: [], // 'full', 'uppers', 'lowers', 'partials'
+      missing_teeth: false,
+      toothaches: false,
+      gingivitis: false,
+      ulcerations: false,
       other: false,
       other_notes: ''
     },
