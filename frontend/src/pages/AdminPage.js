@@ -781,6 +781,7 @@ export default function AdminPage() {
               </>
               )}
             </div>
+          </div>
           </CardHeader>
           {showStaffSection && (
             <CardContent>
