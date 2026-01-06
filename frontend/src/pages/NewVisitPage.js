@@ -498,6 +498,21 @@ export default function NewVisitPage() {
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 <div>
+                  <Label>Height (inches)</Label>
+                  <Input
+                    value={visitData.vital_signs.height}
+                    onChange={(e) => updateVitalSign('height', e.target.value)}
+                    placeholder="e.g., 65"
+                    className="mt-1"
+                    data-testid="height-input"
+                    disabled={!!patient?.permanent_info?.height}
+                    title={patient?.permanent_info?.height ? 'Height is set from patient record' : ''}
+                  />
+                  {patient?.permanent_info?.height && (
+                    <p className="text-xs text-slate-500 mt-1">Pre-filled from record</p>
+                  )}
+                </div>
+                <div>
                   <Label>Weight (lbs)</Label>
                   <Input
                     value={visitData.vital_signs.weight}
