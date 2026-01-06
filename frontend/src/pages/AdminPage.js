@@ -720,6 +720,7 @@ export default function AdminPage() {
               ))}
             </div>
           </CardContent>
+          )}
         </Card>
       </main>
 
