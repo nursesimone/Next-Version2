@@ -29,7 +29,7 @@ import {
   Trash2,
   Building,
   Building2,
-  Cross
+  Activity
 } from 'lucide-react';
 import { toast } from 'sonner';
 
