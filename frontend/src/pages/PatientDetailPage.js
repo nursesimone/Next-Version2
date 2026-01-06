@@ -68,7 +68,11 @@ export default function PatientDetailPage() {
       ]);
       setPatient(patientRes.data);
       setProfileData(patientRes.data.permanent_info || {});
-      setVisits(visitsRes.data);
+      
+      // Filter out daily_note visits from Visit History
+      const filteredVisits = visitsRes.data.filter(v => v.visit_type !== 'daily_note');
+      setVisits(filteredVisits);
+      
       setUnableToContactRecords(utcRes.data);
       // Check if organization is custom (not one of the presets)
       const org = patientRes.data.permanent_info?.organization;
