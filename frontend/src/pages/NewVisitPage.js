@@ -65,13 +65,43 @@ const initialVisitData = {
   head_to_toe: {
     head_neck: '',
     head_neck_from_last: false,
-    eyes_vision: '',
+    eyes_vision: {
+      normal: false,
+      glasses: false,
+      contacts: false,
+      cataracts: false,
+      glaucoma: false,
+      blind: false,
+      blind_which: '', // 'left', 'right', 'both'
+      other: false,
+      other_notes: ''
+    },
     eyes_vision_from_last: false,
-    ears_hearing: '',
+    ears_hearing: {
+      normal: false,
+      hearing_aid: false,
+      hard_of_hearing: false,
+      deaf: false,
+      ear_infection: false,
+      other: false,
+      other_notes: ''
+    },
     ears_hearing_from_last: false,
     nose_nasal_cavity: '',
     nose_nasal_cavity_from_last: false,
-    mouth_teeth_oral_cavity: '',
+    mouth_teeth_oral_cavity: {
+      normal: false,
+      dentures: false,
+      dentures_upper: false,
+      dentures_lower: false,
+      dentures_partial: false,
+      dentures_full: false,
+      poor_dentition: false,
+      mouth_sores: false,
+      dry_mouth: false,
+      other: false,
+      other_notes: ''
+    },
     mouth_teeth_oral_cavity_from_last: false
   },
   gastrointestinal: {
