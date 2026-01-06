@@ -369,7 +369,7 @@ export default function AdminPage() {
         <Card className="mb-8">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <div>
+              <div className="flex-1">
                 <CardTitle className="flex items-center gap-2">
                   <Building2 className="w-5 h-5" />
                   Manage Organizations
@@ -378,21 +378,25 @@ export default function AdminPage() {
                   Add and manage residential organizations
                 </CardDescription>
               </div>
-              {!showOrganizationsSection ? (
-                <Button 
-                  onClick={() => setShowOrganizationsSection(true)}
-                  className="bg-eggplant-700 hover:bg-eggplant-600"
-                >
-                  Launch
-                </Button>
-              ) : (
-                <Dialog open={showOrganizationDialog} onOpenChange={setShowOrganizationDialog}>
-                  <DialogTrigger asChild>
-                    <Button className="bg-eggplant-700 hover:bg-eggplant-600">
-                      <Plus className="w-4 h-4 mr-2" />
-                      Add Organization
+              <div className="flex items-center gap-2">
+                {showOrganizationsSection && (
+                  <>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setShowOrganizationsSection(false)}
+                      className="text-slate-500"
+                    >
+                      <ChevronDown className="w-4 h-4 mr-1" />
+                      Collapse
                     </Button>
-                  </DialogTrigger>
+                    <Dialog open={showOrganizationDialog} onOpenChange={setShowOrganizationDialog}>
+                      <DialogTrigger asChild>
+                        <Button className="bg-eggplant-700 hover:bg-eggplant-600">
+                          <Plus className="w-4 h-4 mr-2" />
+                          Add Organization
+                        </Button>
+                      </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Add Organization</DialogTitle>
