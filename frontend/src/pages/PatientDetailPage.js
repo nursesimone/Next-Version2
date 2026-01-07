@@ -1115,6 +1115,85 @@ export default function PatientDetailPage() {
         </AlertDialogContent>
       </AlertDialog>
 
+      {/* Daily Notes Report Modal */}
+      <Dialog open={showDailyNotesModal} onOpenChange={setShowDailyNotesModal}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">Daily Notes Report</DialogTitle>
+            <DialogDescription>
+              <div className="text-base mt-2">
+                <p className="font-semibold text-slate-900">{patient?.full_name}</p>
+                <p className="text-slate-600">
+                  {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                </p>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="mt-4 space-y-4">
+            {dailyNotesData.length === 0 ? (
+              <div className="text-center py-12 text-slate-500">
+                <FileText className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                <p>No daily notes recorded for this month</p>
+              </div>
+            ) : (
+              <>
+                {/* Report Header Line */}
+                <div className="flex justify-between items-center text-sm text-slate-600 pb-3 border-b-2 border-slate-300">
+                  <span className="font-medium">{patient?.permanent_info?.organization || 'Organization'}</span>
+                  <span>
+                    Report Period: {formatDate(dailyNotesData[0]?.visit_date)} - {formatDate(dailyNotesData[dailyNotesData.length - 1]?.visit_date)}
+                  </span>
+                </div>
+
+                {/* Journal Entries */}
+                <div className="space-y-4 mt-6">
+                  {dailyNotesData.map((note, index) => (
+                    <div key={note.id} className="pb-4">
+                      <div className="flex gap-6">
+                        <div className="font-semibold text-slate-700 min-w-[110px]">
+                          {formatDateNumeric(note.visit_date)}
+                        </div>
+                        <div className="flex-1 text-slate-900">
+                          {note.daily_note_content || note.nurse_notes || 'No notes recorded'}
+                        </div>
+                      </div>
+                      {index < dailyNotesData.length - 1 && (
+                        <div className="border-b border-slate-300 mt-4"></div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+
+          <DialogFooter className="mt-6">
+            <Button
+              variant="outline"
+              onClick={() => setShowDailyNotesModal(false)}
+            >
+              Close
+            </Button>
+            {dailyNotesData.length > 0 && (
+              <Button
+                onClick={() => {
+                  // Navigate to reports page with pre-filled filters
+                  const now = new Date();
+                  const month = String(now.getMonth() + 1).padStart(2, '0');
+                  const year = now.getFullYear();
+                  navigate(`/reports?patient=${patientId}&visitType=daily_note&month=${month}&year=${year}`);
+                }}
+                className="bg-eggplant-700 hover:bg-eggplant-600"
+              >
+                <FileText className="w-4 h-4 mr-2" />
+                Download PDF
+              </Button>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
