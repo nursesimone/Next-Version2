@@ -938,9 +938,16 @@ async def delete_patient(patient_id: str, nurse: dict = Depends(get_current_nurs
 # ==================== VISIT ENDPOINTS ====================
 @api_router.post("/patients/{patient_id}/visits", response_model=VisitResponse)
 async def create_visit(patient_id: str, data: VisitCreate, nurse: dict = Depends(get_current_nurse)):
-    patient = await db.patients.find_one({"id": patient_id, "nurse_id": nurse["id"]})
+    # Check if patient exists (admins can create for any patient, regular nurses need assignment)
+    patient = await db.patients.find_one({"id": patient_id}, {"_id": 0})
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found")
+    
+    # If not admin, verify nurse is assigned to this patient
+    if not nurse.get("is_admin", False):
+        assigned_nurses = patient.get("assigned_nurses", [])
+        if nurse["id"] not in assigned_nurses:
+            raise HTTPException(status_code=403, detail="Not authorized to create visits for this patient")
     
     visit_id = str(uuid.uuid4())
     now = datetime.now(timezone.utc).isoformat()
