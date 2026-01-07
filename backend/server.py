@@ -215,15 +215,15 @@ class MouthOralAssessment(BaseModel):
     other_notes: Optional[str] = None
 
 class HeadToToeAssessment(BaseModel):
-    head_neck: Optional[Union[str, HeadNeckAssessment]] = None
+    head_neck: Optional[HeadNeckAssessment] = None
     head_neck_from_last: Optional[bool] = False
-    eyes_vision: Optional[Union[str, EyesVisionAssessment]] = None
+    eyes_vision: Optional[EyesVisionAssessment] = None
     eyes_vision_from_last: Optional[bool] = False
-    ears_hearing: Optional[Union[str, EarsHearingAssessment]] = None
+    ears_hearing: Optional[EarsHearingAssessment] = None
     ears_hearing_from_last: Optional[bool] = False
     nose_nasal_cavity: Optional[str] = None
     nose_nasal_cavity_from_last: Optional[bool] = False
-    mouth_teeth_oral_cavity: Optional[Union[str, MouthOralAssessment]] = None
+    mouth_teeth_oral_cavity: Optional[MouthOralAssessment] = None
     mouth_teeth_oral_cavity_from_last: Optional[bool] = False
 
 class GastrointestinalAssessment(BaseModel):
