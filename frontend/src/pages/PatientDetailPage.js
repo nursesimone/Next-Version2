@@ -1075,11 +1075,12 @@ export default function PatientDetailPage() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => navigate(`/daily-notes-report?patientId=${patientId}`)}
+            onClick={fetchDailyNotes}
+            disabled={loadingDailyNotes}
             className="ml-4 self-start"
           >
             <FileText className="w-4 h-4 mr-2" />
-            Daily Notes Report
+            {loadingDailyNotes ? 'Loading...' : 'Daily Notes Report'}
           </Button>
         </div>
       </main>
