@@ -834,6 +834,42 @@ export default function InterventionPage() {
               </Card>
             )}
 
+          {/* Other Intervention Type */}
+          {formData.intervention_type === 'other' && (
+            <Card className="bg-white border-slate-100">
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-slate-600" />
+                  Other Intervention Details
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label>Description of Intervention *</Label>
+                  <Textarea
+                    value={formData.other_details.description}
+                    onChange={(e) => updateOther('description', e.target.value)}
+                    placeholder="Describe the intervention performed..."
+                    className="mt-1"
+                    rows={4}
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <Label>Additional Notes</Label>
+                  <Textarea
+                    value={formData.other_details.notes}
+                    onChange={(e) => updateOther('notes', e.target.value)}
+                    placeholder="Any additional information..."
+                    className="mt-1"
+                    rows={3}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Post-Intervention Observations */}
           <Card className="bg-white border-slate-100">
             <CardHeader>
