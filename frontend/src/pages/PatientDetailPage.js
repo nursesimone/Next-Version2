@@ -48,6 +48,7 @@ export default function PatientDetailPage() {
   const navigate = useNavigate();
   const [patient, setPatient] = useState(null);
   const [visits, setVisits] = useState([]);
+  const [interventions, setInterventions] = useState([]);
   const [unableToContactRecords, setUnableToContactRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingProfile, setEditingProfile] = useState(false);
