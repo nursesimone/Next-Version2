@@ -293,7 +293,7 @@ export default function InterventionPage() {
             <CardHeader>
               <CardTitle className="text-lg">Type of Intervention</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-4">
               <Select
                 value={formData.intervention_type}
                 onValueChange={(value) => updateField('intervention_type', value)}
@@ -326,8 +326,27 @@ export default function InterventionPage() {
                       Procedure
                     </span>
                   </SelectItem>
+                  <SelectItem value="other">
+                    <span className="flex items-center gap-2">
+                      Other
+                    </span>
+                  </SelectItem>
                 </SelectContent>
               </Select>
+              
+              {/* Other Intervention Type Text Input */}
+              {formData.intervention_type === 'other' && (
+                <div>
+                  <Label>Please specify the intervention type *</Label>
+                  <Input
+                    value={formData.intervention_type_other}
+                    onChange={(e) => updateField('intervention_type_other', e.target.value)}
+                    placeholder="Enter intervention type..."
+                    className="mt-1"
+                    required
+                  />
+                </div>
+              )}
             </CardContent>
           </Card>
 
