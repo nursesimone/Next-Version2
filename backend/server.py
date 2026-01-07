@@ -177,35 +177,40 @@ class PhysicalAssessment(BaseModel):
     fall_incidence_since_last_visit: Optional[str] = None
 
 class EyesVisionAssessment(BaseModel):
-    normal: Optional[bool] = False
+    pupils_perrla: Optional[str] = None
+    no_issues: Optional[bool] = False
     glasses: Optional[bool] = False
     contacts: Optional[bool] = False
-    cataracts: Optional[bool] = False
+    blurred_vision: Optional[bool] = False
     glaucoma: Optional[bool] = False
-    blind: Optional[bool] = False
+    prosthesis: Optional[bool] = False
+    blind_eyes: Optional[bool] = False
     blind_which: Optional[str] = None  # 'left', 'right', 'both'
+    cataract_surgery: Optional[bool] = False
+    infections: Optional[bool] = False
     other: Optional[bool] = False
     other_notes: Optional[str] = None
 
 class EarsHearingAssessment(BaseModel):
-    normal: Optional[bool] = False
-    hearing_aid: Optional[bool] = False
-    hard_of_hearing: Optional[bool] = False
+    no_issues: Optional[bool] = False
     deaf: Optional[bool] = False
-    ear_infection: Optional[bool] = False
+    deaf_which: Optional[str] = None  # 'left', 'right', 'both'
+    hard_of_hearing: Optional[bool] = False
+    hearing_aid: Optional[bool] = False
+    vertigo: Optional[bool] = False
+    tinnitus: Optional[bool] = False
+    infections: Optional[bool] = False
     other: Optional[bool] = False
     other_notes: Optional[str] = None
 
 class MouthOralAssessment(BaseModel):
-    normal: Optional[bool] = False
+    no_issues: Optional[bool] = False
     dentures: Optional[bool] = False
-    dentures_upper: Optional[bool] = False
-    dentures_lower: Optional[bool] = False
-    dentures_partial: Optional[bool] = False
-    dentures_full: Optional[bool] = False
+    dentures_type: Optional[str] = None  # 'upper', 'lower', 'partial', 'full'
     poor_dentition: Optional[bool] = False
     mouth_sores: Optional[bool] = False
     dry_mouth: Optional[bool] = False
+    thrush: Optional[bool] = False
     other: Optional[bool] = False
     other_notes: Optional[str] = None
 
