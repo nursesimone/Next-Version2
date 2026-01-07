@@ -406,7 +406,10 @@ export default function NewVisitPage() {
       toast.success(saveAs === 'draft' ? 'Visit saved as draft' : 'Visit completed successfully');
       navigate(`/patients/${patientId}`);
     } catch (error) {
-      toast.error('Failed to save visit');
+      console.error('Failed to save visit:', error);
+      console.error('Error response:', error.response?.data);
+      const errorMessage = error.response?.data?.detail || 'Failed to save visit';
+      toast.error(errorMessage);
     } finally {
       setSaving(false);
     }
