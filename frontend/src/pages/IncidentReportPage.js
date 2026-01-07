@@ -425,23 +425,31 @@ export default function IncidentReportPage() {
                   <Label htmlFor="resident" className="font-normal cursor-pointer">Resident/Patient</Label>
                 </div>
 
-                {formData.involved_parties.resident && formData.organization && (
+                {formData.involved_parties.resident && (
                   <div className="ml-6 p-4 bg-slate-50 rounded border">
                     <Label className="mb-2 block">Select Resident(s):</Label>
-                    <div className="space-y-2 max-h-40 overflow-y-auto">
-                      {getFilteredPatients().map(patient => (
-                        <div key={patient.id} className="flex items-center space-x-2">
-                          <Checkbox
-                            id={`patient-${patient.id}`}
-                            checked={formData.involved_residents.includes(patient.id)}
-                            onCheckedChange={() => toggleResidentInvolved(patient.id)}
-                          />
-                          <Label htmlFor={`patient-${patient.id}`} className="font-normal cursor-pointer text-sm">
-                            {patient.full_name}
-                          </Label>
-                        </div>
-                      ))}
-                    </div>
+                    {formData.organization ? (
+                      <div className="space-y-2 max-h-40 overflow-y-auto">
+                        {getFilteredPatients().length > 0 ? (
+                          getFilteredPatients().map(patient => (
+                            <div key={patient.id} className="flex items-center space-x-2">
+                              <Checkbox
+                                id={`patient-${patient.id}`}
+                                checked={formData.involved_residents.includes(patient.id)}
+                                onCheckedChange={() => toggleResidentInvolved(patient.id)}
+                              />
+                              <Label htmlFor={`patient-${patient.id}`} className="font-normal cursor-pointer text-sm">
+                                {patient.full_name}
+                              </Label>
+                            </div>
+                          ))
+                        ) : (
+                          <p className="text-sm text-slate-500">No residents found for {formData.organization}</p>
+                        )}
+                      </div>
+                    ) : (
+                      <p className="text-sm text-slate-500">Please select an organization first</p>
+                    )}
                   </div>
                 )}
 
