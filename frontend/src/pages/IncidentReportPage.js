@@ -140,15 +140,31 @@ export default function IncidentReportPage() {
 
   const getFilteredPatients = () => {
     if (!formData.organization) return [];
-    return patients.filter(p => p.permanent_info?.organization === formData.organization);
+    // More flexible matching - handles variations in organization names
+    return patients.filter(p => {
+      const patientOrg = p.permanent_info?.organization || '';
+      const selectedOrg = formData.organization || '';
+      // Exact match or contains match
+      return patientOrg === selectedOrg || 
+             patientOrg.toLowerCase().includes(selectedOrg.toLowerCase()) ||
+             selectedOrg.toLowerCase().includes(patientOrg.toLowerCase());
+    });
   };
 
   const getFilteredStaff = () => {
     if (!formData.organization) return [];
-    return staff.filter(s => 
-      s.assigned_organizations?.includes(formData.organization) ||
-      s.is_admin
-    );
+    // Show all admins plus staff assigned to this organization
+    return staff.filter(s => {
+      if (s.is_admin) return true;
+      const assignedOrgs = s.assigned_organizations || [];
+      const selectedOrg = formData.organization;
+      // Check for exact match or partial match in assigned organizations
+      return assignedOrgs.some(org => 
+        org === selectedOrg || 
+        org.toLowerCase().includes(selectedOrg.toLowerCase()) ||
+        selectedOrg.toLowerCase().includes(org.toLowerCase())
+      );
+    });
   };
 
   const generatePDF = () => {
