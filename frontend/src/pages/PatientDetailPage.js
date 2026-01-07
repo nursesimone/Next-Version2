@@ -142,6 +142,37 @@ export default function PatientDetailPage() {
     }
   };
 
+  const fetchDailyNotes = async () => {
+    setLoadingDailyNotes(true);
+    try {
+      // Get current month's start and end dates
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      
+      // Fetch all visits for this patient
+      const response = await visitsAPI.list(patientId);
+      
+      // Filter for daily_note visits from current month
+      const dailyNotes = response.data.filter(visit => {
+        if (visit.visit_type !== 'daily_note') return false;
+        const visitDate = new Date(visit.visit_date);
+        return visitDate.getFullYear() === year && 
+               (visitDate.getMonth() + 1) === parseInt(month);
+      });
+      
+      // Sort by date
+      dailyNotes.sort((a, b) => new Date(a.visit_date) - new Date(b.visit_date));
+      
+      setDailyNotesData(dailyNotes);
+      setShowDailyNotesModal(true);
+    } catch (error) {
+      toast.error('Failed to load daily notes');
+    } finally {
+      setLoadingDailyNotes(false);
+    }
+  };
+
   const handleVisitButtonClick = async (visitType) => {
     // Check for existing draft
     try {
