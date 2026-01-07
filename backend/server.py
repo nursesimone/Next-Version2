@@ -164,7 +164,7 @@ class HeadNeckAssessment(BaseModel):
 class PhysicalAssessment(BaseModel):
     general_appearance: Optional[str] = None
     general_appearance_from_last: Optional[bool] = False  # Pull from last visit
-    skin_assessment: Optional[Union[str, SkinAssessment]] = None
+    skin_assessment: Optional[SkinAssessment] = None
     skin_assessment_from_last: Optional[bool] = False
     mobility_level: Optional[str] = None  # ambulatory, supervised, with_assistance, wheelchair, paralyzed, non_ambulatory
     mobility_level_from_last: Optional[bool] = False
