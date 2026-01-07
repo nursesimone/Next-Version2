@@ -515,6 +515,40 @@ export default function NewVisitPage() {
                 />
               </div>
               
+              {/* Type of Nurse Visit - For nurse_visit only */}
+              {visitType === 'nurse_visit' && (
+                <div className="mt-4">
+                  <Label>Type of Nurse Visit *</Label>
+                  <Select
+                    value={visitData.nurse_visit_type}
+                    onValueChange={(value) => setVisitData(prev => ({ ...prev, nurse_visit_type: value, nurse_visit_type_other: value !== 'other' ? '' : prev.nurse_visit_type_other }))}
+                    required
+                  >
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Select type of nurse visit..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="rn_clinical_oversight">Registered Nurse Clinical Oversight</SelectItem>
+                      <SelectItem value="skilled_nursing_management">Skilled Nursing Management</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  
+                  {/* Show text field if "Other" selected */}
+                  {visitData.nurse_visit_type === 'other' && (
+                    <div className="mt-3">
+                      <Label>Please specify type:</Label>
+                      <Input
+                        value={visitData.nurse_visit_type_other}
+                        onChange={(e) => setVisitData(prev => ({ ...prev, nurse_visit_type_other: e.target.value }))}
+                        placeholder="Describe the type of visit..."
+                        className="mt-1"
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
+              
               {/* Visit Location - For nurse_visit only */}
               {visitType === 'nurse_visit' && (
                 <div className="mt-4">
