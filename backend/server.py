@@ -210,7 +210,7 @@ class MouthOralAssessment(BaseModel):
     other_notes: Optional[str] = None
 
 class HeadToToeAssessment(BaseModel):
-    head_neck: Optional[str] = None
+    head_neck: Optional[Union[str, HeadNeckAssessment]] = None
     head_neck_from_last: Optional[bool] = False
     eyes_vision: Optional[Union[str, EyesVisionAssessment]] = None
     eyes_vision_from_last: Optional[bool] = False
