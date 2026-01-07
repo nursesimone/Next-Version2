@@ -30,7 +30,12 @@ export default function RegisterPage() {
     setLoading(true);
     
     try {
-      await register(formData);
+      // Add default title if not provided
+      const registrationData = {
+        ...formData,
+        title: 'RN' // Default title
+      };
+      await register(registrationData);
       toast.success('Account created successfully!');
       navigate('/dashboard');
     } catch (err) {
