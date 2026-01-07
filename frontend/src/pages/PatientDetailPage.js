@@ -66,9 +66,10 @@ export default function PatientDetailPage() {
 
   const fetchPatientData = async () => {
     try {
-      const [patientRes, visitsRes, utcRes] = await Promise.all([
+      const [patientRes, visitsRes, interventionsRes, utcRes] = await Promise.all([
         patientsAPI.get(patientId),
         visitsAPI.list(patientId),
+        interventionsAPI.list(patientId),
         unableToContactAPI.list(patientId)
       ]);
       setPatient(patientRes.data);
@@ -78,6 +79,7 @@ export default function PatientDetailPage() {
       const filteredVisits = visitsRes.data.filter(v => v.visit_type !== 'daily_note');
       setVisits(filteredVisits);
       
+      setInterventions(interventionsRes.data);
       setUnableToContactRecords(utcRes.data);
       // Check if organization is custom (not one of the presets)
       const org = patientRes.data.permanent_info?.organization;
