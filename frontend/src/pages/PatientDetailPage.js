@@ -350,7 +350,7 @@ export default function PatientDetailPage() {
             <Tabs defaultValue="visits" className="space-y-6">
               <TabsList className="bg-white border border-slate-100 p-1">
                 <TabsTrigger value="visits" className="data-[state=active]:bg-eggplant-50 data-[state=active]:text-eggplant-700">
-                  Visit History ({visits.length})
+                  Visit History ({visits.length + interventions.length})
                 </TabsTrigger>
                 <TabsTrigger value="profile" className="data-[state=active]:bg-eggplant-50 data-[state=active]:text-eggplant-700">
                   Profile
