@@ -462,23 +462,31 @@ export default function IncidentReportPage() {
                   <Label htmlFor="staff" className="font-normal cursor-pointer">Staff Member</Label>
                 </div>
 
-                {formData.involved_parties.staff && formData.organization && (
+                {formData.involved_parties.staff && (
                   <div className="ml-6 p-4 bg-slate-50 rounded border">
                     <Label className="mb-2 block">Select Staff Member(s):</Label>
-                    <div className="space-y-2 max-h-40 overflow-y-auto">
-                      {getFilteredStaff().map(staffMember => (
-                        <div key={staffMember.id} className="flex items-center space-x-2">
-                          <Checkbox
-                            id={`staff-${staffMember.id}`}
-                            checked={formData.involved_staff.includes(staffMember.id)}
-                            onCheckedChange={() => toggleStaffInvolved(staffMember.id)}
-                          />
-                          <Label htmlFor={`staff-${staffMember.id}`} className="font-normal cursor-pointer text-sm">
-                            {staffMember.full_name} ({staffMember.title})
-                          </Label>
-                        </div>
-                      ))}
-                    </div>
+                    {formData.organization ? (
+                      <div className="space-y-2 max-h-40 overflow-y-auto">
+                        {getFilteredStaff().length > 0 ? (
+                          getFilteredStaff().map(staffMember => (
+                            <div key={staffMember.id} className="flex items-center space-x-2">
+                              <Checkbox
+                                id={`staff-${staffMember.id}`}
+                                checked={formData.involved_staff.includes(staffMember.id)}
+                                onCheckedChange={() => toggleStaffInvolved(staffMember.id)}
+                              />
+                              <Label htmlFor={`staff-${staffMember.id}`} className="font-normal cursor-pointer text-sm">
+                                {staffMember.full_name} ({staffMember.title})
+                              </Label>
+                            </div>
+                          ))
+                        ) : (
+                          <p className="text-sm text-slate-500">No staff found for {formData.organization}</p>
+                        )}
+                      </div>
+                    ) : (
+                      <p className="text-sm text-slate-500">Please select an organization first</p>
+                    )}
                   </div>
                 )}
 
