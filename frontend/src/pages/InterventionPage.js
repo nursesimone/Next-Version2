@@ -249,9 +249,9 @@ export default function InterventionPage() {
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Intervention Date */}
+          {/* Intervention Date & Location */}
           <Card className="bg-white border-slate-100">
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 space-y-4">
               <div>
                 <Label>Intervention completed on:</Label>
                 <Input
@@ -262,6 +262,23 @@ export default function InterventionPage() {
                   required
                   data-testid="intervention-date-input"
                 />
+              </div>
+              
+              <div>
+                <Label>Location *</Label>
+                <Select
+                  value={formData.location}
+                  onValueChange={(value) => updateField('location', value)}
+                  required
+                >
+                  <SelectTrigger className="mt-1" data-testid="intervention-location-select">
+                    <SelectValue placeholder="Select location..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="home">Home</SelectItem>
+                    <SelectItem value="adult_day_center">Adult Day Center</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </CardContent>
           </Card>
