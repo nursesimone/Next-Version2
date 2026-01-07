@@ -400,6 +400,9 @@ export default function AdminPage() {
                 </CardTitle>
                 <CardDescription>
                   Add and manage residential organizations
+                  <div className="mt-1 font-semibold text-slate-700">
+                    Total Organizations: {organizations.length}
+                  </div>
                 </CardDescription>
               </div>
               <div className="flex items-center gap-2">
