@@ -149,7 +149,27 @@ export default function ReportsPage() {
     doc.setDrawColor(60);
     doc.setLineWidth(0.8);
     doc.line(margin, y, pageWidth - margin, y);
+    y += 8;
+
+    // ============ ORGANIZATION (LEFT) & REPORT PERIOD (RIGHT) ============
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(100);
+    
+    // Organization name (flush left)
+    const organizationName = selectedOrganization !== 'all' 
+      ? selectedOrganization 
+      : (selectedPatient !== 'all' 
+          ? patients.find(p => p.id === selectedPatient)?.permanent_info?.organization || 'All Organizations'
+          : 'All Organizations');
+    doc.text(organizationName, margin, y);
+    
+    // Report period (flush right)
+    const reportPeriod = `Report Period: ${reportData.summary.start_date} - ${reportData.summary.end_date}`;
+    doc.text(reportPeriod, pageWidth - margin, y, { align: 'right' });
     y += 10;
+
+    doc.setTextColor(0); // Reset to black for entries
 
     // ============ JOURNAL ENTRIES ============
     doc.setFontSize(10);
