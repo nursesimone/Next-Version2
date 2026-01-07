@@ -592,7 +592,7 @@ export default function InterventionPage() {
                       <SelectContent>
                         <SelectItem value="blood_glucose">Blood Glucose</SelectItem>
                         <SelectItem value="hcg">hCG (Pregnancy Test)</SelectItem>
-                        <SelectItem value="tb_placing">TB - PPD Placing</SelectItem>
+                        <SelectItem value="tb_placing">TB - PPD Placement</SelectItem>
                         <SelectItem value="tb_reading">TB - PPD Reading</SelectItem>
                         <SelectItem value="rapid_strep">Rapid Strep</SelectItem>
                         <SelectItem value="covid">Covid Test</SelectItem>
