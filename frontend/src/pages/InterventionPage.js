@@ -201,6 +201,7 @@ export default function InterventionPage() {
         test_details: formData.intervention_type === 'test' ? formData.test_details : null,
         treatment_details: formData.intervention_type === 'treatment' ? formData.treatment_details : null,
         procedure_details: formData.intervention_type === 'procedure' ? formData.procedure_details : null,
+        other_details: formData.intervention_type === 'other' ? formData.other_details : null,
       };
       
       await interventionsAPI.create(submitData);
