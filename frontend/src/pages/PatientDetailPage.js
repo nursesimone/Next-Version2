@@ -505,12 +505,25 @@ export default function PatientDetailPage() {
                       <div>
                         <Label className="text-slate-500">Race</Label>
                         {editingProfile ? (
-                          <Input
+                          <Select
                             value={profileData.race || ''}
-                            onChange={(e) => handleProfileChange('race', e.target.value)}
-                            className="mt-1"
-                            placeholder="e.g., Caucasian"
-                          />
+                            onValueChange={(value) => handleProfileChange('race', value)}
+                          >
+                            <SelectTrigger className="mt-1">
+                              <SelectValue placeholder="Select race" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="American Indian or Alaska Native">American Indian or Alaska Native</SelectItem>
+                              <SelectItem value="Asian">Asian</SelectItem>
+                              <SelectItem value="Black or African American">Black or African American</SelectItem>
+                              <SelectItem value="Hispanic or Latino">Hispanic or Latino</SelectItem>
+                              <SelectItem value="Native Hawaiian or Pacific Islander">Native Hawaiian or Pacific Islander</SelectItem>
+                              <SelectItem value="White or Caucasian">White or Caucasian</SelectItem>
+                              <SelectItem value="Two or More Races">Two or More Races</SelectItem>
+                              <SelectItem value="Other">Other</SelectItem>
+                              <SelectItem value="Prefer not to say">Prefer not to say</SelectItem>
+                            </SelectContent>
+                          </Select>
                         ) : (
                           <p className="text-slate-900">{profileData.race || 'Not set'}</p>
                         )}
