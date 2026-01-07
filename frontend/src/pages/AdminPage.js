@@ -898,12 +898,12 @@ export default function AdminPage() {
 
       {/* Nurse Profile Dialog */}
       <Dialog open={showNurseProfileDialog} onOpenChange={setShowNurseProfileDialog}>
-        <DialogContent>
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Nurse Profile</DialogTitle>
           </DialogHeader>
           {selectedNurse && (
-            <div className="space-y-4">
+            <div className="space-y-6">
               <div className="flex items-center gap-4 pb-4 border-b">
                 <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center">
                   <Users className="w-8 h-8 text-purple-600" />
@@ -944,8 +944,82 @@ export default function AdminPage() {
                   <p className="font-mono text-xs text-slate-600">{selectedNurse.id}</p>
                 </div>
               </div>
+
+              {/* Current Assignments Section */}
+              <div className="border-t pt-4 space-y-4">
+                <h3 className="font-semibold text-lg">Current Assignments</h3>
+                
+                {/* Organization Assignments */}
+                <div>
+                  <Label className="text-slate-600 font-semibold mb-2 block">
+                    Organization Access
+                  </Label>
+                  {selectedNurse.assigned_organizations && selectedNurse.assigned_organizations.length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                      {selectedNurse.assigned_organizations.map((org, idx) => (
+                        <span key={idx} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm">
+                          {org}
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-slate-500 italic">No organizations assigned</p>
+                  )}
+                </div>
+
+                {/* Patient Assignments */}
+                <div>
+                  <Label className="text-slate-600 font-semibold mb-2 block">
+                    Assigned Patients ({selectedNurse.assigned_patients?.length || 0})
+                  </Label>
+                  {selectedNurse.assigned_patients && selectedNurse.assigned_patients.length > 0 ? (
+                    <div className="max-h-40 overflow-y-auto space-y-1">
+                      {selectedNurse.assigned_patients.map((patientId) => {
+                        const patient = patients.find(p => p.id === patientId);
+                        return patient ? (
+                          <div key={patientId} className="text-sm py-1 px-2 bg-slate-50 rounded">
+                            {patient.full_name}
+                          </div>
+                        ) : null;
+                      })}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-slate-500 italic">No patients assigned</p>
+                  )}
+                </div>
+
+                {/* Allowed Forms */}
+                <div>
+                  <Label className="text-slate-600 font-semibold mb-2 block">
+                    Allowed Forms
+                  </Label>
+                  {selectedNurse.allowed_forms && selectedNurse.allowed_forms.length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                      {selectedNurse.allowed_forms.map((form, idx) => (
+                        <span key={idx} className="px-3 py-1 bg-green-50 text-green-700 rounded text-sm">
+                          {form === 'nurse_visit' && 'Nurse Visit'}
+                          {form === 'vitals_only' && 'Vitals Only'}
+                          {form === 'daily_note' && 'Daily Note'}
+                          {form === 'patient_intervention' && 'Intervention'}
+                          {form === 'unable_to_contact' && 'Unable to Contact'}
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-slate-500 italic">All forms allowed (default)</p>
+                  )}
+                </div>
+              </div>
             </div>
           )}
+          <DialogFooter>
+            <Button 
+              variant="outline" 
+              onClick={() => setShowNurseProfileDialog(false)}
+            >
+              Close
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
 
