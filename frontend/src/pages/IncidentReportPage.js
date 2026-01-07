@@ -36,6 +36,8 @@ export default function IncidentReportPage() {
   const [patients, setPatients] = useState([]);
   const [staff, setStaff] = useState([]);
   const [saving, setSaving] = useState(false);
+  const [openResidentSelect, setOpenResidentSelect] = useState(false);
+  const [openStaffSelect, setOpenStaffSelect] = useState(false);
   
   const [formData, setFormData] = useState({
     organization: '',
