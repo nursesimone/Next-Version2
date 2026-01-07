@@ -100,7 +100,10 @@ export default function UnableToContactPage() {
       toast.success('Unable to contact record saved');
       navigate(`/patients/${patientId}`);
     } catch (error) {
-      toast.error('Failed to save record');
+      console.error('Failed to save UTC record:', error);
+      console.error('Error response:', error.response?.data);
+      const errorMessage = error.response?.data?.detail || 'Failed to save record';
+      toast.error(errorMessage);
     } finally {
       setSaving(false);
     }
