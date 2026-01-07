@@ -103,6 +103,7 @@ export default function ReportsPage() {
     
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
     let y = 20;
     const margin = 20;
     const lineHeight = 7;
@@ -110,94 +111,171 @@ export default function ReportsPage() {
     // Get visit type label
     const getVisitTypeLabel = (type) => {
       switch (type) {
-        case 'vitals_only': return 'Vital Signs';
-        case 'daily_note': return 'Daily Notes';
-        default: return type;
+        case 'vitals_only': return 'Vital Signs Report';
+        case 'daily_note': return 'Daily Notes Report';
+        default: return 'Nurse Visit Report';
       }
     };
 
-    // Determine report type based on filter
-    const reportType = selectedVisitType !== 'all' ? getVisitTypeLabel(selectedVisitType) : 'POSH-Able Living';
-
-    // ============ HEADER ============
-    // Report Type as main heading
-    doc.setFontSize(22);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(15, 118, 110);
-    doc.text(reportType, pageWidth / 2, y, { align: 'center' });
-    y += 10;
-
-    // Patient Name (or "All Patients" if filtering all)
-    doc.setFontSize(14);
-    doc.setTextColor(60);
+    // Determine patient name
     const patientName = selectedPatient !== 'all' 
       ? patients.find(p => p.id === selectedPatient)?.full_name || 'All Patients'
       : 'All Patients';
+
+    // Month name
+    const monthName = months.find(m => m.value === selectedMonth)?.label;
+
+    // ============ HEADER (3 Lines) ============
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(60);
+    
+    // Line 1: Report Name
+    doc.text(getVisitTypeLabel(selectedVisitType), pageWidth / 2, y, { align: 'center' });
+    y += 8;
+    
+    // Line 2: Patient Name
+    doc.setFontSize(14);
     doc.text(patientName, pageWidth / 2, y, { align: 'center' });
     y += 8;
-
-    // Report Period (Month Year)
-    const monthName = months.find(m => m.value === selectedMonth)?.label;
+    
+    // Line 3: Month
     doc.setFontSize(12);
-    doc.setTextColor(0);
     doc.setFont('helvetica', 'normal');
     doc.text(`${monthName} ${selectedYear}`, pageWidth / 2, y, { align: 'center' });
-    y += 8;
-
-    // Divider line
-    doc.setDrawColor(15, 118, 110);
-    doc.setLineWidth(0.5);
-    doc.line(margin, y, pageWidth - margin, y);
-    y += 8;
-
-    // Report date range (below divider)
-    doc.setFontSize(10);
-    doc.text(`Report Period: ${reportData.summary.start_date} to ${reportData.summary.end_date}`, pageWidth / 2, y, { align: 'center' });
     y += 10;
 
-    // Visit Details (no stats box, no organization section)
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(12);
-    doc.text('Visit Details', margin, y);
-    y += lineHeight;
+    // ============ SEPARATOR LINE ============
+    doc.setDrawColor(60);
+    doc.setLineWidth(0.8);
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 10;
 
-    doc.setFontSize(9);
+    // ============ JOURNAL ENTRIES ============
+    doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
 
-    // Table header
-    doc.setFillColor(15, 118, 110);
-    doc.setTextColor(255);
-    doc.rect(margin, y, pageWidth - margin * 2, 8, 'F');
-    doc.text('Date', margin + 2, y + 5.5);
-    doc.text('Resident', margin + 30, y + 5.5);
-    doc.text('Type', margin + 85, y + 5.5);
-    doc.text('Organization', margin + 120, y + 5.5);
-    doc.text('Status', margin + 160, y + 5.5);
-    y += 8;
-    doc.setTextColor(0);
+    // Group visits by date and patient for better organization
+    const sortedVisits = [...reportData.visits].sort((a, b) => 
+      new Date(a.visit_date) - new Date(b.visit_date)
+    );
 
-    // Table rows
-    for (const visit of reportData.visits) {
-      if (y > 270) {
-        doc.addPage();
-        y = 20;
+    if (selectedVisitType === 'daily_note') {
+      // ============ DAILY NOTES FORMAT ============
+      for (const visit of sortedVisits) {
+        // Check if we need a new page
+        if (y > pageHeight - 40) {
+          doc.addPage();
+          y = 20;
+        }
+
+        // Format date
+        const visitDate = new Date(visit.visit_date);
+        const formattedDate = visitDate.toLocaleDateString('en-US', { 
+          month: '2-digit', 
+          day: '2-digit', 
+          year: 'numeric' 
+        });
+
+        // Date (left-aligned)
+        doc.setFont('helvetica', 'bold');
+        doc.text(formattedDate, margin, y);
+        
+        // Note content (indented)
+        doc.setFont('helvetica', 'normal');
+        const noteContent = visit.daily_note_content || visit.nurse_notes || 'No notes recorded';
+        const wrappedNote = doc.splitTextToSize(noteContent, pageWidth - margin - 60);
+        doc.text(wrappedNote, margin + 40, y);
+        
+        y += wrappedNote.length * 5 + 5;
+
+        // Separator line
+        doc.setDrawColor(180);
+        doc.setLineWidth(0.3);
+        doc.line(margin, y, pageWidth - margin, y);
+        y += 8;
       }
-      
-      const visitDate = formatDate(visit.visit_date);
-      const patientName = visit.patient_name?.substring(0, 18) || 'Unknown';
-      const visitType = getVisitTypeLabel(visit.visit_type);
-      const org = (visit.organization || '-').substring(0, 12);
-      const status = visit.overall_health_status?.substring(0, 10) || '-';
-      
-      doc.text(visitDate, margin + 2, y + 5);
-      doc.text(patientName, margin + 30, y + 5);
-      doc.text(visitType, margin + 85, y + 5);
-      doc.text(org, margin + 120, y + 5);
-      doc.text(status, margin + 160, y + 5);
-      
-      doc.setDrawColor(200);
-      doc.line(margin, y + 7, pageWidth - margin, y + 7);
-      y += 8;
+    } else if (selectedVisitType === 'vitals_only') {
+      // ============ VITAL SIGNS FORMAT ============
+      for (const visit of sortedVisits) {
+        // Check if we need a new page (need more space for vitals - 2-3 lines)
+        if (y > pageHeight - 50) {
+          doc.addPage();
+          y = 20;
+        }
+
+        // Format date
+        const visitDate = new Date(visit.visit_date);
+        const formattedDate = visitDate.toLocaleDateString('en-US', { 
+          month: '2-digit', 
+          day: '2-digit', 
+          year: 'numeric' 
+        });
+
+        // Date (left-aligned, bold)
+        doc.setFont('helvetica', 'bold');
+        doc.text(formattedDate, margin, y);
+        
+        doc.setFont('helvetica', 'normal');
+        
+        // Vital signs - Line 1
+        const vitals = visit.vital_signs || {};
+        const line1 = `Weight: ${vitals.weight || 'N/A'}     Height: ${vitals.height || 'N/A'}     Temp: ${vitals.body_temperature || 'N/A'}`;
+        doc.text(line1, margin + 40, y);
+        y += 6;
+        
+        // Vital signs - Line 2
+        const bpSys = vitals.blood_pressure_systolic || 'N/A';
+        const bpDia = vitals.blood_pressure_diastolic || 'N/A';
+        const line2 = `BP: ${bpSys}/${bpDia}     Pulse Ox: ${vitals.pulse_oximeter || 'N/A'}%     Pulse: ${vitals.pulse || 'N/A'}     Resp: ${vitals.respirations || 'N/A'}`;
+        doc.text(line2, margin + 40, y);
+        y += 8;
+
+        // Separator line
+        doc.setDrawColor(180);
+        doc.setLineWidth(0.3);
+        doc.line(margin, y, pageWidth - margin, y);
+        y += 8;
+      }
+    } else {
+      // ============ NURSE VISIT (Mixed content) ============
+      for (const visit of sortedVisits) {
+        if (y > pageHeight - 60) {
+          doc.addPage();
+          y = 20;
+        }
+
+        const visitDate = new Date(visit.visit_date);
+        const formattedDate = visitDate.toLocaleDateString('en-US', { 
+          month: '2-digit', 
+          day: '2-digit', 
+          year: 'numeric' 
+        });
+
+        doc.setFont('helvetica', 'bold');
+        doc.text(formattedDate, margin, y);
+        
+        doc.setFont('helvetica', 'normal');
+        
+        // Show vitals if available
+        const vitals = visit.vital_signs || {};
+        if (vitals.weight || vitals.blood_pressure_systolic) {
+          const vitalSummary = `BP: ${vitals.blood_pressure_systolic || 'N/A'}/${vitals.blood_pressure_diastolic || 'N/A'}, Temp: ${vitals.body_temperature || 'N/A'}, Pulse: ${vitals.pulse || 'N/A'}`;
+          doc.text(vitalSummary, margin + 40, y);
+          y += 6;
+        }
+        
+        // Show notes
+        const noteContent = visit.nurse_notes || 'No notes recorded';
+        const wrappedNote = doc.splitTextToSize(noteContent, pageWidth - margin - 60);
+        doc.text(wrappedNote, margin + 40, y);
+        y += wrappedNote.length * 5 + 5;
+
+        doc.setDrawColor(180);
+        doc.setLineWidth(0.3);
+        doc.line(margin, y, pageWidth - margin, y);
+        y += 8;
+      }
     }
 
     // Footer
@@ -206,12 +284,14 @@ export default function ReportsPage() {
       doc.setPage(i);
       doc.setFontSize(8);
       doc.setTextColor(150);
-      doc.text(`Page ${i} of ${pages}`, pageWidth - margin - 20, doc.internal.pageSize.getHeight() - 10);
-      doc.text(`Generated: ${new Date().toLocaleString()}`, margin, doc.internal.pageSize.getHeight() - 10);
+      doc.text(`Page ${i} of ${pages}`, pageWidth - margin - 20, pageHeight - 10);
+      doc.text(`Generated: ${new Date().toLocaleString()}`, margin, pageHeight - 10);
     }
 
-    // Save
-    doc.save(`monthly_report_${selectedYear}_${selectedMonth.padStart(2, '0')}.pdf`);
+    // Save with descriptive filename
+    const reportTypeFile = selectedVisitType === 'daily_note' ? 'DailyNotes' : selectedVisitType === 'vitals_only' ? 'VitalSigns' : 'NurseVisits';
+    const patientFile = selectedPatient !== 'all' ? patients.find(p => p.id === selectedPatient)?.full_name.replace(/\s/g, '_') : 'AllPatients';
+    doc.save(`${reportTypeFile}_${patientFile}_${monthName}${selectedYear}.pdf`);
     toast.success('Report downloaded successfully');
   };
 
