@@ -262,7 +262,11 @@ class HomeVisitLogbook(BaseModel):
 class VisitCreate(BaseModel):
     visit_date: Optional[str] = None
     visit_type: str = "nurse_visit"  # nurse_visit, vitals_only, daily_note
+    nurse_visit_type: Optional[str] = None  # rn_clinical_oversight, skilled_nursing_management, other
+    nurse_visit_type_other: Optional[str] = None
     organization: Optional[str] = None  # POSH-Able Living, Ebenezer Private Home Care
+    visit_location: Optional[str] = None  # home, day_program, other
+    visit_location_other: Optional[str] = None
     vital_signs: VitalSigns = VitalSigns()
     physical_assessment: PhysicalAssessment = PhysicalAssessment()
     head_to_toe: HeadToToeAssessment = HeadToToeAssessment()
