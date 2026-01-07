@@ -1634,6 +1634,7 @@ export default function NewVisitPage() {
                             <SelectValue placeholder="Select control level..." />
                           </SelectTrigger>
                           <SelectContent>
+                            <SelectItem value="no_constipation">The patient does not experience constipation</SelectItem>
                             <SelectItem value="well_controlled">Well controlled with no exacerbation</SelectItem>
                             <SelectItem value="moderately_controlled">Moderately controlled with diet</SelectItem>
                             <SelectItem value="poorly_controlled">Poorly controlled with exacerbation</SelectItem>
