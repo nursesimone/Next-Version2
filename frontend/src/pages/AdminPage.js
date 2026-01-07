@@ -957,11 +957,15 @@ export default function AdminPage() {
                   </Label>
                   {selectedNurse.assigned_organizations && selectedNurse.assigned_organizations.length > 0 ? (
                     <div className="flex flex-wrap gap-2">
-                      {selectedNurse.assigned_organizations.map((org, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm">
-                          {org}
-                        </span>
-                      ))}
+                      {selectedNurse.assigned_organizations.map((orgId, idx) => {
+                        // Find organization name from ID
+                        const org = organizations.find(o => o.id === orgId);
+                        return (
+                          <span key={idx} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm">
+                            {org ? org.name : orgId}
+                          </span>
+                        );
+                      })}
                     </div>
                   ) : (
                     <p className="text-sm text-slate-500 italic">No organizations assigned</p>
