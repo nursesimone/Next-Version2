@@ -59,6 +59,9 @@ export default function PatientDetailPage() {
   const [showDraftDialog, setShowDraftDialog] = useState(false);
   const [draftVisit, setDraftVisit] = useState(null);
   const [pendingVisitType, setPendingVisitType] = useState(null);
+  const [showDailyNotesModal, setShowDailyNotesModal] = useState(false);
+  const [dailyNotesData, setDailyNotesData] = useState([]);
+  const [loadingDailyNotes, setLoadingDailyNotes] = useState(false);
 
   useEffect(() => {
     fetchPatientData();
