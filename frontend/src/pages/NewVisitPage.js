@@ -34,6 +34,8 @@ import { toast } from 'sonner';
 const initialVisitData = {
   visit_date: new Date().toISOString().split('T')[0],
   visit_type: 'nurse_visit',
+  nurse_visit_type: '', // 'rn_clinical_oversight', 'skilled_nursing_management', 'other'
+  nurse_visit_type_other: '', // Details if 'other' selected
   organization: '',
   visit_location: '', // 'home', 'day_program', 'other'
   visit_location_other: '', // Details if 'other' selected
