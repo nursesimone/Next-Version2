@@ -138,10 +138,33 @@ class VitalSigns(BaseModel):
     repeat_blood_pressure_diastolic: Optional[str] = None
     bp_abnormal: Optional[bool] = False  # sys >= 140 or dia >= 90 or sys < 90 or dia < 60
 
+class SkinAssessment(BaseModel):
+    skin_turgor: Optional[str] = None
+    integrity_wnl: Optional[bool] = False
+    integrity_rash: Optional[bool] = False
+    integrity_discolored: Optional[bool] = False
+    integrity_bruised: Optional[bool] = False
+    integrity_burns: Optional[bool] = False
+    integrity_open_areas: Optional[bool] = False
+    integrity_lacerations: Optional[bool] = False
+    integrity_thick: Optional[bool] = False
+    integrity_thin: Optional[bool] = False
+    integrity_lesions_flat: Optional[bool] = False
+    integrity_lesions_raised: Optional[bool] = False
+    other_notes: Optional[str] = None
+
+class HeadNeckAssessment(BaseModel):
+    within_normal_limits: Optional[bool] = False
+    wounds: Optional[bool] = False
+    masses: Optional[bool] = False
+    alopecia: Optional[bool] = False
+    other: Optional[bool] = False
+    other_notes: Optional[str] = None
+
 class PhysicalAssessment(BaseModel):
     general_appearance: Optional[str] = None
     general_appearance_from_last: Optional[bool] = False  # Pull from last visit
-    skin_assessment: Optional[str] = None
+    skin_assessment: Optional[Union[str, SkinAssessment]] = None
     skin_assessment_from_last: Optional[bool] = False
     mobility_level: Optional[str] = None  # ambulatory, supervised, with_assistance, wheelchair, paralyzed, non_ambulatory
     mobility_level_from_last: Optional[bool] = False
