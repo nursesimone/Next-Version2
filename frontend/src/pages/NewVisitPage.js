@@ -284,13 +284,13 @@ export default function NewVisitPage() {
         console.log('No previous visits found');
       }
       
-      // Pre-fill height from last vitals (height should persist)
-      if (response.data.last_vitals?.height) {
+      // Pre-fill height from patient profile (height should persist from profile)
+      if (response.data.permanent_info?.height) {
         setVisitData(prev => ({
           ...prev,
           vital_signs: {
             ...prev.vital_signs,
-            height: response.data.last_vitals.height
+            height: response.data.permanent_info.height
           }
         }));
       }
