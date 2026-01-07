@@ -568,6 +568,9 @@ export default function AdminPage() {
                 </CardTitle>
                 <CardDescription>
                   Add and manage adult day program centers
+                  <div className="mt-1 font-semibold text-slate-700">
+                    Total Day Programs: {dayPrograms.length}
+                  </div>
                 </CardDescription>
               </div>
               <div className="flex items-center gap-2">
