@@ -70,12 +70,13 @@ export default function PatientDetailPage() {
 
   const fetchPatientData = async () => {
     try {
-      const [patientRes, visitsRes, interventionsRes, utcRes] = await Promise.all([
+      // Fetch patient and visits first (critical)
+      const [patientRes, visitsRes, utcRes] = await Promise.all([
         patientsAPI.get(patientId),
         visitsAPI.list(patientId),
-        interventionsAPI.list(patientId),
         unableToContactAPI.list(patientId)
       ]);
+      
       setPatient(patientRes.data);
       setProfileData(patientRes.data.permanent_info || {});
       
@@ -83,14 +84,24 @@ export default function PatientDetailPage() {
       const filteredVisits = visitsRes.data.filter(v => v.visit_type !== 'daily_note');
       setVisits(filteredVisits);
       
-      setInterventions(interventionsRes.data);
       setUnableToContactRecords(utcRes.data);
+      
+      // Fetch interventions separately (non-critical)
+      try {
+        const interventionsRes = await interventionsAPI.list(patientId);
+        setInterventions(interventionsRes.data);
+      } catch (err) {
+        console.log('Could not load interventions:', err);
+        setInterventions([]); // Set to empty array if fails
+      }
+      
       // Check if organization is custom (not one of the presets)
       const org = patientRes.data.permanent_info?.organization;
       if (org && org !== 'POSH Host Homes' && org !== 'Ebenezer Private HomeCare' && org !== 'Jericho') {
         setCustomOrganization(org);
       }
     } catch (error) {
+      console.error('Failed to load patient data:', error);
       toast.error('Failed to load patient data');
       navigate('/dashboard');
     } finally {
