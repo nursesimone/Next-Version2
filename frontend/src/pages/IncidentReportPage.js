@@ -451,27 +451,78 @@ export default function IncidentReportPage() {
                 </div>
 
                 {formData.involved_parties.resident && (
-                  <div className="ml-6 p-4 bg-slate-50 rounded border">
-                    <Label className="mb-2 block">Select Resident(s):</Label>
+                  <div className="ml-6 p-4 bg-slate-50 rounded border space-y-3">
+                    <Label className="block">Select Resident(s):</Label>
                     {formData.organization ? (
-                      <div className="space-y-2 max-h-40 overflow-y-auto">
-                        {getFilteredPatients().length > 0 ? (
-                          getFilteredPatients().map(patient => (
-                            <div key={patient.id} className="flex items-center space-x-2">
-                              <Checkbox
-                                id={`patient-${patient.id}`}
-                                checked={formData.involved_residents.includes(patient.id)}
-                                onCheckedChange={() => toggleResidentInvolved(patient.id)}
-                              />
-                              <Label htmlFor={`patient-${patient.id}`} className="font-normal cursor-pointer text-sm">
-                                {patient.full_name}
-                              </Label>
-                            </div>
-                          ))
-                        ) : (
-                          <p className="text-sm text-slate-500">No residents found for {formData.organization}</p>
+                      <>
+                        <Popover open={openResidentSelect} onOpenChange={setOpenResidentSelect}>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              aria-expanded={openResidentSelect}
+                              className="w-full justify-between h-auto min-h-[40px]"
+                            >
+                              <span className="text-left flex-1">
+                                {formData.involved_residents.length > 0
+                                  ? `${formData.involved_residents.length} resident(s) selected`
+                                  : "Select residents..."}
+                              </span>
+                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-full p-0" align="start">
+                            <Command>
+                              <CommandInput placeholder="Search residents..." />
+                              <CommandList>
+                                <CommandEmpty>No resident found.</CommandEmpty>
+                                <CommandGroup>
+                                  {getFilteredPatients().map((patient) => (
+                                    <CommandItem
+                                      key={patient.id}
+                                      value={patient.full_name}
+                                      onSelect={() => {
+                                        toggleResidentInvolved(patient.id);
+                                      }}
+                                    >
+                                      <Check
+                                        className={cn(
+                                          "mr-2 h-4 w-4",
+                                          formData.involved_residents.includes(patient.id)
+                                            ? "opacity-100"
+                                            : "opacity-0"
+                                        )}
+                                      />
+                                      {patient.full_name}
+                                    </CommandItem>
+                                  ))}
+                                </CommandGroup>
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                        
+                        {/* Selected Residents as Badges */}
+                        {formData.involved_residents.length > 0 && (
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            {formData.involved_residents.map((residentId) => {
+                              const resident = patients.find(p => p.id === residentId);
+                              return resident ? (
+                                <Badge key={residentId} variant="secondary" className="text-sm">
+                                  {resident.full_name}
+                                  <button
+                                    type="button"
+                                    onClick={() => toggleResidentInvolved(residentId)}
+                                    className="ml-1 hover:text-destructive"
+                                  >
+                                    <X className="h-3 w-3" />
+                                  </button>
+                                </Badge>
+                              ) : null;
+                            })}
+                          </div>
                         )}
-                      </div>
+                      </>
                     ) : (
                       <p className="text-sm text-slate-500">Please select an organization first</p>
                     )}
