@@ -148,6 +148,13 @@ export default function InterventionPage() {
     }));
   };
 
+  const updateOther = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      other_details: { ...prev.other_details, [field]: value }
+    }));
+  };
+
   const validateForm = () => {
     if (!formData.location) {
       toast.error('Please select the location');
