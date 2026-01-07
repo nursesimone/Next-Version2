@@ -17,16 +17,21 @@ from bson import ObjectId
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
+# Configure logging FIRST (before any logging calls)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
 # JWT Configuration
-try:
-    JWT_SECRET = os.environ['JWT_SECRET']
-except KeyError:
-    JWT_SECRET = 'nurse-visit-secret-key-2024'  # Fallback for development only
+JWT_SECRET = os.environ.get('JWT_SECRET', 'nurse-visit-secret-key-2024')
+if JWT_SECRET == 'nurse-visit-secret-key-2024':
     logger.warning("JWT_SECRET not found in environment variables, using default (NOT SECURE FOR PRODUCTION)")
 JWT_ALGORITHM = "HS256"
 
