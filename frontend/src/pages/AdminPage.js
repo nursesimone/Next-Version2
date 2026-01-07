@@ -1011,7 +1011,14 @@ export default function AdminPage() {
                       ))}
                     </div>
                   ) : (
-                    <p className="text-sm text-slate-500 italic">All forms allowed (default)</p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-3 py-1 bg-green-50 text-green-700 rounded text-sm">Nurse Visit</span>
+                      <span className="px-3 py-1 bg-green-50 text-green-700 rounded text-sm">Vitals Only</span>
+                      <span className="px-3 py-1 bg-green-50 text-green-700 rounded text-sm">Daily Note</span>
+                      <span className="px-3 py-1 bg-green-50 text-green-700 rounded text-sm">Intervention</span>
+                      <span className="px-3 py-1 bg-green-50 text-green-700 rounded text-sm">Unable to Contact</span>
+                      <p className="text-xs text-slate-500 italic w-full mt-1">(All forms allowed by default)</p>
+                    </div>
                   )}
                 </div>
               </div>
