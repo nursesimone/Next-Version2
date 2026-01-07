@@ -44,6 +44,7 @@ export default function InterventionPage() {
     body_temperature: '',
     mood_scale: null,
     intervention_type: 'injection',
+    intervention_type_other: '',
     injection_details: {
       is_vaccination: true,
       vaccination_type: '',
@@ -76,6 +77,10 @@ export default function InterventionPage() {
       body_site: '',
       suture_count: '',
       ear_side: '',
+      notes: ''
+    },
+    other_details: {
+      description: '',
       notes: ''
     },
     verified_patient_identity: false,
