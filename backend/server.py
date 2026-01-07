@@ -1135,9 +1135,16 @@ async def create_unable_to_contact(data: UnableToContactCreate, nurse: dict = De
 
 @api_router.get("/patients/{patient_id}/unable-to-contact", response_model=List[UnableToContactResponse])
 async def list_unable_to_contact(patient_id: str, nurse: dict = Depends(get_current_nurse)):
-    patient = await db.patients.find_one({"id": patient_id, "nurse_id": nurse["id"]})
+    # Check if patient exists (admins can see all patients, regular nurses need to be assigned)
+    patient = await db.patients.find_one({"id": patient_id}, {"_id": 0})
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found")
+    
+    # If not admin, verify nurse is assigned to this patient
+    if not nurse.get("is_admin", False):
+        assigned_nurses = patient.get("assigned_nurses", [])
+        if nurse["id"] not in assigned_nurses:
+            raise HTTPException(status_code=403, detail="Not authorized to view this patient's records")
     
     records = await db.unable_to_contact.find({"patient_id": patient_id}, {"_id": 0}).sort("attempt_date", -1).to_list(1000)
     for r in records:
