@@ -539,27 +539,78 @@ export default function IncidentReportPage() {
                 </div>
 
                 {formData.involved_parties.staff && (
-                  <div className="ml-6 p-4 bg-slate-50 rounded border">
-                    <Label className="mb-2 block">Select Staff Member(s):</Label>
+                  <div className="ml-6 p-4 bg-slate-50 rounded border space-y-3">
+                    <Label className="block">Select Staff Member(s):</Label>
                     {formData.organization ? (
-                      <div className="space-y-2 max-h-40 overflow-y-auto">
-                        {getFilteredStaff().length > 0 ? (
-                          getFilteredStaff().map(staffMember => (
-                            <div key={staffMember.id} className="flex items-center space-x-2">
-                              <Checkbox
-                                id={`staff-${staffMember.id}`}
-                                checked={formData.involved_staff.includes(staffMember.id)}
-                                onCheckedChange={() => toggleStaffInvolved(staffMember.id)}
-                              />
-                              <Label htmlFor={`staff-${staffMember.id}`} className="font-normal cursor-pointer text-sm">
-                                {staffMember.full_name} ({staffMember.title})
-                              </Label>
-                            </div>
-                          ))
-                        ) : (
-                          <p className="text-sm text-slate-500">No staff found for {formData.organization}</p>
+                      <>
+                        <Popover open={openStaffSelect} onOpenChange={setOpenStaffSelect}>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              aria-expanded={openStaffSelect}
+                              className="w-full justify-between h-auto min-h-[40px]"
+                            >
+                              <span className="text-left flex-1">
+                                {formData.involved_staff.length > 0
+                                  ? `${formData.involved_staff.length} staff member(s) selected`
+                                  : "Select staff members..."}
+                              </span>
+                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-full p-0" align="start">
+                            <Command>
+                              <CommandInput placeholder="Search staff..." />
+                              <CommandList>
+                                <CommandEmpty>No staff member found.</CommandEmpty>
+                                <CommandGroup>
+                                  {getFilteredStaff().map((staffMember) => (
+                                    <CommandItem
+                                      key={staffMember.id}
+                                      value={`${staffMember.full_name} ${staffMember.title}`}
+                                      onSelect={() => {
+                                        toggleStaffInvolved(staffMember.id);
+                                      }}
+                                    >
+                                      <Check
+                                        className={cn(
+                                          "mr-2 h-4 w-4",
+                                          formData.involved_staff.includes(staffMember.id)
+                                            ? "opacity-100"
+                                            : "opacity-0"
+                                        )}
+                                      />
+                                      {staffMember.full_name} ({staffMember.title})
+                                    </CommandItem>
+                                  ))}
+                                </CommandGroup>
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                        
+                        {/* Selected Staff as Badges */}
+                        {formData.involved_staff.length > 0 && (
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            {formData.involved_staff.map((staffId) => {
+                              const staffMember = staff.find(s => s.id === staffId);
+                              return staffMember ? (
+                                <Badge key={staffId} variant="secondary" className="text-sm">
+                                  {staffMember.full_name} ({staffMember.title})
+                                  <button
+                                    type="button"
+                                    onClick={() => toggleStaffInvolved(staffId)}
+                                    className="ml-1 hover:text-destructive"
+                                  >
+                                    <X className="h-3 w-3" />
+                                  </button>
+                                </Badge>
+                              ) : null;
+                            })}
+                          </div>
                         )}
-                      </div>
+                      </>
                     ) : (
                       <p className="text-sm text-slate-500">Please select an organization first</p>
                     )}
