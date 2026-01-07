@@ -828,86 +828,142 @@ export default function PatientDetailPage() {
 
           {/* Visits Tab */}
           <TabsContent value="visits" className="space-y-4">
-            {visits.length === 0 ? (
+            {visits.length === 0 && interventions.length === 0 ? (
               <Card className="bg-white border-slate-100">
                 <CardContent className="py-12">
                   <div className="empty-state">
                     <FileText className="empty-state-icon" />
-                    <h3 className="empty-state-title">No visits recorded</h3>
+                    <h3 className="empty-state-title">No visits or interventions recorded</h3>
                     <p className="empty-state-description">
-                      Start documenting this patient's visits by clicking the "New Visit" button above.
+                      Start documenting this patient's visits by clicking the "New Visit" or "Intervention" button above.
                     </p>
                   </div>
                 </CardContent>
               </Card>
             ) : (
-              visits.map(visit => (
-                <Card 
-                  key={visit.id} 
-                  className="bg-white border-slate-100 hover:border-eggplant-200 transition-all"
-                  data-testid={`visit-card-${visit.id}`}
-                >
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between">
-                      <div 
-                        className="flex items-center gap-4 flex-1 cursor-pointer"
-                        onClick={() => navigate(`/visits/${visit.id}`)}
-                      >
-                        <div className="w-12 h-12 bg-eggplant-50 rounded-xl flex items-center justify-center">
-                          <Activity className="w-6 h-6 text-eggplant-700" />
+              <>
+                {/* Visits */}
+                {visits.map(visit => (
+                  <Card 
+                    key={`visit-${visit.id}`}
+                    className="bg-white border-slate-100 hover:border-eggplant-200 transition-all"
+                    data-testid={`visit-card-${visit.id}`}
+                  >
+                    <CardContent className="p-6">
+                      <div className="flex items-start justify-between">
+                        <div 
+                          className="flex items-center gap-4 flex-1 cursor-pointer"
+                          onClick={() => navigate(`/visits/${visit.id}`)}
+                        >
+                          <div className="w-12 h-12 bg-eggplant-50 rounded-xl flex items-center justify-center">
+                            <Activity className="w-6 h-6 text-eggplant-700" />
+                          </div>
+                          <div>
+                            <p className="font-medium text-slate-900">
+                              {visit.visit_type === 'nurse_visit' ? 'Nurse Visit' : 'Vitals Only'} on {formatDateTime(visit.visit_date)}
+                            </p>
+                            <div className="flex flex-wrap gap-2 mt-2">
+                              {visit.vital_signs?.blood_pressure_systolic && (
+                                <span className="bg-slate-100 px-2 py-1 rounded text-xs font-mono">
+                                  BP: {visit.vital_signs.blood_pressure_systolic}/{visit.vital_signs.blood_pressure_diastolic}
+                                </span>
+                              )}
+                              {visit.vital_signs?.pulse && (
+                                <span className="bg-slate-100 px-2 py-1 rounded text-xs font-mono">
+                                  HR: {visit.vital_signs.pulse}
+                                </span>
+                              )}
+                              {visit.vital_signs?.body_temperature && (
+                                <span className="bg-slate-100 px-2 py-1 rounded text-xs font-mono">
+                                  Temp: {visit.vital_signs.body_temperature}
+                                </span>
+                              )}
+                              {visit.overall_health_status && (
+                                <span className={`px-2 py-1 rounded text-xs font-medium ${getHealthStatusColor(visit.overall_health_status)}`}>
+                                  {visit.overall_health_status}
+                                </span>
+                              )}
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-medium text-slate-900">
-                            Visit on {formatDateTime(visit.visit_date)}
-                          </p>
-                          <div className="flex flex-wrap gap-2 mt-2">
-                            {visit.vital_signs?.blood_pressure_systolic && (
-                              <span className="bg-slate-100 px-2 py-1 rounded text-xs font-mono">
-                                BP: {visit.vital_signs.blood_pressure_systolic}/{visit.vital_signs.blood_pressure_diastolic}
-                              </span>
-                            )}
-                            {visit.vital_signs?.pulse && (
-                              <span className="bg-slate-100 px-2 py-1 rounded text-xs font-mono">
-                                HR: {visit.vital_signs.pulse}
-                              </span>
-                            )}
-                            {visit.vital_signs?.body_temperature && (
-                              <span className="bg-slate-100 px-2 py-1 rounded text-xs font-mono">
-                                Temp: {visit.vital_signs.body_temperature}
-                              </span>
-                            )}
-                            {visit.overall_health_status && (
-                              <span className={`px-2 py-1 rounded text-xs font-medium ${getHealthStatusColor(visit.overall_health_status)}`}>
-                                {visit.overall_health_status}
-                              </span>
-                            )}
+                        <div className="flex items-center gap-3">
+                          {(visit.visit_type === 'nurse_visit' || visit.visit_type === 'vitals_only') && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/visits/${visit.id}`);
+                              }}
+                              className="text-eggplant-700"
+                            >
+                              <FileText className="w-4 h-4 mr-1" />
+                              View PDF
+                            </Button>
+                          )}
+                          <div className="text-slate-400 text-sm flex items-center gap-1">
+                            <Clock className="w-4 h-4" />
+                            {formatDate(visit.created_at)}
                           </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        {(visit.visit_type === 'nurse_visit' || visit.visit_type === 'vitals_only') && (
+                    </CardContent>
+                  </Card>
+                ))}
+                
+                {/* Interventions */}
+                {interventions.map(intervention => (
+                  <Card 
+                    key={`intervention-${intervention.id}`}
+                    className="bg-white border-slate-100 hover:border-blue-200 transition-all"
+                    data-testid={`intervention-card-${intervention.id}`}
+                  >
+                    <CardContent className="p-6">
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center gap-4 flex-1">
+                          <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center">
+                            <Syringe className="w-6 h-6 text-blue-700" />
+                          </div>
+                          <div>
+                            <p className="font-medium text-slate-900">
+                              {intervention.intervention_type.charAt(0).toUpperCase() + intervention.intervention_type.slice(1)} on {formatDateTime(intervention.intervention_date)}
+                            </p>
+                            <div className="flex flex-wrap gap-2 mt-2">
+                              <span className="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-medium">
+                                {intervention.location === 'home' ? 'Home' : 'Adult Day Center'}
+                              </span>
+                              {intervention.body_temperature && (
+                                <span className="bg-slate-100 px-2 py-1 rounded text-xs font-mono">
+                                  Temp: {intervention.body_temperature}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
                           <Button
                             size="sm"
                             variant="outline"
                             onClick={(e) => {
                               e.stopPropagation();
-                              navigate(`/visits/${visit.id}`);
+                              // TODO: Generate intervention PDF
+                              toast.info('PDF generation for interventions coming soon');
                             }}
-                            className="text-eggplant-700"
+                            className="text-blue-700"
                           >
                             <FileText className="w-4 h-4 mr-1" />
                             View PDF
                           </Button>
-                        )}
-                        <div className="text-slate-400 text-sm flex items-center gap-1">
-                          <Clock className="w-4 h-4" />
-                          {formatDate(visit.created_at)}
+                          <div className="text-slate-400 text-sm flex items-center gap-1">
+                            <Clock className="w-4 h-4" />
+                            {formatDate(intervention.created_at)}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))
+                    </CardContent>
+                  </Card>
+                ))}
+              </>
             )}
           </TabsContent>
 
