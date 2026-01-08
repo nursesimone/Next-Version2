@@ -30,6 +30,13 @@ import { cn } from '../lib/utils';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
+// Helper function to get current date in Eastern Time
+const getEasternDate = () => {
+  const now = new Date();
+  const easternDate = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+  return easternDate.toISOString().split('T')[0];
+};
+
 export default function IncidentReportPage() {
   const navigate = useNavigate();
   const { nurse } = useAuth();
@@ -41,7 +48,7 @@ export default function IncidentReportPage() {
   
   const [formData, setFormData] = useState({
     organization: '',
-    incident_date: new Date().toISOString().split('T')[0],
+    incident_date: getEasternDate(),
     incident_time: '',
     involved_parties: {
       resident: false,
