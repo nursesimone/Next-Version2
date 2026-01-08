@@ -67,6 +67,7 @@ export default function IncidentReportPage() {
     description: '',
     severity: '3',
     officials_called: {
+      none: false,
       police: false,
       fire: false,
       emt: false,
