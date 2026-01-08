@@ -290,7 +290,11 @@ class VisitResponse(BaseModel):
     nurse_id: str
     visit_date: str
     visit_type: str = "nurse_visit"
+    nurse_visit_type: Optional[str] = None
+    nurse_visit_type_other: Optional[str] = None
     organization: Optional[str] = None
+    visit_location: Optional[str] = None
+    visit_location_other: Optional[str] = None
     vital_signs: VitalSigns
     physical_assessment: PhysicalAssessment
     head_to_toe: HeadToToeAssessment
