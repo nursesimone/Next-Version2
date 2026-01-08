@@ -123,19 +123,11 @@ const initialVisitData = {
     mouth_teeth_oral_cavity: {
       no_issues: false,
       dentures: false,
-      dentures_type: '',  // Initialize as empty string, not undefined
+      dentures_type: '',  // 'upper', 'lower', 'partial', 'full'
       poor_dentition: false,
       mouth_sores: false,
       dry_mouth: false,
       thrush: false,
-      other: false,
-      other_notes: ''
-    },
-      dentures_type: [], // 'full', 'uppers', 'lowers', 'partials'
-      missing_teeth: false,
-      toothaches: false,
-      gingivitis: false,
-      ulcerations: false,
       other: false,
       other_notes: ''
     },
