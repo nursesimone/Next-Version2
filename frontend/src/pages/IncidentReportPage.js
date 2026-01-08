@@ -804,6 +804,7 @@ export default function IncidentReportPage() {
                 <Label className="mb-2 block">Which officials, if any, were called out to the incident?</Label>
                 <div className="space-y-2">
                   {[
+                    { id: 'none', label: 'None' },
                     { id: 'police', label: 'Police' },
                     { id: 'fire', label: 'Fire Department' },
                     { id: 'emt', label: 'EMT/Ambulance' },
