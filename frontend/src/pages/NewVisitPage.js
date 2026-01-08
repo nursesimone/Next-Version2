@@ -750,6 +750,13 @@ export default function NewVisitPage() {
                 <CardDescription>Review and check required home environment items</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
+                {/* Debug: Show current visit location */}
+                {process.env.NODE_ENV === 'development' && (
+                  <div className="text-xs text-slate-500 mb-2">
+                    Debug: visit_location = "{visitData.visit_location}"
+                  </div>
+                )}
+                
                 {visitData.visit_location === 'day_program' ? (
                   // Show prefilled message when seen at day program
                   <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
