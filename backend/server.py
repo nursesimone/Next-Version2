@@ -221,7 +221,7 @@ class HeadToToeAssessment(BaseModel):
     eyes_vision_from_last: Optional[bool] = False
     ears_hearing: Optional[EarsHearingAssessment] = None
     ears_hearing_from_last: Optional[bool] = False
-    nose_nasal_cavity: Optional[str] = None
+    nose_nasal_cavity: Optional[str] = ""
     nose_nasal_cavity_from_last: Optional[bool] = False
     mouth_teeth_oral_cavity: Optional[MouthOralAssessment] = None
     mouth_teeth_oral_cavity_from_last: Optional[bool] = False
