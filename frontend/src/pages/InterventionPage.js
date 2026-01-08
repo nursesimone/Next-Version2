@@ -243,6 +243,7 @@ export default function InterventionPage() {
                 </div>
                 <div>
                   <h1 className="font-bold text-slate-900">Patient Intervention</h1>
+                  <p className="text-sm text-slate-600">Patient: <span className="font-semibold text-slate-900">{patient?.full_name}</span></p>
                 </div>
               </div>
             </div>
