@@ -858,6 +858,22 @@ export default function PatientDetailPage() {
                           </div>
                         )}
                       </div>
+
+                      <div>
+                        <Label className="text-slate-500">Additional Information</Label>
+                        <p className="text-xs text-slate-400 mb-1">Employment, hobbies, favorite things, foods, siblings, etc.</p>
+                        {editingProfile ? (
+                          <Textarea
+                            value={profileData.additional_info || ''}
+                            onChange={(e) => handleProfileChange('additional_info', e.target.value)}
+                            className="mt-1"
+                            placeholder="e.g., Works at local grocery store, loves painting, enjoys chocolate ice cream, has two sisters..."
+                            rows={4}
+                          />
+                        ) : (
+                          <p className="text-slate-900 mt-1 whitespace-pre-wrap">{profileData.additional_info || 'Not provided'}</p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
