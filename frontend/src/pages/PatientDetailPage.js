@@ -1130,15 +1130,10 @@ export default function PatientDetailPage() {
       <Dialog open={showDailyNotesModal} onOpenChange={setShowDailyNotesModal}>
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl">Daily Notes Report</DialogTitle>
-            <DialogDescription>
-              <div className="text-base mt-2">
-                <p className="font-semibold text-slate-900">{patient?.full_name}</p>
-                <p className="text-slate-600">
-                  {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
-                </p>
-              </div>
-            </DialogDescription>
+            <DialogTitle className="text-xl flex items-center justify-between">
+              <span>Daily Notes for {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</span>
+              <span className="font-bold">{patient?.full_name}</span>
+            </DialogTitle>
           </DialogHeader>
           
           <div className="mt-4 space-y-4">
