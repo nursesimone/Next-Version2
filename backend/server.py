@@ -206,13 +206,13 @@ class EarsHearingAssessment(BaseModel):
 class MouthOralAssessment(BaseModel):
     no_issues: Optional[bool] = False
     dentures: Optional[bool] = False
-    dentures_type: Optional[str] = None  # 'upper', 'lower', 'partial', 'full'
+    dentures_type: Optional[str] = ""  # 'upper', 'lower', 'partial', 'full'
     poor_dentition: Optional[bool] = False
     mouth_sores: Optional[bool] = False
     dry_mouth: Optional[bool] = False
     thrush: Optional[bool] = False
     other: Optional[bool] = False
-    other_notes: Optional[str] = None
+    other_notes: Optional[str] = ""
 
 class HeadToToeAssessment(BaseModel):
     head_neck: Optional[HeadNeckAssessment] = None
