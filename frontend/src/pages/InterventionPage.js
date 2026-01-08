@@ -33,13 +33,21 @@ export default function InterventionPage() {
   const { patientId } = useParams();
   const navigate = useNavigate();
   const { nurse } = useAuth();
+  
   const [patient, setPatient] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
+  // Helper function to get current date in Eastern Time
+  const getEasternDate = () => {
+    const now = new Date();
+    const easternDate = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+    return easternDate.toISOString().split('T')[0];
+  };
+
   const [formData, setFormData] = useState({
     patient_id: patientId,
-    intervention_date: new Date().toISOString().split('T')[0],
+    intervention_date: getEasternDate(),
     location: '',
     body_temperature: '',
     mood_scale: null,
