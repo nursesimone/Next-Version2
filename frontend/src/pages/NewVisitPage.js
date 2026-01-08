@@ -2281,7 +2281,13 @@ export default function NewVisitPage() {
               data-testid="submit-visit-btn"
             >
               <Save className="w-5 h-5 mr-2" />
-              {saving ? 'Saving Visit...' : 'Complete Visit'}
+              {saving 
+                ? 'Saving...' 
+                : visitType === 'daily_note' 
+                  ? 'Save Note' 
+                  : visitType === 'vitals_only'
+                    ? 'Record Vitals'
+                    : 'Complete Visit'}
             </Button>
           </div>
         </form>
