@@ -257,12 +257,13 @@ export default function IncidentReportPage() {
     y += lineHeight;
     doc.setFont('helvetica', 'normal');
     const officials = [];
+    if (formData.officials_called.none) officials.push('None');
     if (formData.officials_called.police) officials.push('Police');
     if (formData.officials_called.fire) officials.push('Fire Department');
     if (formData.officials_called.emt) officials.push('EMT/Ambulance');
     if (formData.officials_called.gcal) officials.push('GCAL');
     if (formData.officials_called.other) officials.push('Other');
-    doc.text(officials.length > 0 ? officials.join(', ') : 'None', margin + 5, y);
+    doc.text(officials.length > 0 ? officials.join(', ') : 'None specified', margin + 5, y);
     y += lineHeight * 2;
 
     // Outcome
