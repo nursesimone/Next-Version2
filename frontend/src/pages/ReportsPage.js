@@ -175,6 +175,12 @@ export default function ReportsPage() {
     // Report period (flush right)
     const reportPeriod = `Report Period: ${reportData.summary.start_date} - ${reportData.summary.end_date}`;
     doc.text(reportPeriod, pageWidth - margin, y, { align: 'right' });
+    y += 8;
+    
+    // ============ SEPARATOR LINE BEFORE ENTRIES ============
+    doc.setDrawColor(180);
+    doc.setLineWidth(0.3);
+    doc.line(margin, y, pageWidth - margin, y);
     y += 10;
 
     doc.setTextColor(0); // Reset to black for entries
