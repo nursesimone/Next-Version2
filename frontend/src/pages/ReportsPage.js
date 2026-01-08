@@ -125,25 +125,33 @@ export default function ReportsPage() {
     // Month name
     const monthName = months.find(m => m.value === selectedMonth)?.label;
 
-    // ============ HEADER (3 Lines) ============
-    doc.setFontSize(16);
-    doc.setFont('helvetica', 'bold');
+    // ============ HEADER ============
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'normal');
     doc.setTextColor(60);
     
-    // Line 1: Report Name
-    doc.text(getVisitTypeLabel(selectedVisitType), pageWidth / 2, y, { align: 'center' });
-    y += 8;
-    
-    // Line 2: Patient Name
-    doc.setFontSize(14);
-    doc.text(patientName, pageWidth / 2, y, { align: 'center' });
-    y += 8;
-    
-    // Line 3: Month
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'normal');
-    doc.text(`${monthName} ${selectedYear}`, pageWidth / 2, y, { align: 'center' });
-    y += 10;
+    // For Daily Notes: "Daily Notes for Month Year" (left) and Patient Name (right, bold)
+    if (selectedVisitType === 'daily_note') {
+      doc.text(`Daily Notes for ${monthName} ${selectedYear}`, margin, y);
+      doc.setFont('helvetica', 'bold');
+      doc.text(patientName, pageWidth - margin, y, { align: 'right' });
+      y += 10;
+    } else {
+      // For other reports: centered format
+      doc.setFontSize(16);
+      doc.setFont('helvetica', 'bold');
+      doc.text(getVisitTypeLabel(selectedVisitType), pageWidth / 2, y, { align: 'center' });
+      y += 8;
+      
+      doc.setFontSize(14);
+      doc.text(patientName, pageWidth / 2, y, { align: 'center' });
+      y += 8;
+      
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`${monthName} ${selectedYear}`, pageWidth / 2, y, { align: 'center' });
+      y += 10;
+    }
 
     // ============ SEPARATOR LINE ============
     doc.setDrawColor(60);
