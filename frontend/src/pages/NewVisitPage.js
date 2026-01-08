@@ -31,8 +31,15 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 
+// Helper function to get current date in Eastern Time
+const getEasternDate = () => {
+  const now = new Date();
+  const easternDate = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+  return easternDate.toISOString().split('T')[0];
+};
+
 const initialVisitData = {
-  visit_date: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }).split(',')[0].split('/').map(n => n.padStart(2, '0')).reverse().join('-').replace(/(\d{2})-(\d{2})-(\d{4})/, '$3-$1-$2'),
+  visit_date: getEasternDate(),
   visit_type: 'nurse_visit',
   nurse_visit_type: '', // 'rn_clinical_oversight', 'skilled_nursing_management', 'other'
   nurse_visit_type_other: '', // Details if 'other' selected
