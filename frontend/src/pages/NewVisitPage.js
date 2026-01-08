@@ -404,14 +404,39 @@ export default function NewVisitPage() {
         }
       }
       
-      await visitsAPI.create(patientId, submitData);
+      console.log('Submitting visit data:', submitData);
+      
+      const response = await visitsAPI.create(patientId, submitData);
+      console.log('Visit save response:', response);
+      
       toast.success(saveAs === 'draft' ? 'Visit saved as draft' : 'Visit completed successfully');
-      navigate(`/patients/${patientId}`);
+      
+      // Add a small delay before navigation to ensure UI updates
+      setTimeout(() => {
+        navigate(`/patients/${patientId}`);
+      }, 500);
+      
     } catch (error) {
-      console.error('Failed to save visit:', error);
-      console.error('Error response:', error.response?.data);
-      const errorMessage = error.response?.data?.detail || 'Failed to save visit';
-      toast.error(errorMessage);
+      console.error('Failed to save visit - Full error:', error);
+      console.error('Error response:', error.response);
+      console.error('Error response data:', error.response?.data);
+      
+      let errorMessage = 'Failed to save visit';
+      
+      if (error.response?.data?.detail) {
+        if (typeof error.response.data.detail === 'string') {
+          errorMessage = error.response.data.detail;
+        } else if (Array.isArray(error.response.data.detail)) {
+          // Pydantic validation errors
+          errorMessage = error.response.data.detail.map(e => `${e.loc?.join('.')}: ${e.msg}`).join(', ');
+        }
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      toast.error(errorMessage, { duration: 5000 });
+      
+      // Don't navigate on error - stay on form
     } finally {
       setSaving(false);
     }
