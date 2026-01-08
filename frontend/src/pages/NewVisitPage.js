@@ -32,7 +32,7 @@ import {
 import { toast } from 'sonner';
 
 const initialVisitData = {
-  visit_date: new Date().toISOString().split('T')[0],
+  visit_date: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }).split(',')[0].split('/').map(n => n.padStart(2, '0')).reverse().join('-').replace(/(\d{2})-(\d{2})-(\d{4})/, '$3-$1-$2'),
   visit_type: 'nurse_visit',
   nurse_visit_type: '', // 'rn_clinical_oversight', 'skilled_nursing_management', 'other'
   nurse_visit_type_other: '', // Details if 'other' selected
