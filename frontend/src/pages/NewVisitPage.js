@@ -118,21 +118,19 @@ const initialVisitData = {
       other_notes: ''
     },
     ears_hearing_from_last: false,
-    nose_nasal_cavity: {
-      no_issues: false,
-      congestion: false,
-      loss_of_smell: false,
-      sinus_issues: false,
-      runny_nose: false,
-      nose_bleeds: false,
-      other: false,
-      other_notes: ''
-    },
+    nose_nasal_cavity: '',  // Backend expects string, not object
     nose_nasal_cavity_from_last: false,
     mouth_teeth_oral_cavity: {
       no_issues: false,
-      no_teeth: false,
       dentures: false,
+      dentures_type: '',  // Initialize as empty string, not undefined
+      poor_dentition: false,
+      mouth_sores: false,
+      dry_mouth: false,
+      thrush: false,
+      other: false,
+      other_notes: ''
+    },
       dentures_type: [], // 'full', 'uppers', 'lowers', 'partials'
       missing_teeth: false,
       toothaches: false,
