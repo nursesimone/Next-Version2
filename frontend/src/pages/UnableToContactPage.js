@@ -39,10 +39,17 @@ export default function UnableToContactPage() {
     }
   };
 
+  // Helper function to get current date in Eastern Time
+  const getEasternDate = () => {
+    const now = new Date();
+    const easternDate = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+    return easternDate.toISOString().split('T')[0];
+  };
+
   const [formData, setFormData] = useState({
     patient_id: patientId,
     visit_type: visitType,
-    attempt_date: new Date().toISOString().split('T')[0],
+    attempt_date: getEasternDate(),
     attempt_time: new Date().toTimeString().slice(0, 5),
     attempt_reason: '', // New field: reason for attempted visit
     attempt_location: '',
