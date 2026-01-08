@@ -320,7 +320,7 @@ export default function IncidentReportPage() {
       // Reset form
       setFormData({
         organization: '',
-        incident_date: new Date().toISOString().split('T')[0],
+        incident_date: getEasternDate(),
         incident_time: '',
         involved_parties: {
           resident: false,
