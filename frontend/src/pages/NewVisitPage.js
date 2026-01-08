@@ -236,12 +236,45 @@ export default function NewVisitPage() {
 
   const loadDraft = async (draftId) => {
     try {
+      console.log('Loading draft with ID:', draftId);
       const response = await visitsAPI.getById(draftId);
+      console.log('Draft response:', response.data);
       const draft = response.data;
-      setVisitData(draft);
+      
+      // Ensure all required nested objects exist with proper defaults
+      const loadedData = {
+        ...draft,
+        nurse_visit_type: draft.nurse_visit_type || '',
+        nurse_visit_type_other: draft.nurse_visit_type_other || '',
+        visit_location: draft.visit_location || '',
+        visit_location_other: draft.visit_location_other || '',
+        vital_signs: draft.vital_signs || initialVisitData.vital_signs,
+        physical_assessment: draft.physical_assessment || initialVisitData.physical_assessment,
+        head_to_toe: {
+          ...initialVisitData.head_to_toe,
+          ...draft.head_to_toe,
+          nose_nasal_cavity: draft.head_to_toe?.nose_nasal_cavity || '',
+          mouth_teeth_oral_cavity: {
+            ...initialVisitData.head_to_toe.mouth_teeth_oral_cavity,
+            ...(draft.head_to_toe?.mouth_teeth_oral_cavity || {}),
+            dentures_type: draft.head_to_toe?.mouth_teeth_oral_cavity?.dentures_type || ''
+          }
+        },
+        gastrointestinal: draft.gastrointestinal || initialVisitData.gastrointestinal,
+        genito_urinary: draft.genito_urinary || initialVisitData.genito_urinary,
+        respiratory: draft.respiratory || initialVisitData.respiratory,
+        endocrine: draft.endocrine || initialVisitData.endocrine,
+        changes_since_last: draft.changes_since_last || initialVisitData.changes_since_last,
+        home_visit_logbook: draft.home_visit_logbook || initialVisitData.home_visit_logbook
+      };
+      
+      setVisitData(loadedData);
       toast.success('Draft loaded successfully');
     } catch (error) {
-      toast.error('Failed to load draft');
+      console.error('Failed to load draft:', error);
+      console.error('Error details:', error.response?.data);
+      toast.error('Failed to load draft - starting with blank form');
+      // Don't fail completely - just start with a new form
     }
   };
 
