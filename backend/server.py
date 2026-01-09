@@ -352,6 +352,7 @@ class ProcedureDetails(BaseModel):
 class InterventionCreate(BaseModel):
     patient_id: str
     intervention_date: str
+    intervention_time: Optional[str] = None  # NEW: Time field
     location: str  # home, adult_day_center
     body_temperature: Optional[str] = None
     mood_scale: Optional[int] = None  # 1-5
