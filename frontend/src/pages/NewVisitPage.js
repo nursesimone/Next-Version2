@@ -151,7 +151,9 @@ const initialVisitData = {
     constipation_control: '' // 'well_controlled', 'moderately_controlled', 'poorly_controlled'
   },
   genito_urinary: {
-    toileting_level: ''
+    toileting_level: '',
+    catheter_type: '', // 'urethral', 'suprapubic', 'external'
+    diaper_worn: '' // '100% of the time', 'While Sleeping (HS)'
   },
   respiratory: {
     lung_sounds: '',
