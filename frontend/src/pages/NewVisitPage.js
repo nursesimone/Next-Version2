@@ -35,7 +35,7 @@ import { toast } from 'sonner';
 const LogbookCheckItem = ({ label, item, data, onChange }) => {
   return (
     <div className="space-y-2">
-      <div className="font-medium text-sm text-slate-700">{label}</div>
+      <div className="font-semibold text-sm text-eggplant-700">{label}</div>
       <div className="flex items-center gap-6 ml-4">
         <div className="flex items-center gap-2">
           <Checkbox
