@@ -96,9 +96,11 @@ export default function PatientDetailPage() {
       setPatient(patientRes.data);
       setProfileData(patientRes.data.permanent_info || {});
       
-      // Filter out daily_note visits from Visit History
+      // Separate daily_note visits from regular visits
       const filteredVisits = visitsRes.data.filter(v => v.visit_type !== 'daily_note');
+      const dailyNotesList = visitsRes.data.filter(v => v.visit_type === 'daily_note');
       setVisits(filteredVisits);
+      setDailyNotesData(dailyNotesList);
       
       setUnableToContactRecords(utcRes.data);
       
