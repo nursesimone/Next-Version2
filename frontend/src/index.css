@@ -123,3 +123,39 @@
         page-break-before: always;
     }
 }
+
+/* Mobile viewport fixes - prevent content from being cut off */
+@media (max-width: 768px) {
+    /* Add breathing room at the top for mobile browsers */
+    body {
+        padding-top: env(safe-area-inset-top);
+    }
+    
+    /* Ensure main containers have proper spacing */
+    .min-h-screen {
+        padding-top: 0.5rem !important;
+        min-height: calc(100vh - env(safe-area-inset-top, 0px));
+    }
+    
+    /* Adjust sticky positioned elements */
+    header.sticky,
+    [class*="sticky top-"] {
+        top: calc(env(safe-area-inset-top, 0px) + 0.5rem);
+    }
+    
+    /* Ensure forms and content have proper top padding */
+    main {
+        padding-top: 0.75rem;
+    }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    body {
+        min-height: -webkit-fill-available;
+    }
+    
+    .min-h-screen {
+        min-height: -webkit-fill-available;
+    }
+}
