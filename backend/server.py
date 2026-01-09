@@ -921,10 +921,6 @@ async def list_patients(nurse: dict = Depends(get_current_nurse)):
             sort=[("visit_date", -1)]
         )
         
-        # Debug logging
-        if last_vitals_visit:
-            print(f"Found vitals for patient {p['full_name']}: status={last_vitals_visit.get('status')}, date={last_vitals_visit.get('visit_date')}")
-        
         # Get last UTC record (sorted by created_at for precise ordering)
         last_utc = await db.unable_to_contact.find_one(
             {"patient_id": p["id"]},
@@ -937,14 +933,20 @@ async def list_patients(nurse: dict = Depends(get_current_nurse)):
         
         # Use last_vitals_visit for vitals data (could be from vitals_only or nurse_visit)
         if last_vitals_visit:
-            p["last_vitals"] = last_vitals_visit.get("vital_signs")
-            p["last_vitals_date"] = last_vitals_visit.get("visit_date")
-            # Only update last_visit_id if this vitals visit is more recent
-            if not p["last_visit_date"] or last_vitals_visit.get("visit_date") >= p["last_visit_date"]:
-                p["last_visit_id"] = last_vitals_visit.get("id")
+            vitals = last_vitals_visit.get("vital_signs")
+            # Check if vital_signs actually has data
+            if vitals and isinstance(vitals, dict) and any(vitals.values()):
+                p["last_vitals"] = vitals
+                p["last_vitals_date"] = last_vitals_visit.get("visit_date")
+                # Only update last_visit_id if this vitals visit is more recent
+                if not p["last_visit_date"] or last_vitals_visit.get("visit_date") >= p["last_visit_date"]:
+                    p["last_visit_id"] = last_vitals_visit.get("id")
+            else:
+                p["last_vitals"] = None
+                p["last_vitals_date"] = None
         else:
+            p["last_vitals"] = None
             p["last_vitals_date"] = None
-            print(f"No vitals found for patient {p['full_name']}")
         
         # Include UTC regardless of date (show most recent UTC)
         if last_utc:
