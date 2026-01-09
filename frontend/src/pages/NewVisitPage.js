@@ -1530,7 +1530,7 @@ export default function NewVisitPage() {
                           <div className="ml-6 mt-2">
                             <Label className="text-sm mb-2 block">Which eye(s)?</Label>
                             <Select
-                              value={visitData.head_to_toe.eyes_vision.blind_which}
+                              value={visitData.head_to_toe.eyes_vision.blind_which_eyes}
                               onValueChange={(value) => 
                                 setVisitData(prev => ({
                                   ...prev,
@@ -1538,7 +1538,7 @@ export default function NewVisitPage() {
                                     ...prev.head_to_toe,
                                     eyes_vision: {
                                       ...prev.head_to_toe.eyes_vision,
-                                      blind_which: value
+                                      blind_which_eyes: value
                                     }
                                   }
                                 }))
