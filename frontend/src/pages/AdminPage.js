@@ -963,12 +963,22 @@ export default function AdminPage() {
                   </Label>
                   {selectedNurse.assigned_organizations && selectedNurse.assigned_organizations.length > 0 ? (
                     <div className="flex flex-wrap gap-2">
-                      {selectedNurse.assigned_organizations.map((orgId, idx) => {
-                        // Find organization by ID or name (handles both formats)
-                        const org = organizations.find(o => o.id === orgId || o.name === orgId);
+                      {selectedNurse.assigned_organizations.map((orgIdOrName, idx) => {
+                        // Try to find organization by ID first, then by name
+                        let displayName = orgIdOrName;
+                        const orgById = organizations.find(o => o.id === orgIdOrName);
+                        const orgByName = organizations.find(o => o.name === orgIdOrName);
+                        
+                        if (orgById) {
+                          displayName = orgById.name;
+                        } else if (orgByName) {
+                          displayName = orgByName.name;
+                        }
+                        // If neither found, use the raw value (might be the name already)
+                        
                         return (
                           <span key={idx} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm">
-                            {org ? org.name : orgId}
+                            {displayName}
                           </span>
                         );
                       })}
