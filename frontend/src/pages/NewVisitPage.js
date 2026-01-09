@@ -31,6 +31,47 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 
+// LogbookCheckItem Component
+const LogbookCheckItem = ({ label, item, data, onChange }) => {
+  return (
+    <div className="space-y-2">
+      <div className="font-medium text-sm text-slate-700">{label}</div>
+      <div className="flex items-center gap-6 ml-4">
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id={`${item}-reviewed`}
+            checked={data.reviewed}
+            onCheckedChange={(checked) => onChange(item, 'reviewed', checked)}
+          />
+          <Label htmlFor={`${item}-reviewed`} className="cursor-pointer font-normal">
+            Reviewed
+          </Label>
+        </div>
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id={`${item}-unavailable`}
+            checked={data.unavailable}
+            onCheckedChange={(checked) => onChange(item, 'unavailable', checked)}
+          />
+          <Label htmlFor={`${item}-unavailable`} className="cursor-pointer font-normal">
+            Unavailable
+          </Label>
+        </div>
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id={`${item}-na`}
+            checked={data.not_applicable}
+            onCheckedChange={(checked) => onChange(item, 'not_applicable', checked)}
+          />
+          <Label htmlFor={`${item}-na`} className="cursor-pointer font-normal">
+            N/A
+          </Label>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Helper function to get current date in Eastern Time
 const getEasternDate = () => {
   const now = new Date();
