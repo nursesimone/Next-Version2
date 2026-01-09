@@ -1624,6 +1624,57 @@ export default function NewVisitPage() {
                           </div>
                         ))}
                         
+                        {/* Deaf Follow-up */}
+                        {visitData.head_to_toe.ears_hearing.deaf && (
+                          <div className="ml-6 mt-2">
+                            <Label className="text-sm mb-2 block">Which ear(s)?</Label>
+                            <Select
+                              value={visitData.head_to_toe.ears_hearing.deaf_which_ears}
+                              onValueChange={(value) => 
+                                setVisitData(prev => ({
+                                  ...prev,
+                                  head_to_toe: {
+                                    ...prev.head_to_toe,
+                                    ears_hearing: {
+                                      ...prev.head_to_toe.ears_hearing,
+                                      deaf_which_ears: value
+                                    }
+                                  }
+                                }))
+                              }
+                            >
+                              <SelectTrigger className="w-48">
+                                <SelectValue placeholder="Select ear(s)" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="left">Left</SelectItem>
+                                <SelectItem value="right">Right</SelectItem>
+                                <SelectItem value="both">Both</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <div className="mt-2">
+                              <Label className="text-sm mb-1 block">For how long?</Label>
+                              <Input
+                                value={visitData.head_to_toe.ears_hearing.deaf_for_how_long}
+                                onChange={(e) => 
+                                  setVisitData(prev => ({
+                                    ...prev,
+                                    head_to_toe: {
+                                      ...prev.head_to_toe,
+                                      ears_hearing: {
+                                        ...prev.head_to_toe.ears_hearing,
+                                        deaf_for_how_long: e.target.value
+                                      }
+                                    }
+                                  }))
+                                }
+                                placeholder="e.g., Since birth, 5 years, etc."
+                                className="w-full"
+                              />
+                            </div>
+                          </div>
+                        )}
+                        
                         <div className="flex items-start space-x-2 pt-2">
                           <Checkbox
                             id="hearing-other"
