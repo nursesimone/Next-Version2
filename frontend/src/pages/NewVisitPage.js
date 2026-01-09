@@ -150,15 +150,12 @@ const initialVisitData = {
     },
     eyes_vision_from_last: false,
     ears_hearing: {
-      no_issues: false,
+      wnl: false,
+      hearing_aids: false,
       deaf: false,
-      deaf_which: '', // 'left', 'right', 'both'
-      hard_of_hearing: false,
-      hearing_aid: false,
-      vertigo: false,
       tinnitus: false,
-      other: false,
-      other_notes: ''
+      deaf_which_ears: '',
+      deaf_for_how_long: ''
     },
     ears_hearing_from_last: false,
     nose_nasal_cavity: '',  // Backend expects string, not object
