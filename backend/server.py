@@ -1134,10 +1134,16 @@ async def get_last_visit(patient_id: str, nurse: dict = Depends(get_current_nurs
 # ==================== UNABLE TO CONTACT ENDPOINTS ====================
 @api_router.post("/unable-to-contact", response_model=UnableToContactResponse)
 async def create_unable_to_contact(data: UnableToContactCreate, nurse: dict = Depends(get_current_nurse)):
-    # Verify patient exists and belongs to nurse
-    patient = await db.patients.find_one({"id": data.patient_id, "nurse_id": nurse["id"]})
+    # Verify patient exists and nurse has access
+    patient = await db.patients.find_one({"id": data.patient_id}, {"_id": 0})
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found")
+    
+    # Check if nurse has access (is admin OR is assigned to patient)
+    is_admin = nurse.get("is_admin", False)
+    is_assigned = nurse["id"] in patient.get("assigned_nurses", [])
+    if not (is_admin or is_assigned):
+        raise HTTPException(status_code=403, detail="Not authorized to create records for this patient")
     
     record_id = str(uuid.uuid4())
     now = datetime.now(timezone.utc).isoformat()
