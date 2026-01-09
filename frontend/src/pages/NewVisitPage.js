@@ -1652,26 +1652,6 @@ export default function NewVisitPage() {
                                 <SelectItem value="both">Both</SelectItem>
                               </SelectContent>
                             </Select>
-                            <div className="mt-2">
-                              <Label className="text-sm mb-1 block">For how long?</Label>
-                              <Input
-                                value={visitData.head_to_toe.ears_hearing.deaf_for_how_long}
-                                onChange={(e) => 
-                                  setVisitData(prev => ({
-                                    ...prev,
-                                    head_to_toe: {
-                                      ...prev.head_to_toe,
-                                      ears_hearing: {
-                                        ...prev.head_to_toe.ears_hearing,
-                                        deaf_for_how_long: e.target.value
-                                      }
-                                    }
-                                  }))
-                                }
-                                placeholder="e.g., Since birth, 5 years, etc."
-                                className="w-full"
-                              />
-                            </div>
                           </div>
                         )}
                         
