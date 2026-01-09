@@ -389,6 +389,7 @@ class InterventionResponse(BaseModel):
     patient_dob: Optional[str] = None
     nurse_id: str
     intervention_date: str
+    intervention_time: Optional[str] = None  # NEW: Time field
     location: str
     body_temperature: Optional[str] = None
     mood_scale: Optional[int] = None
