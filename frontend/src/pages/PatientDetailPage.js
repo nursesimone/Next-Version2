@@ -1074,7 +1074,7 @@ export default function PatientDetailPage() {
                             </div>
                           </div>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2">
                           <Button
                             size="sm"
                             variant="outline"
@@ -1087,6 +1087,17 @@ export default function PatientDetailPage() {
                           >
                             <FileText className="w-4 h-4 mr-1" />
                             View PDF
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteIntervention(intervention.id);
+                            }}
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          >
+                            <Trash2 className="w-4 h-4" />
                           </Button>
                           <div className="text-slate-400 text-sm flex items-center gap-1">
                             <Clock className="w-4 h-4" />
