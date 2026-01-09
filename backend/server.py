@@ -941,12 +941,15 @@ async def list_patients(nurse: dict = Depends(get_current_nurse)):
                 # Only update last_visit_id if this vitals visit is more recent
                 if not p["last_visit_date"] or last_vitals_visit.get("visit_date") >= p["last_visit_date"]:
                     p["last_visit_id"] = last_vitals_visit.get("id")
+                print(f"✅ Set vitals for {p['full_name']}: BP={vitals.get('blood_pressure_systolic')}, Temp={vitals.get('body_temperature')}")
             else:
                 p["last_vitals"] = None
                 p["last_vitals_date"] = None
+                print(f"❌ No valid vitals data for {p['full_name']}: vitals={vitals}")
         else:
             p["last_vitals"] = None
             p["last_vitals_date"] = None
+            print(f"❌ No vitals visit found for {p['full_name']}")
         
         # Include UTC regardless of date (show most recent UTC)
         if last_utc:
