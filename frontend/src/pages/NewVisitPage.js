@@ -933,84 +933,90 @@ export default function NewVisitPage() {
                 <CardDescription>Review and check required home environment items</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {/* Debug: Show current visit location */}
-                {process.env.NODE_ENV === 'development' && (
-                  <div className="text-xs text-slate-500 mb-2">
-                    Debug: visit_location = "{visitData.visit_location}"
-                  </div>
-                )}
-                
                 {visitData.visit_location === 'day_program' ? (
                   // Show prefilled message when seen at day program
                   <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
                     <p className="text-sm text-slate-700">
                       Patient was seen at their day program or another location outside of their home today. 
                       All monitoring logs are stored at the place of residence. The following logbooks were not 
-                      reviewed during this visit: Bowel Movement, Vital Signs BG (if applicable), MAR, Weight Log, 
+                      reviewed during this visit: Bowel Movement, Vital Signs, Blood Glucose (if applicable), MAR, 
                       Seizure Log.
                     </p>
                   </div>
                 ) : (
-                  // Show normal checkboxes for home visits
+                  // Show checkboxes for home visits
                   <>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="flex items-center gap-3">
-                        <Checkbox
-                          id="locked-meds"
-                          checked={visitData.home_visit_logbook.locked_meds_checked}
-                          onCheckedChange={(checked) => updateHomeLogbook('locked_meds_checked', checked)}
-                          data-testid="locked-meds-checkbox"
+                    <div className="space-y-4">
+                      {/* Locked Medications */}
+                      <LogbookCheckItem
+                        label="Medications are stored in locked containers, behind locked doors"
+                        item="locked_meds"
+                        data={visitData.home_visit_logbook.locked_meds}
+                        onChange={updateLogbookItem}
+                      />
+                      
+                      {/* MAR */}
+                      <LogbookCheckItem
+                        label="Medication Administration Record (MAR)"
+                        item="mar"
+                        data={visitData.home_visit_logbook.mar}
+                        onChange={updateLogbookItem}
+                      />
+                      
+                      {/* Blood Glucose */}
+                      <LogbookCheckItem
+                        label="Blood Glucose Log (if applicable)"
+                        item="blood_glucose"
+                        data={visitData.home_visit_logbook.blood_glucose}
+                        onChange={updateLogbookItem}
+                      />
+                      
+                      {/* Bowel Movement */}
+                      <LogbookCheckItem
+                        label="Bowel Movement"
+                        item="bowel_movement"
+                        data={visitData.home_visit_logbook.bowel_movement}
+                        onChange={updateLogbookItem}
+                      />
+                      
+                      {/* Vital Signs */}
+                      <LogbookCheckItem
+                        label="Vital Signs or BP Log"
+                        item="vital_signs"
+                        data={visitData.home_visit_logbook.vital_signs}
+                        onChange={updateLogbookItem}
+                      />
+                      
+                      {/* Seizure */}
+                      <LogbookCheckItem
+                        label="Seizure"
+                        item="seizure"
+                        data={visitData.home_visit_logbook.seizure}
+                        onChange={updateLogbookItem}
+                      />
+                      
+                      {/* Other */}
+                      <div className="border-t pt-4">
+                        <LogbookCheckItem
+                          label="Other"
+                          item="other"
+                          data={visitData.home_visit_logbook.other}
+                          onChange={updateLogbookItem}
                         />
-                        <Label htmlFor="locked-meds" className="cursor-pointer">
-                          Locked Medications Checked
-                        </Label>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Checkbox
-                          id="mar-reviewed"
-                          checked={visitData.home_visit_logbook.mar_reviewed}
-                          onCheckedChange={(checked) => updateHomeLogbook('mar_reviewed', checked)}
-                          data-testid="mar-checkbox"
-                        />
-                        <Label htmlFor="mar-reviewed" className="cursor-pointer">
-                          MAR (Medication Administration Record) Reviewed
-                        </Label>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Checkbox
-                          id="bm-log"
-                          checked={visitData.home_visit_logbook.bm_log_checked}
-                          onCheckedChange={(checked) => updateHomeLogbook('bm_log_checked', checked)}
-                          data-testid="bm-log-checkbox"
-                        />
-                        <Label htmlFor="bm-log" className="cursor-pointer">
-                          BM (Bowel Movement) Log Checked
-                        </Label>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Checkbox
-                          id="communication-log"
-                          checked={visitData.home_visit_logbook.communication_log_checked}
-                          onCheckedChange={(checked) => updateHomeLogbook('communication_log_checked', checked)}
-                          data-testid="communication-log-checkbox"
-                        />
-                        <Label htmlFor="communication-log" className="cursor-pointer">
-                          Communication Log Checked
-                        </Label>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Checkbox
-                          id="seizure-log"
-                          checked={visitData.home_visit_logbook.seizure_log_checked}
-                          onCheckedChange={(checked) => updateHomeLogbook('seizure_log_checked', checked)}
-                          data-testid="seizure-log-checkbox"
-                        />
-                        <Label htmlFor="seizure-log" className="cursor-pointer">
-                          Seizure Log Checked (if applicable)
-                        </Label>
+                        {(visitData.home_visit_logbook.other.reviewed || 
+                          visitData.home_visit_logbook.other.unavailable || 
+                          visitData.home_visit_logbook.other.not_applicable) && (
+                          <Input
+                            value={visitData.home_visit_logbook.other_description || ''}
+                            onChange={(e) => updateHomeLogbook('other_description', e.target.value)}
+                            placeholder="Describe other logbook item..."
+                            className="mt-2 ml-8"
+                          />
+                        )}
                       </div>
                     </div>
-                    <div>
+                    
+                    <div className="mt-6">
                       <Label>Logbook Notes</Label>
                       <Textarea
                         value={visitData.home_visit_logbook.notes}
