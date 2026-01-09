@@ -48,6 +48,7 @@ export default function InterventionPage() {
   const [formData, setFormData] = useState({
     patient_id: patientId,
     intervention_date: getEasternDate(),
+    intervention_time: '',
     location: '',
     body_temperature: '',
     mood_scale: null,
