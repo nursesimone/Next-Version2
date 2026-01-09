@@ -257,13 +257,28 @@ class ChangesSinceLastVisit(BaseModel):
     er_urgent_care_visits: Optional[str] = None
     upcoming_appointments: Optional[str] = None
 
+class LogbookItem(BaseModel):
+    reviewed: Optional[bool] = False
+    unavailable: Optional[bool] = False
+    not_applicable: Optional[bool] = False
+
 class HomeVisitLogbook(BaseModel):
+    locked_meds: LogbookItem = LogbookItem()
+    mar: LogbookItem = LogbookItem()
+    blood_glucose: LogbookItem = LogbookItem()
+    bowel_movement: LogbookItem = LogbookItem()
+    vital_signs: LogbookItem = LogbookItem()
+    seizure: LogbookItem = LogbookItem()
+    other: LogbookItem = LogbookItem()
+    other_description: Optional[str] = None
+    notes: Optional[str] = None
+    
+    # Legacy fields for backwards compatibility
     locked_meds_checked: Optional[bool] = False
     mar_reviewed: Optional[bool] = False
     bm_log_checked: Optional[bool] = False
     communication_log_checked: Optional[bool] = False
     seizure_log_checked: Optional[bool] = False
-    notes: Optional[str] = None
 
 class VisitCreate(BaseModel):
     visit_date: Optional[str] = None
