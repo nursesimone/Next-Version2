@@ -442,6 +442,9 @@ export default function PatientDetailPage() {
                 <TabsTrigger value="visits" className="data-[state=active]:bg-eggplant-50 data-[state=active]:text-eggplant-700">
                   Visit History ({visits.length + interventions.length})
                 </TabsTrigger>
+                <TabsTrigger value="daily-notes" className="data-[state=active]:bg-eggplant-50 data-[state=active]:text-eggplant-700">
+                  Saved Notes ({dailyNotesData.length})
+                </TabsTrigger>
                 <TabsTrigger value="profile" className="data-[state=active]:bg-eggplant-50 data-[state=active]:text-eggplant-700">
                   Profile
                 </TabsTrigger>
