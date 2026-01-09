@@ -996,7 +996,7 @@ export default function PatientDetailPage() {
                             </div>
                           </div>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2">
                           {(visit.visit_type === 'nurse_visit' || visit.visit_type === 'vitals_only') && (
                             <Button
                               size="sm"
@@ -1011,6 +1011,17 @@ export default function PatientDetailPage() {
                               View PDF
                             </Button>
                           )}
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteVisit(visit.id);
+                            }}
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
                           <div className="text-slate-400 text-sm flex items-center gap-1">
                             <Clock className="w-4 h-4" />
                             {formatDate(visit.created_at)}
