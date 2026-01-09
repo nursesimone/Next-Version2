@@ -41,6 +41,8 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showPostAddDialog, setShowPostAddDialog] = useState(false);
+  const [newlyAddedPatientId, setNewlyAddedPatientId] = useState(null);
   const [newPatientName, setNewPatientName] = useState('');
   const [newPatientOrg, setNewPatientOrg] = useState('');
   const [addingPatient, setAddingPatient] = useState(false);
