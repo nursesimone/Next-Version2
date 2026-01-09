@@ -1605,11 +1605,10 @@ export default function NewVisitPage() {
                       <Label className="text-base font-semibold mb-3 block">Ears / Hearing</Label>
                       <div className="space-y-2 pl-2">
                         {[
-                          { id: 'normal', label: 'Normal' },
-                          { id: 'hearing_aid', label: 'Uses Hearing Aid' },
-                          { id: 'hard_of_hearing', label: 'Hard of Hearing' },
+                          { id: 'wnl', label: 'WNL/Normal' },
+                          { id: 'hearing_aids', label: 'Uses Hearing Aid' },
                           { id: 'deaf', label: 'Deaf' },
-                          { id: 'ear_infection', label: 'Ear Infection' }
+                          { id: 'tinnitus', label: 'Tinnitus' }
                         ].map(option => (
                           <div key={option.id} className="flex items-center space-x-2">
                             <Checkbox
