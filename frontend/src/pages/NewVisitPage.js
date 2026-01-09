@@ -795,8 +795,8 @@ export default function NewVisitPage() {
                 <div>
                   <Label>Weight (lbs)</Label>
                   <Input
-                    type="number"
-                    inputMode="decimal"
+                    type="tel"
+                    pattern="[0-9]*"
                     value={visitData.vital_signs.weight}
                     onChange={(e) => updateVitalSign('weight', e.target.value)}
                     placeholder="e.g., 150"
@@ -807,9 +807,8 @@ export default function NewVisitPage() {
                 <div>
                   <Label>Temperature (°F)</Label>
                   <Input
-                    type="number"
-                    inputMode="decimal"
-                    step="0.1"
+                    type="tel"
+                    pattern="[0-9.]*"
                     value={visitData.vital_signs.body_temperature}
                     onChange={(e) => updateVitalSign('body_temperature', e.target.value)}
                     placeholder="e.g., 98.6"
@@ -820,8 +819,8 @@ export default function NewVisitPage() {
                 <div>
                   <Label>BP Systolic</Label>
                   <Input
-                    type="number"
-                    inputMode="numeric"
+                    type="tel"
+                    pattern="[0-9]*"
                     value={visitData.vital_signs.blood_pressure_systolic}
                     onChange={(e) => updateVitalSign('blood_pressure_systolic', e.target.value)}
                     placeholder="e.g., 120"
@@ -832,8 +831,8 @@ export default function NewVisitPage() {
                 <div>
                   <Label>BP Diastolic</Label>
                   <Input
-                    type="number"
-                    inputMode="numeric"
+                    type="tel"
+                    pattern="[0-9]*"
                     value={visitData.vital_signs.blood_pressure_diastolic}
                     onChange={(e) => updateVitalSign('blood_pressure_diastolic', e.target.value)}
                     placeholder="e.g., 80"
@@ -844,8 +843,8 @@ export default function NewVisitPage() {
                 <div>
                   <Label>Pulse Oximeter (%)</Label>
                   <Input
-                    type="number"
-                    inputMode="numeric"
+                    type="tel"
+                    pattern="[0-9]*"
                     value={visitData.vital_signs.pulse_oximeter}
                     onChange={(e) => updateVitalSign('pulse_oximeter', e.target.value)}
                     placeholder="e.g., 98"
@@ -856,8 +855,8 @@ export default function NewVisitPage() {
                 <div>
                   <Label>Pulse (bpm)</Label>
                   <Input
-                    type="number"
-                    inputMode="numeric"
+                    type="tel"
+                    pattern="[0-9]*"
                     value={visitData.vital_signs.pulse}
                     onChange={(e) => updateVitalSign('pulse', e.target.value)}
                     placeholder="e.g., 72"
@@ -868,8 +867,8 @@ export default function NewVisitPage() {
                 <div>
                   <Label>Respirations (/min)</Label>
                   <Input
-                    type="number"
-                    inputMode="numeric"
+                    type="tel"
+                    pattern="[0-9]*"
                     value={visitData.vital_signs.respirations}
                     onChange={(e) => updateVitalSign('respirations', e.target.value)}
                     placeholder="e.g., 16"
@@ -880,9 +879,8 @@ export default function NewVisitPage() {
                 <div>
                   <Label>Height (inches)</Label>
                   <Input
-                    type="number"
-                    inputMode="decimal"
-                    step="0.1"
+                    type="tel"
+                    pattern="[0-9.]*"
                     value={visitData.vital_signs.height}
                     onChange={(e) => updateVitalSign('height', e.target.value)}
                     placeholder="e.g., 65"
@@ -907,8 +905,8 @@ export default function NewVisitPage() {
                     <div>
                       <Label>Repeat BP Systolic</Label>
                       <Input
-                        type="number"
-                        inputMode="numeric"
+                        type="tel"
+                        pattern="[0-9]*"
                         value={visitData.vital_signs.repeat_blood_pressure_systolic}
                         onChange={(e) => updateVitalSign('repeat_blood_pressure_systolic', e.target.value)}
                         placeholder="e.g., 120"
@@ -919,8 +917,8 @@ export default function NewVisitPage() {
                     <div>
                       <Label>Repeat BP Diastolic</Label>
                       <Input
-                        type="number"
-                        inputMode="numeric"
+                        type="tel"
+                        pattern="[0-9]*"
                         value={visitData.vital_signs.repeat_blood_pressure_diastolic}
                         onChange={(e) => updateVitalSign('repeat_blood_pressure_diastolic', e.target.value)}
                         placeholder="e.g., 80"
