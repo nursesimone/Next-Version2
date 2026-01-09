@@ -1421,14 +1421,74 @@ export default function NewVisitPage() {
                   </AccordionTrigger>
                   <AccordionContent className="space-y-4 pt-4">
                     <div>
-                      <Label>Head & Neck</Label>
-                      <Textarea
-                        value={visitData.head_to_toe.head_neck}
-                        onChange={(e) => updateHeadToToe('head_neck', e.target.value)}
-                        placeholder="Describe findings..."
-                        className="mt-1"
-                        rows={2}
-                      />
+                      <Label className="text-base font-semibold mb-3 block">Head & Neck</Label>
+                      <div className="grid grid-cols-2 gap-2 pl-2">
+                        {[
+                          { id: 'wnl', label: 'WNL/No concerns or issues' },
+                          { id: 'wounds', label: 'Wounds' },
+                          { id: 'masses', label: 'Masses' },
+                          { id: 'alopecia', label: 'Alopecia' },
+                          { id: 'swelling', label: 'Swelling' },
+                          { id: 'tenderness', label: 'Tenderness' }
+                        ].map(option => (
+                          <div key={option.id} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={`head-neck-${option.id}`}
+                              checked={visitData.head_to_toe.head_neck[option.id] || false}
+                              onCheckedChange={(checked) => 
+                                setVisitData(prev => ({
+                                  ...prev,
+                                  head_to_toe: {
+                                    ...prev.head_to_toe,
+                                    head_neck: {
+                                      ...prev.head_to_toe.head_neck,
+                                      [option.id]: checked
+                                    }
+                                  }
+                                }))
+                              }
+                            />
+                            <Label htmlFor={`head-neck-${option.id}`} className="font-normal cursor-pointer">
+                              {option.label}
+                            </Label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <Label className="text-base font-semibold mb-3 block">Nose / Nasal Cavity</Label>
+                      <div className="grid grid-cols-2 gap-2 pl-2">
+                        {[
+                          { id: 'wnl', label: 'WNL/No concerns or issues' },
+                          { id: 'congestion', label: 'Congestion' },
+                          { id: 'discharge', label: 'Discharge' },
+                          { id: 'bleeding', label: 'Bleeding/Epistaxis' },
+                          { id: 'deviated_septum', label: 'Deviated Septum' },
+                          { id: 'polyps', label: 'Polyps' }
+                        ].map(option => (
+                          <div key={option.id} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={`nose-${option.id}`}
+                              checked={visitData.head_to_toe.nose_nasal_cavity[option.id] || false}
+                              onCheckedChange={(checked) => 
+                                setVisitData(prev => ({
+                                  ...prev,
+                                  head_to_toe: {
+                                    ...prev.head_to_toe,
+                                    nose_nasal_cavity: {
+                                      ...prev.head_to_toe.nose_nasal_cavity,
+                                      [option.id]: checked
+                                    }
+                                  }
+                                }))
+                              }
+                            />
+                            <Label htmlFor={`nose-${option.id}`} className="font-normal cursor-pointer">
+                              {option.label}
+                            </Label>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                     <div>
                       <Label className="text-base font-semibold mb-3 block">Eyes / Vision</Label>
