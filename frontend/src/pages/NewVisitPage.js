@@ -1897,10 +1897,35 @@ export default function NewVisitPage() {
                 {/* Genito-Urinary */}
                 <AccordionItem value="gu" className="bg-white border border-slate-100 rounded-xl px-6">
                   <AccordionTrigger className="hover:no-underline">
-                    <span className="flex items-center gap-2 text-lg font-semibold">
-                      <Droplet className="w-5 h-5 text-navy-600" />
-                      Genito-Urinary Assessment
-                    </span>
+                    <div className="flex items-center justify-between w-full pr-4">
+                      <span className="flex items-center gap-2 text-lg font-semibold">
+                        <Droplet className="w-5 h-5 text-navy-600" />
+                        Genito-Urinary Assessment
+                      </span>
+                      {lastVisit && (
+                        <Button 
+                          type="button"
+                          variant="ghost" 
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (lastVisit.genito_urinary) {
+                              setVisitData(prev => ({
+                                ...prev,
+                                genito_urinary: {
+                                  ...lastVisit.genito_urinary
+                                }
+                              }));
+                              toast.success('Genito-Urinary data pulled from last visit');
+                            }
+                          }}
+                          className="text-xs text-eggplant-600 hover:text-eggplant-700 underline"
+                          data-testid="pull-gu-btn"
+                        >
+                          Pull from last visit
+                        </Button>
+                      )}
+                    </div>
                   </AccordionTrigger>
                   <AccordionContent className="space-y-4 pt-4">
                     <div className="space-y-4">
