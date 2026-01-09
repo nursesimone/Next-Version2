@@ -389,6 +389,23 @@ export default function NewVisitPage() {
           }
         }));
       }
+      
+      // Pre-fill weight from last visit (but keep it editable)
+      try {
+        const lastVisitResponse = await visitsAPI.getLast(patientId);
+        if (lastVisitResponse.data?.vital_signs?.weight) {
+          setVisitData(prev => ({
+            ...prev,
+            vital_signs: {
+              ...prev.vital_signs,
+              weight: lastVisitResponse.data.vital_signs.weight
+            }
+          }));
+        }
+      } catch (err) {
+        // No weight from last visit - that's okay
+        console.log('No previous weight found');
+      }
     } catch (error) {
       toast.error('Failed to load patient');
       navigate('/dashboard');
