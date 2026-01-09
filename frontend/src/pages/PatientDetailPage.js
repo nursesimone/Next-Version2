@@ -77,10 +77,10 @@ export default function PatientDetailPage() {
       const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/admin/day-programs`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setDayPrograms(response.data || []);
+      setDayPrograms(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.log('Could not fetch day programs:', error);
-      // Not critical - just won't have dropdown
+      setDayPrograms([]); // Ensure it's always an array
     }
   };
 
