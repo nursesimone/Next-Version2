@@ -1011,18 +1011,33 @@ export default function PatientDetailPage() {
                         </div>
                         <div className="flex items-center gap-2">
                           {(visit.visit_type === 'nurse_visit' || visit.visit_type === 'vitals_only') && (
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                navigate(`/visits/${visit.id}`);
-                              }}
-                              className="text-eggplant-700"
-                            >
-                              <FileText className="w-4 h-4 mr-1" />
-                              View PDF
-                            </Button>
+                            <>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate(`/visits/${visit.id}`);
+                                }}
+                                className="text-eggplant-700"
+                              >
+                                <FileText className="w-4 h-4 mr-1" />
+                                View PDF
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  // Navigate to edit page - reuse NewVisitPage with visit data
+                                  navigate(`/patients/${patientId}/new-visit?editVisitId=${visit.id}`);
+                                }}
+                                className="text-blue-700"
+                              >
+                                <Edit className="w-4 h-4 mr-1" />
+                                Edit
+                              </Button>
+                            </>
                           )}
                           <Button
                             size="sm"
