@@ -168,19 +168,7 @@ const initialVisitData = {
       deviated_septum: false,
       polyps: false
     },
-    nose_nasal_cavity_from_last: false,
-    mouth_teeth_oral_cavity: {
-      no_issues: false,
-      dentures: false,
-      dentures_type: '',  // 'upper', 'lower', 'partial', 'full'
-      poor_dentition: false,
-      mouth_sores: false,
-      dry_mouth: false,
-      thrush: false,
-      other: false,
-      other_notes: ''
-    },
-    mouth_teeth_oral_cavity_from_last: false
+    nose_nasal_cavity_from_last: false
   },
   gastrointestinal: {
     last_bowel_movement: '',
