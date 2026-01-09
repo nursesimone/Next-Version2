@@ -257,6 +257,40 @@ export default function VisitDetailPage() {
 
       y += boxHeight + 10;
 
+      // Visit Service Information Section
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Type of Service:', margin, y);
+      doc.setFont('helvetica', 'normal');
+      let serviceType = 'N/A';
+      if (visit?.nurse_visit_type) {
+        serviceType = visit.nurse_visit_type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        if (visit.nurse_visit_type === 'other' && visit.nurse_visit_type_other) {
+          serviceType += ` (${visit.nurse_visit_type_other})`;
+        }
+      }
+      doc.text(serviceType, margin + 40, y);
+      y += lineHeight;
+      
+      doc.setFont('helvetica', 'bold');
+      doc.text('Visit Frequency:', margin, y);
+      doc.setFont('helvetica', 'normal');
+      doc.text(patient?.permanent_info?.visit_frequency || 'N/A', margin + 40, y);
+      y += lineHeight;
+      
+      doc.setFont('helvetica', 'bold');
+      doc.text('Patient Seen At:', margin, y);
+      doc.setFont('helvetica', 'normal');
+      let location = 'N/A';
+      if (visit?.visit_location) {
+        location = visit.visit_location.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        if (visit.visit_location === 'other' && visit.visit_location_other) {
+          location += ` (${visit.visit_location_other})`;
+        }
+      }
+      doc.text(location, margin + 40, y);
+      y += lineHeight * 2;
+
       // Visit Date
       doc.setFontSize(11);
       doc.setFont('helvetica', 'normal');
