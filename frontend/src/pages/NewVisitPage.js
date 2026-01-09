@@ -322,7 +322,14 @@ export default function NewVisitPage() {
         head_to_toe: {
           ...initialVisitData.head_to_toe,
           ...(visit.head_to_toe || {}),
-          nose_nasal_cavity: visit.head_to_toe?.nose_nasal_cavity || '',
+          nose_nasal_cavity: visit.head_to_toe?.nose_nasal_cavity || {
+            wnl: false,
+            congestion: false,
+            discharge: false,
+            bleeding: false,
+            deviated_septum: false,
+            polyps: false
+          },
           mouth_teeth_oral_cavity: {
             ...initialVisitData.head_to_toe.mouth_teeth_oral_cavity,
             ...(visit.head_to_toe?.mouth_teeth_oral_cavity || {}),
