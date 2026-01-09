@@ -914,11 +914,16 @@ async def list_patients(nurse: dict = Depends(get_current_nurse)):
         )
         
         # Get last vitals from any visit type (nurse_visit or vitals_only)
+        # Remove status filter to see ALL visits with vitals
         last_vitals_visit = await db.visits.find_one(
-            {"patient_id": p["id"], "status": "completed", "visit_type": {"$in": ["nurse_visit", "vitals_only"]}},
-            {"_id": 0, "id": 1, "visit_date": 1, "vital_signs": 1},
+            {"patient_id": p["id"], "visit_type": {"$in": ["nurse_visit", "vitals_only"]}, "vital_signs": {"$exists": True}},
+            {"_id": 0, "id": 1, "visit_date": 1, "vital_signs": 1, "status": 1},
             sort=[("visit_date", -1)]
         )
+        
+        # Debug logging
+        if last_vitals_visit:
+            print(f"Found vitals for patient {p['full_name']}: status={last_vitals_visit.get('status')}, date={last_vitals_visit.get('visit_date')}")
         
         # Get last UTC record (sorted by created_at for precise ordering)
         last_utc = await db.unable_to_contact.find_one(
@@ -934,9 +939,12 @@ async def list_patients(nurse: dict = Depends(get_current_nurse)):
         if last_vitals_visit:
             p["last_vitals"] = last_vitals_visit.get("vital_signs")
             p["last_vitals_date"] = last_vitals_visit.get("visit_date")
-            p["last_visit_id"] = last_vitals_visit.get("id")  # Update to show the visit with vitals
+            # Only update last_visit_id if this vitals visit is more recent
+            if not p["last_visit_date"] or last_vitals_visit.get("visit_date") >= p["last_visit_date"]:
+                p["last_visit_id"] = last_vitals_visit.get("id")
         else:
             p["last_vitals_date"] = None
+            print(f"No vitals found for patient {p['full_name']}")
         
         # Include UTC regardless of date (show most recent UTC)
         if last_utc:
