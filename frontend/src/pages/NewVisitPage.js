@@ -156,7 +156,8 @@ const initialVisitData = {
     diaper_worn: '' // '100% of the time', 'While Sleeping (HS)'
   },
   respiratory: {
-    lung_sounds: '',
+    lung_sounds: '', // 'normal' or 'abnormal'
+    lung_abnormalities: [], // Array of: 'wheezing', 'rales', 'rhonchi', 'stridor', 'pleural_rub', 'unsure'
     oxygen_type: ''
   },
   endocrine: {
