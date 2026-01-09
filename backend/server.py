@@ -1310,9 +1310,16 @@ async def create_intervention(data: InterventionCreate, nurse: dict = Depends(ge
 
 @api_router.get("/patients/{patient_id}/interventions", response_model=List[InterventionResponse])
 async def list_interventions(patient_id: str, nurse: dict = Depends(get_current_nurse)):
-    patient = await db.patients.find_one({"id": patient_id, "nurse_id": nurse["id"]})
+    # Verify patient exists and nurse has access
+    patient = await db.patients.find_one({"id": patient_id}, {"_id": 0})
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found")
+    
+    # Check if nurse has access (is admin OR is assigned to patient)
+    is_admin = nurse.get("is_admin", False)
+    is_assigned = nurse["id"] in patient.get("assigned_nurses", [])
+    if not (is_admin or is_assigned):
+        raise HTTPException(status_code=403, detail="Not authorized to view this patient's interventions")
     
     interventions = await db.interventions.find({"patient_id": patient_id}, {"_id": 0}).sort("intervention_date", -1).to_list(1000)
     for i in interventions:
