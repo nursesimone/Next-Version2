@@ -965,19 +965,27 @@ export default function AdminPage() {
                     <div className="flex flex-wrap gap-2">
                       {selectedNurse.assigned_organizations.map((orgIdOrName, idx) => {
                         // Try to find organization by ID first, then by name
-                        let displayName = orgIdOrName;
                         const orgById = organizations.find(o => o.id === orgIdOrName);
                         const orgByName = organizations.find(o => o.name === orgIdOrName);
                         
+                        let displayName;
                         if (orgById) {
                           displayName = orgById.name;
                         } else if (orgByName) {
                           displayName = orgByName.name;
+                        } else {
+                          // If not found in database, check if it's one of the default org names
+                          const defaultOrgs = ['POSH Host Homes', 'Ebenezer Private HomeCare', 'Jericho'];
+                          if (defaultOrgs.includes(orgIdOrName)) {
+                            displayName = orgIdOrName;
+                          } else {
+                            // Last resort: show "Unknown Organization" with tooltip
+                            displayName = `Unknown (${orgIdOrName.substring(0, 8)}...)`;
+                          }
                         }
-                        // If neither found, use the raw value (might be the name already)
                         
                         return (
-                          <span key={idx} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm">
+                          <span key={idx} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm" title={orgIdOrName}>
                             {displayName}
                           </span>
                         );
