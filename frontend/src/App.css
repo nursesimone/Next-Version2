@@ -109,3 +109,29 @@
         @apply fixed inset-0 z-50 bg-white;
     }
 }
+
+/* Mobile safe area - prevents content from being cut off at the top */
+@media (max-width: 768px) {
+    /* Add safe area padding for mobile browsers */
+    body {
+        padding-top: env(safe-area-inset-top);
+    }
+    
+    /* Ensure all page containers have proper top spacing on mobile */
+    .min-h-screen {
+        padding-top: 1rem;
+    }
+    
+    /* Adjust sticky headers for mobile */
+    header.sticky {
+        top: env(safe-area-inset-top, 0);
+    }
+}
+
+/* Improved mobile viewport handling */
+@supports (-webkit-touch-callout: none) {
+    /* iOS Safari specific fixes */
+    body {
+        min-height: -webkit-fill-available;
+    }
+}
