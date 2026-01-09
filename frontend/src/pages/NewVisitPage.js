@@ -1839,25 +1839,74 @@ export default function NewVisitPage() {
                     </span>
                   </AccordionTrigger>
                   <AccordionContent className="space-y-4 pt-4">
-                    <div>
-                      <Label>Toileting Level</Label>
-                      <Select
-                        value={visitData.genito_urinary.toileting_level}
-                        onValueChange={(value) => updateGU('toileting_level', value)}
-                      >
-                        <SelectTrigger className="mt-1">
-                          <SelectValue placeholder="Select toileting level" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Self-Toileting">Self-Toileting</SelectItem>
-                          <SelectItem value="Assisted Toileting">Assisted Toileting</SelectItem>
-                          <SelectItem value="Bedpan/Urinal">Bedpan/Urinal</SelectItem>
-                          <SelectItem value="Indwelling Catheter">Indwelling Catheter</SelectItem>
-                          <SelectItem value="Intermittent Catheter">Intermittent Catheter</SelectItem>
-                          <SelectItem value="Adult Diapers/Brief">Adult Diapers/Brief</SelectItem>
-                          <SelectItem value="Ostomy">Ostomy</SelectItem>
-                        </SelectContent>
-                      </Select>
+                    <div className="space-y-4">
+                      <div>
+                        <Label>Toileting Level</Label>
+                        <Select
+                          value={visitData.genito_urinary.toileting_level}
+                          onValueChange={(value) => {
+                            updateGU('toileting_level', value);
+                            // Reset sub-options when changing main selection
+                            if (value !== 'Urinary Catheter') {
+                              updateGU('catheter_type', '');
+                            }
+                            if (value !== 'Adult Diapers/Brief') {
+                              updateGU('diaper_worn', '');
+                            }
+                          }}
+                        >
+                          <SelectTrigger className="mt-1">
+                            <SelectValue placeholder="Select toileting level" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Self-Toileting">Self-Toileting</SelectItem>
+                            <SelectItem value="Assisted Toileting">Assisted Toileting</SelectItem>
+                            <SelectItem value="Bedpan/Urinal">Bedpan/Urinal</SelectItem>
+                            <SelectItem value="Urinary Catheter">Urinary Catheter</SelectItem>
+                            <SelectItem value="Adult Diapers/Brief">Adult Diapers/Brief</SelectItem>
+                            <SelectItem value="Ostomy">Ostomy</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Catheter Type - Show when Urinary Catheter selected */}
+                      {visitData.genito_urinary.toileting_level === 'Urinary Catheter' && (
+                        <div className="ml-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                          <Label className="text-blue-900">Catheter Type</Label>
+                          <Select
+                            value={visitData.genito_urinary.catheter_type}
+                            onValueChange={(value) => updateGU('catheter_type', value)}
+                          >
+                            <SelectTrigger className="mt-1">
+                              <SelectValue placeholder="Select catheter type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Urethral">Urethral</SelectItem>
+                              <SelectItem value="Suprapubic">Suprapubic</SelectItem>
+                              <SelectItem value="External">External</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      )}
+
+                      {/* Diaper Worn - Show when Adult Diapers/Brief selected */}
+                      {visitData.genito_urinary.toileting_level === 'Adult Diapers/Brief' && (
+                        <div className="ml-6 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                          <Label className="text-purple-900">Worn</Label>
+                          <Select
+                            value={visitData.genito_urinary.diaper_worn}
+                            onValueChange={(value) => updateGU('diaper_worn', value)}
+                          >
+                            <SelectTrigger className="mt-1">
+                              <SelectValue placeholder="Select when worn" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="100% of the time">100% of the time</SelectItem>
+                              <SelectItem value="While Sleeping (HS)">While Sleeping (HS)</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      )}
                     </div>
                   </AccordionContent>
                 </AccordionItem>
