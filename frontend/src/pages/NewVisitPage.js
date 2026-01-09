@@ -244,6 +244,58 @@ export default function NewVisitPage() {
     }
   }, []);
 
+  // Load visit for editing if editVisitId is in URL
+  useEffect(() => {
+    const editId = searchParams.get('editVisitId');
+    if (editId) {
+      setIsEditMode(true);
+      setEditVisitId(editId);
+      loadVisitForEdit(editId);
+    }
+  }, [searchParams]);
+
+  const loadVisitForEdit = async (visitId) => {
+    try {
+      console.log('Loading visit for editing:', visitId);
+      const response = await visitsAPI.get(visitId);
+      const visit = response.data;
+      
+      // Load the visit data into the form
+      const loadedData = {
+        ...initialVisitData,
+        ...visit,
+        visit_date: visit.visit_date?.split('T')[0] || initialVisitData.visit_date,
+        nurse_visit_type: visit.nurse_visit_type || '',
+        nurse_visit_type_other: visit.nurse_visit_type_other || '',
+        visit_location: visit.visit_location || '',
+        visit_location_other: visit.visit_location_other || '',
+        vital_signs: { ...initialVisitData.vital_signs, ...(visit.vital_signs || {}) },
+        physical_assessment: { ...initialVisitData.physical_assessment, ...(visit.physical_assessment || {}) },
+        head_to_toe: {
+          ...initialVisitData.head_to_toe,
+          ...(visit.head_to_toe || {}),
+          nose_nasal_cavity: visit.head_to_toe?.nose_nasal_cavity || '',
+          mouth_teeth_oral_cavity: {
+            ...initialVisitData.head_to_toe.mouth_teeth_oral_cavity,
+            ...(visit.head_to_toe?.mouth_teeth_oral_cavity || {}),
+          }
+        },
+        gastrointestinal: { ...initialVisitData.gastrointestinal, ...(visit.gastrointestinal || {}) },
+        genito_urinary: { ...initialVisitData.genito_urinary, ...(visit.genito_urinary || {}) },
+        respiratory: { ...initialVisitData.respiratory, ...(visit.respiratory || {}) },
+        endocrine: { ...initialVisitData.endocrine, ...(visit.endocrine || {}) },
+        changes_since_last: { ...initialVisitData.changes_since_last, ...(visit.changes_since_last || {}) },
+        home_visit_logbook: { ...initialVisitData.home_visit_logbook, ...(visit.home_visit_logbook || {}) }
+      };
+      
+      setVisitData(loadedData);
+      toast.success('Visit loaded for editing');
+    } catch (error) {
+      console.error('Failed to load visit for editing:', error);
+      toast.error('Failed to load visit');
+    }
+  };
+
   const loadDraft = async (draftId) => {
     try {
       console.log('Loading draft with ID:', draftId);
