@@ -170,6 +170,19 @@ export default function PatientDetailPage() {
     }
   };
 
+  const handleDeleteVisit = async (visitId) => {
+    if (!window.confirm('Are you sure you want to delete this visit? This action cannot be undone.')) {
+      return;
+    }
+    try {
+      await visitsAPI.delete(visitId);
+      toast.success('Visit deleted successfully');
+      fetchPatientData(); // Refresh the data
+    } catch (error) {
+      toast.error('Failed to delete visit');
+    }
+  };
+
   const fetchDailyNotes = async () => {
     setLoadingDailyNotes(true);
     try {
