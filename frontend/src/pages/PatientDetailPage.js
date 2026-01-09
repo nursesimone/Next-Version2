@@ -713,8 +713,8 @@ export default function PatientDetailPage() {
                             <SelectContent>
                               <SelectItem value="Family Home">Family Home</SelectItem>
                               <SelectItem value="Host Home">Host Home</SelectItem>
-                              <SelectItem value="Group Home">Group Home</SelectItem>
-                              <SelectItem value="Personal Care Home">Personal Care Home</SelectItem>
+                              <SelectItem value="Group Home (CLA)">Group Home (CLA)</SelectItem>
+                              <SelectItem value="Personal Care Home CRA">Personal Care Home CRA</SelectItem>
                               <SelectItem value="Other">Other</SelectItem>
                             </SelectContent>
                           </Select>
