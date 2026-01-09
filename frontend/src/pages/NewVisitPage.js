@@ -244,7 +244,7 @@ export default function NewVisitPage() {
   const loadDraft = async (draftId) => {
     try {
       console.log('Loading draft with ID:', draftId);
-      const response = await visitsAPI.getById(draftId);
+      const response = await visitsAPI.get(draftId);
       console.log('Draft response:', response.data);
       const draft = response.data;
       
