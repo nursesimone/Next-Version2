@@ -1,34 +1,137 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Clinical Zen Theme - App Styles */
+
+/* Login page hero overlay - Eggplant & Navy gradient */
+.login-hero-overlay {
+    position: relative;
+}
+.login-hero-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(76, 29, 149, 0.9), rgba(51, 48, 202, 0.85));
+    z-index: 1;
+}
+.login-hero-content {
+    position: relative;
+    z-index: 2;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
-}
-
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
+/* Form step indicator */
+.step-indicator {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+    gap: 0.5rem;
+}
+.step-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    transition: all 0.3s ease;
+}
+.step-dot.active {
+    background: #6d28d9;
+    transform: scale(1.2);
+}
+.step-dot.completed {
+    background: #8b5cf6;
 }
 
-.App-link {
-    color: #61dafb;
+/* Vitals highlight for abnormal values */
+.vital-abnormal {
+    @apply border-rose-300 bg-rose-50;
+}
+.vital-normal {
+    @apply border-emerald-300 bg-emerald-50;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
+/* Patient card hover effect */
+.patient-card {
+    transition: all 0.2s ease;
+}
+.patient-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(76, 29, 149, 0.12);
+}
+
+/* Sidebar navigation */
+.sidebar-nav-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-eggplant-50 hover:text-eggplant-700 transition-all;
+}
+.sidebar-nav-item.active {
+    @apply bg-eggplant-50 text-eggplant-700 font-medium;
+}
+
+/* Assessment section cards */
+.assessment-section {
+    @apply bg-white border border-slate-100 rounded-xl p-5 space-y-4;
+}
+.assessment-section-title {
+    @apply text-lg font-semibold text-slate-800 flex items-center gap-2;
+}
+
+/* Status badges animation */
+.status-pulse {
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Toast customization */
+[data-sonner-toaster] {
+    font-family: 'Public Sans', sans-serif;
+}
+
+/* Empty state styling */
+.empty-state {
+    @apply flex flex-col items-center justify-center py-16 text-center;
+}
+.empty-state-icon {
+    @apply w-20 h-20 text-slate-300 mb-4;
+}
+.empty-state-title {
+    @apply text-xl font-semibold text-slate-700 mb-2;
+}
+.empty-state-description {
+    @apply text-slate-500 max-w-md;
+}
+
+/* Loading skeleton */
+.skeleton {
+    @apply bg-slate-200 rounded animate-pulse;
+}
+
+/* Mobile responsive drawer */
+@media (max-width: 768px) {
+    .mobile-drawer {
+        @apply fixed inset-0 z-50 bg-white;
     }
-    to {
-        transform: rotate(360deg);
+}
+
+/* Mobile safe area - prevents content from being cut off at the top */
+@media (max-width: 768px) {
+    /* Add safe area padding for mobile browsers */
+    body {
+        padding-top: env(safe-area-inset-top);
+    }
+    
+    /* Ensure all page containers have proper top spacing on mobile */
+    .min-h-screen {
+        padding-top: 1rem;
+    }
+    
+    /* Adjust sticky headers for mobile */
+    header.sticky {
+        top: env(safe-area-inset-top, 0);
+    }
+}
+
+/* Improved mobile viewport handling */
+@supports (-webkit-touch-callout: none) {
+    /* iOS Safari specific fixes */
+    body {
+        min-height: -webkit-fill-available;
     }
 }
