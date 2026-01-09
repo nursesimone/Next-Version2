@@ -1080,9 +1080,22 @@ async def list_visits(patient_id: str, nurse: dict = Depends(get_current_nurse))
 
 @api_router.get("/visits/{visit_id}", response_model=VisitResponse)
 async def get_visit(visit_id: str, nurse: dict = Depends(get_current_nurse)):
-    visit = await db.visits.find_one({"id": visit_id, "nurse_id": nurse["id"]}, {"_id": 0})
+    # Allow any authenticated user to view visits (not just the creator)
+    visit = await db.visits.find_one({"id": visit_id}, {"_id": 0})
     if not visit:
         raise HTTPException(status_code=404, detail="Visit not found")
+    
+    # Verify user has access to this patient
+    patient = await db.patients.find_one({"id": visit["patient_id"]}, {"_id": 0})
+    if not patient:
+        raise HTTPException(status_code=404, detail="Patient not found")
+    
+    # Check if nurse has access (is admin OR is assigned to patient)
+    is_admin = nurse.get("is_admin", False)
+    is_assigned = nurse["id"] in patient.get("assigned_nurses", [])
+    if not (is_admin or is_assigned):
+        raise HTTPException(status_code=403, detail="Not authorized to view this visit")
+    
     return VisitResponse(**visit)
 
 @api_router.delete("/visits/{visit_id}")
