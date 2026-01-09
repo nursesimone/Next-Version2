@@ -139,19 +139,14 @@ const initialVisitData = {
     },
     head_neck_from_last: false,
     eyes_vision: {
-      pupils_perrla: '', // 'yes' or 'no'
-      no_issues: false,
+      wnl: false,
       glasses: false,
       contacts: false,
-      blurred_vision: false,
+      cataracts: false,
       glaucoma: false,
-      prosthesis: false,
-      blind_eyes: false,
-      blind_which: '', // 'left', 'right', 'both'
-      cataract_surgery: false,
-      infections: false,
-      other: false,
-      other_notes: ''
+      blind: false,
+      blind_which_eyes: '',  // 'left', 'right', 'both'
+      blind_for_how_long: ''
     },
     eyes_vision_from_last: false,
     ears_hearing: {
