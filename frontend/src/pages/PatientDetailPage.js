@@ -1034,13 +1034,17 @@ export default function PatientDetailPage() {
                                 variant="outline"
                                 onClick={(e) => {
                                   e.stopPropagation();
+                                  console.log('Edit visit clicked:', visit.id, 'type:', visit.visit_type);
                                   // Navigate to edit page - reuse NewVisitPage with visit data
-                                  navigate(`/patients/${patientId}/new-visit?editVisitId=${visit.id}`);
+                                  const editUrl = `/patients/${patientId}/new-visit?editVisitId=${visit.id}`;
+                                  console.log('Navigating to:', editUrl);
+                                  navigate(editUrl);
                                 }}
                                 className="text-blue-700"
+                                data-testid={`edit-visit-btn-${visit.id}`}
                               >
                                 <Edit className="w-4 h-4 mr-1" />
-                                Edit
+                                Edit Visit
                               </Button>
                             </>
                           )}
