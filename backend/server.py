@@ -1304,6 +1304,7 @@ async def create_intervention(data: InterventionCreate, nurse: dict = Depends(ge
         "patient_id": data.patient_id,
         "nurse_id": nurse["id"],
         "intervention_date": data.intervention_date,
+        "intervention_time": data.intervention_time,
         "location": data.location,
         "body_temperature": data.body_temperature,
         "mood_scale": data.mood_scale,
