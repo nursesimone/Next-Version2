@@ -130,12 +130,12 @@ const initialVisitData = {
   },
   head_to_toe: {
     head_neck: {
-      within_normal_limits: false,
+      wnl: false,
       wounds: false,
       masses: false,
       alopecia: false,
-      other: false,
-      other_notes: ''
+      swelling: false,
+      tenderness: false
     },
     head_neck_from_last: false,
     eyes_vision: {
