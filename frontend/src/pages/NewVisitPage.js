@@ -1486,9 +1486,9 @@ export default function NewVisitPage() {
                     </div>
                     <div>
                       <Label className="text-base font-semibold mb-3 block">Eyes / Vision</Label>
-                      <div className="space-y-2 pl-2">
+                      <div className="grid grid-cols-2 gap-2 pl-2">
                         {[
-                          { id: 'wnl', label: 'WNL/Normal' },
+                          { id: 'wnl', label: 'WNL/No concerns or issues' },
                           { id: 'glasses', label: 'Wears Glasses' },
                           { id: 'contacts', label: 'Wears Contact Lenses' },
                           { id: 'cataracts', label: 'Cataracts' },
