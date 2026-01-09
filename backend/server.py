@@ -878,6 +878,13 @@ async def list_patients(nurse: dict = Depends(get_current_nurse)):
         # Get last visit (completed only, exclude daily_note as they are not visits)
         last_visit = await db.visits.find_one(
             {"patient_id": p["id"], "status": "completed", "visit_type": {"$ne": "daily_note"}},
+            {"_id": 0, "id": 1, "visit_date": 1, "vital_signs": 1, "visit_type": 1},
+            sort=[("visit_date", -1)]
+        )
+        
+        # Get last vitals from any visit type (nurse_visit or vitals_only)
+        last_vitals_visit = await db.visits.find_one(
+            {"patient_id": p["id"], "status": "completed", "visit_type": {"$in": ["nurse_visit", "vitals_only"]}},
             {"_id": 0, "id": 1, "visit_date": 1, "vital_signs": 1},
             sort=[("visit_date", -1)]
         )
