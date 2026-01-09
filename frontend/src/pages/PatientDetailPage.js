@@ -754,7 +754,7 @@ export default function PatientDetailPage() {
                       <div>
                         <Label className="text-slate-500">Adult Day Program Name</Label>
                         {editingProfile ? (
-                          dayPrograms.length > 0 ? (
+                          (Array.isArray(dayPrograms) && dayPrograms.length > 0) ? (
                             <Select
                               value={profileData.adult_day_program_name || ''}
                               onValueChange={(value) => handleProfileChange('adult_day_program_name', value)}
