@@ -496,10 +496,18 @@ export default function NewVisitPage() {
       
       console.log('Submitting visit data:', submitData);
       
-      const response = await visitsAPI.create(patientId, submitData);
-      console.log('Visit save response:', response);
-      
-      toast.success(saveAs === 'draft' ? 'Visit saved as draft' : 'Visit completed successfully');
+      let response;
+      if (isEditMode && editVisitId) {
+        // Update existing visit
+        response = await visitsAPI.update(editVisitId, submitData);
+        console.log('Visit update response:', response);
+        toast.success('Visit updated successfully');
+      } else {
+        // Create new visit
+        response = await visitsAPI.create(patientId, submitData);
+        console.log('Visit save response:', response);
+        toast.success(saveAs === 'draft' ? 'Visit saved as draft' : 'Visit completed successfully');
+      }
       
       // Add a small delay before navigation to ensure UI updates
       setTimeout(() => {
