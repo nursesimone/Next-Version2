@@ -544,6 +544,9 @@ async def register(data: NurseRegister):
         "title": data.title,
         "license_number": data.license_number,
         "is_admin": is_admin,
+        "assigned_patients": [],
+        "assigned_organizations": [],
+        "allowed_forms": [],
         "created_at": datetime.now(timezone.utc).isoformat()
     }
     await db.nurses.insert_one(nurse_doc)
