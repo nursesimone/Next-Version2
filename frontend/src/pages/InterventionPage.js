@@ -275,16 +275,29 @@ export default function InterventionPage() {
           {/* Intervention Date & Location */}
           <Card className="bg-white border-slate-100">
             <CardContent className="pt-6 space-y-4">
-              <div>
-                <Label>Intervention completed on:</Label>
-                <Input
-                  type="date"
-                  value={formData.intervention_date}
-                  onChange={(e) => updateField('intervention_date', e.target.value)}
-                  className="mt-1"
-                  required
-                  data-testid="intervention-date-input"
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label>Intervention completed on:</Label>
+                  <Input
+                    type="date"
+                    value={formData.intervention_date}
+                    onChange={(e) => updateField('intervention_date', e.target.value)}
+                    className="mt-1"
+                    required
+                    data-testid="intervention-date-input"
+                  />
+                </div>
+                
+                <div>
+                  <Label>Time:</Label>
+                  <Input
+                    type="time"
+                    value={formData.intervention_time}
+                    onChange={(e) => updateField('intervention_time', e.target.value)}
+                    className="mt-1"
+                    data-testid="intervention-time-input"
+                  />
+                </div>
               </div>
               
               <div>
