@@ -1596,9 +1596,9 @@ export default function NewVisitPage() {
                     </div>
                     <div>
                       <Label className="text-base font-semibold mb-3 block">Ears / Hearing</Label>
-                      <div className="space-y-2 pl-2">
+                      <div className="grid grid-cols-2 gap-2 pl-2">
                         {[
-                          { id: 'wnl', label: 'WNL/Normal' },
+                          { id: 'wnl', label: 'WNL/No concerns or issues' },
                           { id: 'hearing_aids', label: 'Uses Hearing Aid' },
                           { id: 'deaf', label: 'Deaf' },
                           { id: 'tinnitus', label: 'Tinnitus' }
