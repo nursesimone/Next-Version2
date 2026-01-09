@@ -174,11 +174,14 @@ const initialVisitData = {
     upcoming_appointments: ''
   },
   home_visit_logbook: {
-    locked_meds_checked: false,
-    mar_reviewed: false,
-    bm_log_checked: false,
-    communication_log_checked: false,
-    seizure_log_checked: false,
+    locked_meds: { reviewed: false, unavailable: false, not_applicable: false },
+    mar: { reviewed: false, unavailable: false, not_applicable: false },
+    blood_glucose: { reviewed: false, unavailable: false, not_applicable: false },
+    bowel_movement: { reviewed: false, unavailable: false, not_applicable: false },
+    vital_signs: { reviewed: false, unavailable: false, not_applicable: false },
+    seizure: { reviewed: false, unavailable: false, not_applicable: false },
+    other: { reviewed: false, unavailable: false, not_applicable: false },
+    other_description: '',
     notes: ''
   },
   overall_health_status: '',
