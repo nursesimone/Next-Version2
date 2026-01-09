@@ -1693,16 +1693,6 @@ export default function NewVisitPage() {
                       </div>
                     </div>
                     <div>
-                      <Label>Nose / Nasal Cavity</Label>
-                      <Textarea
-                        value={visitData.head_to_toe.nose_nasal_cavity}
-                        onChange={(e) => updateHeadToToe('nose_nasal_cavity', e.target.value)}
-                        placeholder="Describe findings..."
-                        className="mt-1"
-                        rows={2}
-                      />
-                    </div>
-                    <div>
                       <Label className="text-base font-semibold mb-3 block">Mouth / Teeth / Oral Cavity</Label>
                       <div className="space-y-2 pl-2">
                         {[
