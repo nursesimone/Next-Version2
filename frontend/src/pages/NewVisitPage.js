@@ -1326,10 +1326,35 @@ export default function NewVisitPage() {
                 {/* Head to Toe */}
                 <AccordionItem value="head-to-toe" className="bg-white border border-slate-100 rounded-xl px-6">
                   <AccordionTrigger className="hover:no-underline">
-                    <span className="flex items-center gap-2 text-lg font-semibold">
-                      <Eye className="w-5 h-5 text-eggplant-700" />
-                      Head to Toe Assessment
-                    </span>
+                    <div className="flex items-center justify-between w-full pr-4">
+                      <span className="flex items-center gap-2 text-lg font-semibold">
+                        <Eye className="w-5 h-5 text-eggplant-700" />
+                        Head to Toe Assessment
+                      </span>
+                      {lastVisit && (
+                        <Button 
+                          type="button"
+                          variant="ghost" 
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (lastVisit.head_to_toe) {
+                              setVisitData(prev => ({
+                                ...prev,
+                                head_to_toe: {
+                                  ...lastVisit.head_to_toe
+                                }
+                              }));
+                              toast.success('Head to Toe data pulled from last visit');
+                            }
+                          }}
+                          className="text-xs text-eggplant-600 hover:text-eggplant-700 underline"
+                          data-testid="pull-head-to-toe-btn"
+                        >
+                          Pull from last visit
+                        </Button>
+                      )}
+                    </div>
                   </AccordionTrigger>
                   <AccordionContent className="space-y-4 pt-4">
                     <div>
