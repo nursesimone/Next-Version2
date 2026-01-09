@@ -1132,6 +1132,71 @@ export default function PatientDetailPage() {
             )}
           </TabsContent>
 
+          {/* Daily Notes Tab */}
+          <TabsContent value="daily-notes">
+            {dailyNotesData.length === 0 ? (
+              <Card className="bg-white border-slate-100">
+                <CardContent className="p-12 text-center">
+                  <FileText className="w-12 h-12 text-slate-300 mx-auto mb-4" />
+                  <p className="text-slate-500">No daily notes saved yet</p>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="space-y-4">
+                {dailyNotesData.map(note => (
+                  <Card 
+                    key={`note-${note.id}`}
+                    className="bg-white border-slate-100 hover:border-amber-200 transition-all"
+                  >
+                    <CardContent className="p-6">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center">
+                              <FileText className="w-5 h-5 text-amber-700" />
+                            </div>
+                            <div>
+                              <p className="font-medium text-slate-900">
+                                Daily Note - {formatDateTime(note.visit_date)}
+                              </p>
+                              <p className="text-xs text-slate-500">
+                                Saved: {formatDate(note.created_at)}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="bg-slate-50 p-4 rounded-lg">
+                            <p className="text-slate-900 whitespace-pre-wrap text-sm">
+                              {note.daily_note_content}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 ml-4">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => navigate(`/patients/${patientId}/new-visit?editVisitId=${note.id}`)}
+                            className="text-blue-700"
+                          >
+                            <Edit className="w-4 h-4 mr-1" />
+                            Edit
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => handleDeleteVisit(note.id)}
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </TabsContent>
+
           {/* Last Vitals Tab */}
           <TabsContent value="vitals">
             <Card className="bg-white border-slate-100">
