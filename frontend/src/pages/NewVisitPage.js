@@ -158,7 +158,16 @@ const initialVisitData = {
       deaf_for_how_long: ''
     },
     ears_hearing_from_last: false,
-    nose_nasal_cavity: '',  // Backend expects string, not object
+    mouth_teeth: '',
+    mouth_teeth_from_last: false,
+    nose_nasal_cavity: {
+      wnl: false,
+      congestion: false,
+      discharge: false,
+      bleeding: false,
+      deviated_septum: false,
+      polyps: false
+    },
     nose_nasal_cavity_from_last: false,
     mouth_teeth_oral_cavity: {
       no_issues: false,
