@@ -205,19 +205,40 @@ export default function InterventionPage() {
     setSaving(true);
     try {
       const submitData = {
-        ...formData,
+        patient_id: formData.patient_id,
+        intervention_date: formData.intervention_date,
+        intervention_time: formData.intervention_time || null,
+        location: formData.location,
+        body_temperature: formData.body_temperature || null,
+        mood_scale: formData.mood_scale,
+        intervention_type: formData.intervention_type,
+        verified_patient_identity: formData.verified_patient_identity,
+        donned_proper_ppe: formData.donned_proper_ppe,
+        post_no_severe_symptoms: formData.post_no_severe_symptoms,
+        post_tolerated_well: formData.post_tolerated_well,
+        post_informed_side_effects: formData.post_informed_side_effects,
+        post_advised_results_timeframe: formData.post_advised_results_timeframe,
+        post_educated_seek_care: formData.post_educated_seek_care,
+        completion_status: formData.completion_status || null,
+        next_visit_interval: formData.next_visit_interval || null,
+        next_visit_interval_other: formData.next_visit_interval_other || null,
+        present_person_type: formData.present_person_type || null,
+        present_person_type_other: formData.present_person_type_other || null,
+        present_person_name: formData.present_person_name || null,
+        additional_comments: formData.additional_comments || null,
+        notes: formData.notes || null,
         injection_details: formData.intervention_type === 'injection' ? formData.injection_details : null,
         test_details: formData.intervention_type === 'test' ? formData.test_details : null,
         treatment_details: formData.intervention_type === 'treatment' ? formData.treatment_details : null,
         procedure_details: formData.intervention_type === 'procedure' ? formData.procedure_details : null,
-        other_details: formData.intervention_type === 'other' ? formData.other_details : null,
       };
       
       await interventionsAPI.create(submitData);
       toast.success('Intervention saved successfully');
       navigate(`/patients/${patientId}`);
     } catch (error) {
-      toast.error('Failed to save intervention');
+      console.error('Intervention save error:', error);
+      toast.error(error.response?.data?.detail || 'Failed to save intervention');
     } finally {
       setSaving(false);
     }
