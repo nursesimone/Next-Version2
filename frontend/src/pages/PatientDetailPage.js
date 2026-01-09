@@ -1110,6 +1110,19 @@ export default function PatientDetailPage() {
                           </Button>
                           <Button
                             size="sm"
+                            variant="outline"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              // Navigate to edit intervention page
+                              navigate(`/patients/${patientId}/intervention?editId=${intervention.id}`);
+                            }}
+                            className="text-blue-700"
+                          >
+                            <Edit className="w-4 h-4 mr-1" />
+                            Edit
+                          </Button>
+                          <Button
+                            size="sm"
                             variant="ghost"
                             onClick={(e) => {
                               e.stopPropagation();
