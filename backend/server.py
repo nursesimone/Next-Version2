@@ -84,11 +84,16 @@ class PatientPermanentInfo(BaseModel):
     # Living situation
     living_situation: Optional[str] = None  # private_home, host_home, group_home, personal_care_home, other
     living_situation_other: Optional[str] = None
-    home_address: Optional[str] = None
+    home_address: Optional[str] = None  # Legacy field
+    home_street_address: Optional[str] = None  # New field
+    home_city_state_zip: Optional[str] = None
+    home_address_type: Optional[str] = None
     # Adult Day Program
     attends_adult_day_program: Optional[bool] = False
     adult_day_program_name: Optional[str] = None
-    adult_day_program_address: Optional[str] = None
+    adult_day_program_address: Optional[str] = None  # Legacy field
+    adult_day_street_address: Optional[str] = None  # New field
+    adult_day_city_state_zip: Optional[str] = None
     # Other info
     race: Optional[str] = None
     height: Optional[str] = None
@@ -99,6 +104,7 @@ class PatientPermanentInfo(BaseModel):
     medical_diagnoses: Optional[List[str]] = []
     psychiatric_diagnoses: Optional[List[str]] = []
     visit_frequency: Optional[str] = None
+    additional_information: Optional[str] = None
 
 class PatientCreate(BaseModel):
     full_name: str
