@@ -486,11 +486,12 @@ export default function NewVisitPage() {
     try {
       let submitData = { ...visitData, status: saveAs };
       
-      // Auto-append initials for daily notes
+      // Auto-append initials for daily notes with asterisks
       if (visitType === 'daily_note' && submitData.daily_note_content) {
         const initials = nurse?.full_name?.split(' ').map(n => n[0]).join('').toUpperCase();
-        if (!submitData.daily_note_content.trim().endsWith(initials)) {
-          submitData.daily_note_content = submitData.daily_note_content.trim() + ` -${initials}`;
+        const signature = `**${initials}**`;
+        if (!submitData.daily_note_content.trim().includes(signature)) {
+          submitData.daily_note_content = submitData.daily_note_content.trim() + `   ${signature}`;
         }
       }
       
