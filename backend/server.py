@@ -898,7 +898,14 @@ async def list_patients(nurse: dict = Depends(get_current_nurse)):
         
         p["last_visit_id"] = last_visit.get("id") if last_visit else None
         p["last_visit_date"] = last_visit.get("visit_date") if last_visit else None
-        p["last_vitals_date"] = last_visit.get("visit_date") if last_visit else None
+        
+        # Use last_vitals_visit for vitals data (could be from vitals_only or nurse_visit)
+        if last_vitals_visit:
+            p["last_vitals"] = last_vitals_visit.get("vital_signs")
+            p["last_vitals_date"] = last_vitals_visit.get("visit_date")
+            p["last_visit_id"] = last_vitals_visit.get("id")  # Update to show the visit with vitals
+        else:
+            p["last_vitals_date"] = None
         
         # Include UTC regardless of date (show most recent UTC)
         if last_utc:
