@@ -723,12 +723,31 @@ export default function PatientDetailPage() {
                       <div>
                         <Label className="text-slate-500">Adult Day Program Name</Label>
                         {editingProfile ? (
-                          <Input
-                            value={profileData.adult_day_program_name || ''}
-                            onChange={(e) => handleProfileChange('adult_day_program_name', e.target.value)}
-                            className="mt-1"
-                            placeholder="Program name"
-                          />
+                          dayPrograms.length > 0 ? (
+                            <Select
+                              value={profileData.adult_day_program_name || ''}
+                              onValueChange={(value) => handleProfileChange('adult_day_program_name', value)}
+                            >
+                              <SelectTrigger className="mt-1">
+                                <SelectValue placeholder="Select day program" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="">None</SelectItem>
+                                {dayPrograms.map(program => (
+                                  <SelectItem key={program.id} value={program.name}>
+                                    {program.name}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          ) : (
+                            <Input
+                              value={profileData.adult_day_program_name || ''}
+                              onChange={(e) => handleProfileChange('adult_day_program_name', e.target.value)}
+                              className="mt-1"
+                              placeholder="Program name"
+                            />
+                          )
                         ) : (
                           <p className="text-slate-900">{profileData.adult_day_program_name || 'Not set'}</p>
                         )}
