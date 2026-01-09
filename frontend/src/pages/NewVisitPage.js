@@ -479,6 +479,19 @@ export default function NewVisitPage() {
       home_visit_logbook: { ...prev.home_visit_logbook, [field]: value }
     }));
   };
+  
+  const updateLogbookItem = (item, checkboxType, value) => {
+    setVisitData(prev => ({
+      ...prev,
+      home_visit_logbook: {
+        ...prev.home_visit_logbook,
+        [item]: {
+          ...prev.home_visit_logbook[item],
+          [checkboxType]: value
+        }
+      }
+    }));
+  };
 
   const pullFromLast = (section, field) => {
     if (!lastVisit) {
