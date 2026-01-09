@@ -466,6 +466,37 @@ export default function DashboardPage() {
           </div>
         )}
       </main>
+      
+      {/* Post-Add Patient Dialog */}
+      <Dialog open={showPostAddDialog} onOpenChange={setShowPostAddDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Patient Added Successfully!</DialogTitle>
+            <DialogDescription>
+              What would you like to do next?
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-3 mt-4">
+            <Button 
+              onClick={handleAddAnother}
+              className="bg-eggplant-700 hover:bg-eggplant-600 h-12"
+              data-testid="add-another-patient-btn"
+            >
+              <Plus className="w-5 h-5 mr-2" />
+              Add Another Patient
+            </Button>
+            <Button 
+              onClick={handleViewPatient}
+              variant="outline"
+              className="h-12"
+              data-testid="view-patient-btn"
+            >
+              <ChevronRight className="w-5 h-5 mr-2" />
+              Go to Patient Page
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
