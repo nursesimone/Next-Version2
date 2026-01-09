@@ -183,6 +183,19 @@ export default function PatientDetailPage() {
     }
   };
 
+  const handleDeleteIntervention = async (interventionId) => {
+    if (!window.confirm('Are you sure you want to delete this intervention? This action cannot be undone.')) {
+      return;
+    }
+    try {
+      await interventionsAPI.delete(interventionId);
+      toast.success('Intervention deleted successfully');
+      fetchPatientData(); // Refresh the data
+    } catch (error) {
+      toast.error('Failed to delete intervention');
+    }
+  };
+
   const fetchDailyNotes = async () => {
     setLoadingDailyNotes(true);
     try {
