@@ -1017,10 +1017,34 @@ export default function NewVisitPage() {
               {/* Physical Assessment */}
               <Card className="bg-white border-slate-100">
                 <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <User className="w-5 h-5 text-eggplant-700" />
-                    Physical Assessment
-                  </CardTitle>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <User className="w-5 h-5 text-eggplant-700" />
+                      Physical Assessment
+                    </CardTitle>
+                    {lastVisit && (
+                      <Button 
+                        type="button"
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => {
+                          if (lastVisit.physical_assessment) {
+                            setVisitData(prev => ({
+                              ...prev,
+                              physical_assessment: {
+                                ...lastVisit.physical_assessment
+                              }
+                            }));
+                            toast.success('Physical Assessment pulled from last visit');
+                          }
+                        }}
+                        className="text-xs text-eggplant-600 hover:text-eggplant-700 underline"
+                        data-testid="pull-physical-assessment-btn"
+                      >
+                        Pull from last visit
+                      </Button>
+                    )}
+                  </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
