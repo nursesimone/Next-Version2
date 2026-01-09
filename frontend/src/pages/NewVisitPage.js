@@ -202,6 +202,7 @@ const initialVisitData = {
 export default function NewVisitPage() {
   const { patientId } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { nurse } = useAuth();
   const [patient, setPatient] = useState(null);
   const [visitData, setVisitData] = useState(initialVisitData);
@@ -209,6 +210,8 @@ export default function NewVisitPage() {
   const [saving, setSaving] = useState(false);
   const [bpAbnormal, setBpAbnormal] = useState(false);
   const [lastVisit, setLastVisit] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editVisitId, setEditVisitId] = useState(null);
 
   // Get visit type from session storage
   const visitType = sessionStorage.getItem('visitType') || 'nurse_visit';
