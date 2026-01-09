@@ -1174,7 +1174,7 @@ export default function NewVisitPage() {
                       {/* Skin Integrity */}
                       <div>
                         <Label className="text-base font-semibold mb-2 block">Skin Integrity (Select all that apply)</Label>
-                        <div className="space-y-2 pl-2">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 pl-2">
                           {[
                             { id: 'integrity_wnl', label: 'WNL/Intact' },
                             { id: 'integrity_rash', label: 'Rash' },
