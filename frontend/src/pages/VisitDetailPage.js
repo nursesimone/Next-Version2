@@ -490,6 +490,138 @@ export default function VisitDetailPage() {
           </CardContent>
         </Card>
 
+        {/* Patient Demographics Header - For nurse visits */}
+        {visit.visit_type === 'nurse_visit' && patient && (
+          <Card className="bg-gradient-to-br from-eggplant-50 to-white border-eggplant-100 mb-6">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2 text-eggplant-900">
+                <User className="w-5 h-5" />
+                Patient Demographics
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                {/* Name */}
+                <div>
+                  <p className="text-slate-500 font-medium">Name</p>
+                  <p className="text-slate-900 font-semibold">{patient.full_name}</p>
+                </div>
+                
+                {/* DOB & Age */}
+                {patient.permanent_info?.date_of_birth && (
+                  <div>
+                    <p className="text-slate-500 font-medium">Date of Birth</p>
+                    <p className="text-slate-900">{formatDate(patient.permanent_info.date_of_birth)} 
+                      <span className="text-slate-500 ml-2">({Math.floor((new Date() - new Date(patient.permanent_info.date_of_birth)) / (365.25 * 24 * 60 * 60 * 1000))} years old)</span>
+                    </p>
+                  </div>
+                )}
+                
+                {/* Race */}
+                {patient.permanent_info?.race && (
+                  <div>
+                    <p className="text-slate-500 font-medium">Race</p>
+                    <p className="text-slate-900">{patient.permanent_info.race}</p>
+                  </div>
+                )}
+                
+                {/* Gender */}
+                {patient.permanent_info?.gender && (
+                  <div>
+                    <p className="text-slate-500 font-medium">Gender</p>
+                    <p className="text-slate-900">{patient.permanent_info.gender}</p>
+                  </div>
+                )}
+                
+                {/* Home Address */}
+                {patient.permanent_info?.home_address && (
+                  <div className="md:col-span-2">
+                    <p className="text-slate-500 font-medium">Home Address</p>
+                    <p className="text-slate-900">{patient.permanent_info.home_address}</p>
+                  </div>
+                )}
+                
+                {/* Allergies */}
+                {patient.permanent_info?.allergies && patient.permanent_info.allergies.length > 0 && (
+                  <div className="md:col-span-2">
+                    <p className="text-slate-500 font-medium">Allergies</p>
+                    <div className="flex flex-wrap gap-2 mt-1">
+                      {patient.permanent_info.allergies.map((allergy, idx) => (
+                        <span key={idx} className="bg-red-50 text-red-700 px-3 py-1 rounded-full text-xs font-medium">
+                          {allergy}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {/* Medical Diagnoses */}
+                {patient.permanent_info?.medical_diagnoses && patient.permanent_info.medical_diagnoses.length > 0 && (
+                  <div className="md:col-span-2">
+                    <p className="text-slate-500 font-medium">Medical Diagnoses</p>
+                    <div className="flex flex-wrap gap-2 mt-1">
+                      {patient.permanent_info.medical_diagnoses.map((diagnosis, idx) => (
+                        <span key={idx} className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
+                          {diagnosis}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {/* Medications */}
+                {patient.permanent_info?.medications && patient.permanent_info.medications.length > 0 && (
+                  <div className="md:col-span-2">
+                    <p className="text-slate-500 font-medium">Medications</p>
+                    <div className="flex flex-wrap gap-2 mt-1">
+                      {patient.permanent_info.medications.map((med, idx) => (
+                        <span key={idx} className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
+                          {med}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              {/* Visit Service Information */}
+              <div className="mt-6 pt-6 border-t border-eggplant-100">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                  {/* Type of Service */}
+                  {visit.nurse_visit_type && (
+                    <div>
+                      <p className="text-slate-500 font-medium">Type of Service</p>
+                      <p className="text-slate-900 capitalize">{visit.nurse_visit_type.replace(/_/g, ' ')}</p>
+                      {visit.nurse_visit_type === 'other' && visit.nurse_visit_type_other && (
+                        <p className="text-slate-600 text-xs mt-1">({visit.nurse_visit_type_other})</p>
+                      )}
+                    </div>
+                  )}
+                  
+                  {/* How often is patient seen */}
+                  {patient.permanent_info?.visit_frequency && (
+                    <div>
+                      <p className="text-slate-500 font-medium">Visit Frequency</p>
+                      <p className="text-slate-900">{patient.permanent_info.visit_frequency}</p>
+                    </div>
+                  )}
+                  
+                  {/* Where patient was seen today */}
+                  {visit.visit_location && (
+                    <div>
+                      <p className="text-slate-500 font-medium">Patient Seen At</p>
+                      <p className="text-slate-900 capitalize">{visit.visit_location.replace(/_/g, ' ')}</p>
+                      {visit.visit_location === 'other' && visit.visit_location_other && (
+                        <p className="text-slate-600 text-xs mt-1">({visit.visit_location_other})</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Daily Note Content - for daily_note type */}
         {visit.visit_type === 'daily_note' && visit.daily_note_content && (
           <Card className="bg-white border-slate-100 mb-6">
