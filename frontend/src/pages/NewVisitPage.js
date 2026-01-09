@@ -1921,26 +1921,71 @@ export default function NewVisitPage() {
                     </span>
                   </AccordionTrigger>
                   <AccordionContent className="space-y-4 pt-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-6">
                       <div>
                         <Label>Lung Sounds</Label>
                         <Select
                           value={visitData.respiratory.lung_sounds}
-                          onValueChange={(value) => updateRespiratory('lung_sounds', value)}
+                          onValueChange={(value) => {
+                            updateRespiratory('lung_sounds', value);
+                            // Reset abnormalities when changing to normal
+                            if (value === 'normal') {
+                              updateRespiratory('lung_abnormalities', []);
+                            }
+                          }}
                         >
                           <SelectTrigger className="mt-1">
-                            <SelectValue placeholder="Select" />
+                            <SelectValue placeholder="Select lung sounds" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="Clear">Clear</SelectItem>
-                            <SelectItem value="Wheezing">Wheezing</SelectItem>
-                            <SelectItem value="Crackles">Crackles</SelectItem>
-                            <SelectItem value="Rhonchi">Rhonchi</SelectItem>
-                            <SelectItem value="Diminished">Diminished</SelectItem>
-                            <SelectItem value="Absent">Absent</SelectItem>
+                            <SelectItem value="normal">Normal</SelectItem>
+                            <SelectItem value="abnormal">Abnormal</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
+
+                      {/* Show auto-populated text for Normal */}
+                      {visitData.respiratory.lung_sounds === 'normal' && (
+                        <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                          <p className="text-sm text-green-900">
+                            <strong>Assessment:</strong> Regular, no wheezing, rhonchi or rales observed. Lungs are clear, bilaterally upon auscultation. No complaint of shortness of breath, no difficulty breathing observed during this session.
+                          </p>
+                        </div>
+                      )}
+
+                      {/* Show abnormality checkboxes for Abnormal */}
+                      {visitData.respiratory.lung_sounds === 'abnormal' && (
+                        <div className="p-4 bg-red-50 border border-red-200 rounded-lg space-y-3">
+                          <Label className="text-red-900 font-semibold">Select Abnormalities:</Label>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {[
+                              { value: 'wheezing', label: 'Wheezing' },
+                              { value: 'rales', label: 'Rales' },
+                              { value: 'rhonchi', label: 'Rhonchi' },
+                              { value: 'stridor', label: 'Stridor' },
+                              { value: 'pleural_rub', label: 'Pleural Rub' },
+                              { value: 'unsure', label: 'Unsure (just doesn\'t sound right)' }
+                            ].map(abnormality => (
+                              <label key={abnormality.value} className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                  type="checkbox"
+                                  checked={(visitData.respiratory.lung_abnormalities || []).includes(abnormality.value)}
+                                  onChange={(e) => {
+                                    const current = visitData.respiratory.lung_abnormalities || [];
+                                    const updated = e.target.checked
+                                      ? [...current, abnormality.value]
+                                      : current.filter(v => v !== abnormality.value);
+                                    updateRespiratory('lung_abnormalities', updated);
+                                  }}
+                                  className="w-4 h-4 text-red-600"
+                                />
+                                <span className="text-sm text-slate-900">{abnormality.label}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
                       <div>
                         <Label>Oxygen Type</Label>
                         <Select
