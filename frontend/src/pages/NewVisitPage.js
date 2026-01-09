@@ -317,10 +317,6 @@ export default function NewVisitPage() {
             bleeding: false,
             deviated_septum: false,
             polyps: false
-          },
-          mouth_teeth_oral_cavity: {
-            ...initialVisitData.head_to_toe.mouth_teeth_oral_cavity,
-            ...(visit.head_to_toe?.mouth_teeth_oral_cavity || {}),
           }
         },
         gastrointestinal: { ...initialVisitData.gastrointestinal, ...(visit.gastrointestinal || {}) },
