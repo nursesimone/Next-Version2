@@ -89,15 +89,27 @@ export default function DashboardPage() {
       });
       setPatients([response.data, ...patients]);
       setShowAddDialog(false);
-      setNewPatientName('');
-      setNewPatientOrg('');
+      setNewlyAddedPatientId(response.data.id);
+      setShowPostAddDialog(true);
       toast.success('Patient added successfully');
-      navigate(`/patients/${response.data.id}`);
     } catch (error) {
       toast.error('Failed to add patient');
     } finally {
       setAddingPatient(false);
     }
+  };
+  
+  const handleAddAnother = () => {
+    setShowPostAddDialog(false);
+    setNewPatientName('');
+    setNewPatientOrg('');
+    setNewlyAddedPatientId(null);
+    setShowAddDialog(true);
+  };
+  
+  const handleViewPatient = () => {
+    setShowPostAddDialog(false);
+    navigate(`/patients/${newlyAddedPatientId}`);
   };
 
   const filteredPatients = patients.filter(p => 
