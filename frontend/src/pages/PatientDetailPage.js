@@ -63,10 +63,25 @@ export default function PatientDetailPage() {
   const [showDailyNotesModal, setShowDailyNotesModal] = useState(false);
   const [dailyNotesData, setDailyNotesData] = useState([]);
   const [loadingDailyNotes, setLoadingDailyNotes] = useState(false);
+  const [dayPrograms, setDayPrograms] = useState([]);
 
   useEffect(() => {
     fetchPatientData();
+    fetchDayPrograms();
   }, [patientId]);
+  
+  const fetchDayPrograms = async () => {
+    try {
+      const token = localStorage.getItem('nurse_token');
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/admin/day-programs`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setDayPrograms(response.data || []);
+    } catch (error) {
+      console.log('Could not fetch day programs:', error);
+      // Not critical - just won't have dropdown
+    }
+  };
 
   const fetchPatientData = async () => {
     try {
