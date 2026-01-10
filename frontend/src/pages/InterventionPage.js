@@ -338,7 +338,9 @@ export default function InterventionPage() {
                   <Syringe className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h1 className="font-bold text-slate-900">Patient Intervention</h1>
+                  <h1 className="font-bold text-slate-900">
+                    {isEditMode ? 'Edit Intervention' : 'Patient Intervention'}
+                  </h1>
                   <p className="text-sm text-slate-600">Patient: <span className="font-semibold text-slate-900">{patient?.full_name}</span></p>
                 </div>
               </div>
