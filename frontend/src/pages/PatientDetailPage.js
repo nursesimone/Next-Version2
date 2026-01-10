@@ -485,14 +485,17 @@ export default function PatientDetailPage() {
                     size="sm" 
                     onClick={() => {
                       try {
+                        console.log('Entering edit mode, profileData:', profileData);
+                        console.log('dayPrograms:', dayPrograms);
                         // Ensure profileData is initialized
                         if (!profileData || typeof profileData !== 'object') {
+                          console.warn('profileData is not valid, reinitializing');
                           setProfileData(patient.permanent_info || {});
                         }
                         setEditingProfile(true);
                       } catch (error) {
                         console.error('Error entering edit mode:', error);
-                        toast.error('Failed to enter edit mode');
+                        toast.error('Failed to enter edit mode. Check browser console for details.');
                       }
                     }}
                     data-testid="edit-profile-btn"
