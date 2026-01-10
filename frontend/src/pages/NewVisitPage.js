@@ -158,8 +158,18 @@ const initialVisitData = {
       deaf_for_how_long: ''
     },
     ears_hearing_from_last: false,
-    mouth_teeth: '',
-    mouth_teeth_from_last: false,
+    mouth_teeth_oral_cavity: {
+      no_issues: false,
+      dentures: false,
+      dentures_type: '',
+      poor_dentition: false,
+      mouth_sores: false,
+      dry_mouth: false,
+      thrush: false,
+      other: false,
+      other_notes: ''
+    },
+    mouth_teeth_oral_cavity_from_last: false,
     nose_nasal_cavity: {
       wnl: false,
       congestion: false,
