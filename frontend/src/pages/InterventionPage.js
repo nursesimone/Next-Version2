@@ -291,8 +291,16 @@ export default function InterventionPage() {
         procedure_details: formData.intervention_type === 'procedure' ? formData.procedure_details : null,
       };
       
-      await interventionsAPI.create(submitData);
-      toast.success('Intervention saved successfully');
+      if (isEditMode && editInterventionId) {
+        // Update existing intervention
+        await interventionsAPI.update(editInterventionId, submitData);
+        toast.success('Intervention updated successfully');
+      } else {
+        // Create new intervention
+        await interventionsAPI.create(submitData);
+        toast.success('Intervention saved successfully');
+      }
+      
       navigate(`/patients/${patientId}`);
     } catch (error) {
       console.error('Intervention save error:', error);
