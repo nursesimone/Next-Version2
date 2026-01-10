@@ -114,7 +114,14 @@ export default function InterventionPage() {
 
   useEffect(() => {
     fetchPatient();
-  }, [patientId]);
+    // Check if we're in edit mode
+    const editId = searchParams.get('editId');
+    if (editId) {
+      setIsEditMode(true);
+      setEditInterventionId(editId);
+      loadInterventionForEdit(editId);
+    }
+  }, [patientId, searchParams]);
 
   const fetchPatient = async () => {
     try {
@@ -125,6 +132,54 @@ export default function InterventionPage() {
       navigate('/dashboard');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadInterventionForEdit = async (interventionId) => {
+    try {
+      const response = await interventionsAPI.list(patientId);
+      const intervention = response.data.find(i => i.id === interventionId);
+      
+      if (intervention) {
+        // Populate form with existing data
+        setFormData({
+          patient_id: intervention.patient_id,
+          intervention_date: intervention.intervention_date,
+          intervention_time: intervention.intervention_time || '',
+          location: intervention.location || '',
+          body_temperature: intervention.body_temperature || '',
+          mood_scale: intervention.mood_scale || null,
+          intervention_type: intervention.intervention_type || 'injection',
+          intervention_type_other: intervention.intervention_type_other || '',
+          injection_details: intervention.injection_details || formData.injection_details,
+          test_details: intervention.test_details || formData.test_details,
+          treatment_details: intervention.treatment_details || formData.treatment_details,
+          procedure_details: intervention.procedure_details || formData.procedure_details,
+          other_details: intervention.other_details || formData.other_details,
+          verified_patient_identity: intervention.verified_patient_identity || false,
+          donned_proper_ppe: intervention.donned_proper_ppe || false,
+          post_no_severe_symptoms: intervention.post_no_severe_symptoms || false,
+          post_tolerated_well: intervention.post_tolerated_well || false,
+          post_informed_side_effects: intervention.post_informed_side_effects || false,
+          post_advised_results_timeframe: intervention.post_advised_results_timeframe || false,
+          post_educated_seek_care: intervention.post_educated_seek_care || false,
+          completion_status: intervention.completion_status || '',
+          next_visit_interval: intervention.next_visit_interval || '',
+          next_visit_interval_other: intervention.next_visit_interval_other || '',
+          present_person_type: intervention.present_person_type || '',
+          present_person_type_other: intervention.present_person_type_other || '',
+          present_person_name: intervention.present_person_name || '',
+          additional_comments: intervention.additional_comments || '',
+          notes: intervention.notes || ''
+        });
+        toast.success('Loaded intervention for editing');
+      } else {
+        toast.error('Intervention not found');
+        navigate(`/patients/${patientId}`);
+      }
+    } catch (error) {
+      toast.error('Failed to load intervention');
+      navigate(`/patients/${patientId}`);
     }
   };
 
