@@ -71,6 +71,7 @@ export const interventionsAPI = {
   list: (patientId) => api.get(`/patients/${patientId}/interventions`),
   get: (interventionId) => api.get(`/interventions/${interventionId}`),
   create: (data) => api.post('/interventions', data),
+  update: (interventionId, data) => api.put(`/interventions/${interventionId}`, data),
   delete: (interventionId) => api.delete(`/interventions/${interventionId}`),
 };
 
