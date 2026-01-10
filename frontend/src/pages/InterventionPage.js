@@ -353,7 +353,7 @@ export default function InterventionPage() {
               data-testid="save-btn"
             >
               <Save className="w-4 h-4 mr-2" />
-              {saving ? 'Saving...' : 'Complete Visit'}
+              {saving ? 'Saving...' : (isEditMode ? 'Update Intervention' : 'Complete Visit')}
             </Button>
           </div>
         </div>
