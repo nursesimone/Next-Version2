@@ -884,7 +884,10 @@ async def create_patient(data: PatientCreate, nurse: dict = Depends(get_current_
         "updated_at": now,
         "last_vitals": None
     }
-    await db.patients.insert_one(patient_doc)
+    
+    logger.info(f"💾 Attempting to create patient: name={data.full_name}, id={patient_id}")
+    result = await db.patients.insert_one(patient_doc)
+    logger.info(f"✅ Patient created successfully: inserted_id={result.inserted_id}")
     
     return PatientResponse(
         id=patient_id,
