@@ -483,7 +483,18 @@ export default function PatientDetailPage() {
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    onClick={() => setEditingProfile(true)}
+                    onClick={() => {
+                      try {
+                        // Ensure profileData is initialized
+                        if (!profileData || typeof profileData !== 'object') {
+                          setProfileData(patient.permanent_info || {});
+                        }
+                        setEditingProfile(true);
+                      } catch (error) {
+                        console.error('Error entering edit mode:', error);
+                        toast.error('Failed to enter edit mode');
+                      }
+                    }}
                     data-testid="edit-profile-btn"
                   >
                     <Edit className="w-4 h-4 mr-1" />
