@@ -1711,14 +1711,228 @@ export default function NewVisitPage() {
                       </div>
                     </div>
                     <div>
-                      <Label>Mouth / Teeth</Label>
-                      <Textarea
-                        value={visitData.head_to_toe.mouth_teeth}
-                        onChange={(e) => updateHeadToToe('mouth_teeth', e.target.value)}
-                        placeholder="Describe mouth and teeth findings..."
-                        className="mt-1"
-                        rows={2}
-                      />
+                      <div className="flex items-center justify-between mb-2">
+                        <Label>Mouth / Teeth / Oral Cavity</Label>
+                        {!isVitalsOnly && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => pullFromLastVisit('mouth_teeth_oral_cavity_from_last')}
+                            className="text-xs text-eggplant-600 hover:text-eggplant-700"
+                          >
+                            Pull from last visit
+                          </Button>
+                        )}
+                      </div>
+                      <div className="space-y-3 ml-2">
+                        <div className="flex items-center gap-2">
+                          <Checkbox
+                            id="mouth-no-issues"
+                            checked={visitData.head_to_toe.mouth_teeth_oral_cavity.no_issues}
+                            onCheckedChange={(checked) => {
+                              setVisitData(prev => ({
+                                ...prev,
+                                head_to_toe: {
+                                  ...prev.head_to_toe,
+                                  mouth_teeth_oral_cavity: {
+                                    ...prev.head_to_toe.mouth_teeth_oral_cavity,
+                                    no_issues: checked
+                                  }
+                                }
+                              }));
+                            }}
+                          />
+                          <Label htmlFor="mouth-no-issues" className="cursor-pointer font-normal">
+                            WNL / No concerns
+                          </Label>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <Checkbox
+                            id="mouth-dentures"
+                            checked={visitData.head_to_toe.mouth_teeth_oral_cavity.dentures}
+                            onCheckedChange={(checked) => {
+                              setVisitData(prev => ({
+                                ...prev,
+                                head_to_toe: {
+                                  ...prev.head_to_toe,
+                                  mouth_teeth_oral_cavity: {
+                                    ...prev.head_to_toe.mouth_teeth_oral_cavity,
+                                    dentures: checked,
+                                    dentures_type: checked ? prev.head_to_toe.mouth_teeth_oral_cavity.dentures_type : ''
+                                  }
+                                }
+                              }));
+                            }}
+                          />
+                          <Label htmlFor="mouth-dentures" className="cursor-pointer font-normal">
+                            Dentures
+                          </Label>
+                        </div>
+                        
+                        {visitData.head_to_toe.mouth_teeth_oral_cavity.dentures && (
+                          <div className="ml-6">
+                            <Select
+                              value={visitData.head_to_toe.mouth_teeth_oral_cavity.dentures_type}
+                              onValueChange={(value) => {
+                                setVisitData(prev => ({
+                                  ...prev,
+                                  head_to_toe: {
+                                    ...prev.head_to_toe,
+                                    mouth_teeth_oral_cavity: {
+                                      ...prev.head_to_toe.mouth_teeth_oral_cavity,
+                                      dentures_type: value
+                                    }
+                                  }
+                                }));
+                              }}
+                            >
+                              <SelectTrigger className="mt-1">
+                                <SelectValue placeholder="Select denture type" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="upper">Upper</SelectItem>
+                                <SelectItem value="lower">Lower</SelectItem>
+                                <SelectItem value="partial">Partial</SelectItem>
+                                <SelectItem value="full">Full</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        )}
+                        
+                        <div className="flex items-center gap-2">
+                          <Checkbox
+                            id="mouth-poor-dentition"
+                            checked={visitData.head_to_toe.mouth_teeth_oral_cavity.poor_dentition}
+                            onCheckedChange={(checked) => {
+                              setVisitData(prev => ({
+                                ...prev,
+                                head_to_toe: {
+                                  ...prev.head_to_toe,
+                                  mouth_teeth_oral_cavity: {
+                                    ...prev.head_to_toe.mouth_teeth_oral_cavity,
+                                    poor_dentition: checked
+                                  }
+                                }
+                              }));
+                            }}
+                          />
+                          <Label htmlFor="mouth-poor-dentition" className="cursor-pointer font-normal">
+                            Poor Dentition
+                          </Label>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <Checkbox
+                            id="mouth-sores"
+                            checked={visitData.head_to_toe.mouth_teeth_oral_cavity.mouth_sores}
+                            onCheckedChange={(checked) => {
+                              setVisitData(prev => ({
+                                ...prev,
+                                head_to_toe: {
+                                  ...prev.head_to_toe,
+                                  mouth_teeth_oral_cavity: {
+                                    ...prev.head_to_toe.mouth_teeth_oral_cavity,
+                                    mouth_sores: checked
+                                  }
+                                }
+                              }));
+                            }}
+                          />
+                          <Label htmlFor="mouth-sores" className="cursor-pointer font-normal">
+                            Mouth Sores
+                          </Label>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <Checkbox
+                            id="mouth-dry"
+                            checked={visitData.head_to_toe.mouth_teeth_oral_cavity.dry_mouth}
+                            onCheckedChange={(checked) => {
+                              setVisitData(prev => ({
+                                ...prev,
+                                head_to_toe: {
+                                  ...prev.head_to_toe,
+                                  mouth_teeth_oral_cavity: {
+                                    ...prev.head_to_toe.mouth_teeth_oral_cavity,
+                                    dry_mouth: checked
+                                  }
+                                }
+                              }));
+                            }}
+                          />
+                          <Label htmlFor="mouth-dry" className="cursor-pointer font-normal">
+                            Dry Mouth
+                          </Label>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <Checkbox
+                            id="mouth-thrush"
+                            checked={visitData.head_to_toe.mouth_teeth_oral_cavity.thrush}
+                            onCheckedChange={(checked) => {
+                              setVisitData(prev => ({
+                                ...prev,
+                                head_to_toe: {
+                                  ...prev.head_to_toe,
+                                  mouth_teeth_oral_cavity: {
+                                    ...prev.head_to_toe.mouth_teeth_oral_cavity,
+                                    thrush: checked
+                                  }
+                                }
+                              }));
+                            }}
+                          />
+                          <Label htmlFor="mouth-thrush" className="cursor-pointer font-normal">
+                            Thrush
+                          </Label>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <Checkbox
+                            id="mouth-other"
+                            checked={visitData.head_to_toe.mouth_teeth_oral_cavity.other}
+                            onCheckedChange={(checked) => {
+                              setVisitData(prev => ({
+                                ...prev,
+                                head_to_toe: {
+                                  ...prev.head_to_toe,
+                                  mouth_teeth_oral_cavity: {
+                                    ...prev.head_to_toe.mouth_teeth_oral_cavity,
+                                    other: checked,
+                                    other_notes: checked ? prev.head_to_toe.mouth_teeth_oral_cavity.other_notes : ''
+                                  }
+                                }
+                              }));
+                            }}
+                          />
+                          <Label htmlFor="mouth-other" className="cursor-pointer font-normal">
+                            Other
+                          </Label>
+                        </div>
+                        
+                        {visitData.head_to_toe.mouth_teeth_oral_cavity.other && (
+                          <Textarea
+                            value={visitData.head_to_toe.mouth_teeth_oral_cavity.other_notes}
+                            onChange={(e) => {
+                              setVisitData(prev => ({
+                                ...prev,
+                                head_to_toe: {
+                                  ...prev.head_to_toe,
+                                  mouth_teeth_oral_cavity: {
+                                    ...prev.head_to_toe.mouth_teeth_oral_cavity,
+                                    other_notes: e.target.value
+                                  }
+                                }
+                              }));
+                            }}
+                            placeholder="Describe other findings..."
+                            className="mt-1 ml-6"
+                            rows={2}
+                          />
+                        )}
+                      </div>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
