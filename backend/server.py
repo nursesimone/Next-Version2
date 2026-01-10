@@ -934,22 +934,29 @@ async def list_patients(nurse: dict = Depends(get_current_nurse)):
         # Use last_vitals_visit for vitals data (could be from vitals_only or nurse_visit)
         if last_vitals_visit:
             vitals = last_vitals_visit.get("vital_signs")
+            vitals_visit_id = last_vitals_visit.get("id")
+            vitals_visit_date = last_vitals_visit.get("visit_date")
+            
             # Check if vital_signs actually has data
             if vitals and isinstance(vitals, dict) and any(vitals.values()):
                 p["last_vitals"] = vitals
-                p["last_vitals_date"] = last_vitals_visit.get("visit_date")
-                # Only update last_visit_id if this vitals visit is more recent
-                if not p["last_visit_date"] or last_vitals_visit.get("visit_date") >= p["last_visit_date"]:
-                    p["last_visit_id"] = last_vitals_visit.get("id")
-                print(f"✅ Set vitals for {p['full_name']}: BP={vitals.get('blood_pressure_systolic')}, Temp={vitals.get('body_temperature')}")
+                p["last_vitals_date"] = vitals_visit_date
+                
+                # CRITICAL FIX: Always ensure last_visit_id is set when we have vitals
+                # If no completed visit exists OR vitals visit is more recent, use vitals visit
+                if not p["last_visit_id"] or not p["last_visit_date"] or vitals_visit_date >= p["last_visit_date"]:
+                    p["last_visit_id"] = vitals_visit_id
+                    logger.info(f"✅ Set vitals for {p['full_name']}: visit_id={vitals_visit_id}, BP={vitals.get('blood_pressure_systolic')}/{vitals.get('blood_pressure_diastolic')}, Temp={vitals.get('body_temperature')}")
+                else:
+                    logger.info(f"✅ Set vitals for {p['full_name']} (older than last visit): BP={vitals.get('blood_pressure_systolic')}/{vitals.get('blood_pressure_diastolic')}")
             else:
                 p["last_vitals"] = None
                 p["last_vitals_date"] = None
-                print(f"❌ No valid vitals data for {p['full_name']}: vitals={vitals}")
+                logger.warning(f"❌ No valid vitals data for {p['full_name']}: vitals={vitals}")
         else:
             p["last_vitals"] = None
             p["last_vitals_date"] = None
-            print(f"❌ No vitals visit found for {p['full_name']}")
+            logger.warning(f"❌ No vitals visit found for {p['full_name']}")
         
         # Include UTC regardless of date (show most recent UTC)
         if last_utc:
