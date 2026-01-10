@@ -518,9 +518,9 @@ export default function PatientDetailPage() {
                           <div className="space-y-2 mt-1">
                             <Select
                               value={
-                                ['POSH Host Homes', 'Ebenezer Private HomeCare', 'Jericho'].includes(profileData.organization)
+                                ['POSH Host Homes', 'Ebenezer Private HomeCare', 'Jericho'].includes(profileData?.organization)
                                   ? profileData.organization 
-                                  : profileData.organization ? 'Other' : ''
+                                  : profileData?.organization ? 'Other' : ''
                               }
                               onValueChange={(value) => {
                                 if (value === 'Other') {
@@ -541,11 +541,11 @@ export default function PatientDetailPage() {
                                 <SelectItem value="Other">Other (Enter custom name)</SelectItem>
                               </SelectContent>
                             </Select>
-                            {(profileData.organization && 
+                            {(profileData?.organization && 
                               profileData.organization !== 'POSH-Able Living' && 
                               profileData.organization !== 'Ebenezer Private HomeCare') && (
                               <Input
-                                value={profileData.organization || ''}
+                                value={profileData?.organization || ''}
                                 onChange={(e) => {
                                   handleProfileChange('organization', e.target.value);
                                   setCustomOrganization(e.target.value);
@@ -556,7 +556,7 @@ export default function PatientDetailPage() {
                           </div>
                         ) : (
                           <p className="text-slate-900 flex items-center gap-2">
-                            {profileData.organization ? (
+                            {profileData?.organization ? (
                               <>
                                 <Building2 className="w-4 h-4 text-eggplant-600" />
                                 {profileData.organization}
