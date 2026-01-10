@@ -328,8 +328,8 @@ export default function PatientDetailPage() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Patient Header - Sticky */}
-        <div className="sticky top-0 z-10 bg-slate-50 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 py-4 mb-4 border-b border-slate-200 shadow-sm">
+        {/* Patient Header - Sticky below main header */}
+        <div className="sticky top-16 z-30 bg-slate-50 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 py-4 mb-4 border-b border-slate-200 shadow-sm">
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 bg-eggplant-50 rounded-2xl flex items-center justify-center">
