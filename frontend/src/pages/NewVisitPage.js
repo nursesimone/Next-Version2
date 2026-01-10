@@ -388,7 +388,21 @@ export default function NewVisitPage() {
             bleeding: false,
             deviated_septum: false,
             polyps: false
-          }
+          },
+          // Handle migration from old mouth_teeth string to new mouth_teeth_oral_cavity object
+          mouth_teeth_oral_cavity: (draft.head_to_toe?.mouth_teeth_oral_cavity && typeof draft.head_to_toe.mouth_teeth_oral_cavity === 'object') 
+            ? draft.head_to_toe.mouth_teeth_oral_cavity 
+            : {
+                no_issues: false,
+                dentures: false,
+                dentures_type: '',
+                poor_dentition: false,
+                mouth_sores: false,
+                dry_mouth: false,
+                thrush: false,
+                other: false,
+                other_notes: typeof draft.head_to_toe?.mouth_teeth === 'string' ? draft.head_to_toe.mouth_teeth : ''
+              }
         },
         gastrointestinal: { ...initialVisitData.gastrointestinal, ...(draft.gastrointestinal || {}) },
         genito_urinary: { ...initialVisitData.genito_urinary, ...(draft.genito_urinary || {}) },
