@@ -33,10 +33,13 @@ export default function InterventionPage() {
   const { patientId } = useParams();
   const navigate = useNavigate();
   const { nurse } = useAuth();
+  const [searchParams] = useSearchParams();
   
   const [patient, setPatient] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editInterventionId, setEditInterventionId] = useState(null);
 
   // Helper function to get current date in Eastern Time
   const getEasternDate = () => {
