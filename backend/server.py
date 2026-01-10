@@ -915,11 +915,16 @@ async def list_patients(nurse: dict = Depends(get_current_nurse)):
         
         # Get last vitals from any visit type (nurse_visit or vitals_only)
         # Remove status filter to see ALL visits with vitals
+        logger.info(f"🔍 Searching vitals for patient: {p['full_name']} (id: {p['id']})")
         last_vitals_visit = await db.visits.find_one(
             {"patient_id": p["id"], "visit_type": {"$in": ["nurse_visit", "vitals_only"]}, "vital_signs": {"$exists": True}},
-            {"_id": 0, "id": 1, "visit_date": 1, "vital_signs": 1, "status": 1},
+            {"_id": 0, "id": 1, "visit_date": 1, "vital_signs": 1, "status": 1, "visit_type": 1},
             sort=[("visit_date", -1)]
         )
+        if last_vitals_visit:
+            logger.info(f"  Found visit: type={last_vitals_visit.get('visit_type')}, date={last_vitals_visit.get('visit_date')}, status={last_vitals_visit.get('status')}")
+        else:
+            logger.warning(f"  ❌ No vitals visit found for {p['full_name']}")
         
         # Get last UTC record (sorted by created_at for precise ordering)
         last_utc = await db.unable_to_contact.find_one(
