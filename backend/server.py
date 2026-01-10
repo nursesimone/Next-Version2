@@ -1091,10 +1091,14 @@ async def create_visit(patient_id: str, data: VisitCreate, nurse: dict = Depends
         "reviewed_and_signed_by": data.reviewed_and_signed_by,
         "created_at": now
     }
-    await db.visits.insert_one(visit_doc)
+    
+    logger.info(f"💾 Attempting to save visit: patient_id={patient_id}, visit_type={data.visit_type}, visit_id={visit_id}")
+    result = await db.visits.insert_one(visit_doc)
+    logger.info(f"✅ Visit saved successfully: inserted_id={result.inserted_id}")
     
     # Update patient's last_vitals
-    await db.patients.update_one(
+    logger.info(f"💾 Updating patient last_vitals for patient_id={patient_id}")
+    update_result = await db.patients.update_one(
         {"id": patient_id},
         {"$set": {
             "last_vitals": data.vital_signs.model_dump(),
