@@ -1420,6 +1420,33 @@ async def get_intervention(intervention_id: str, nurse: dict = Depends(get_curre
     intervention["patient_dob"] = patient.get("permanent_info", {}).get("date_of_birth") if patient else None
     return InterventionResponse(**intervention)
 
+@api_router.put("/interventions/{intervention_id}", response_model=InterventionResponse)
+async def update_intervention(intervention_id: str, intervention: InterventionCreate, nurse: dict = Depends(get_current_nurse)):
+    # Verify intervention exists and belongs to this nurse
+    existing = await db.interventions.find_one({"id": intervention_id, "nurse_id": nurse["id"]}, {"_id": 0})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Intervention not found")
+    
+    # Update the intervention data
+    update_data = intervention.model_dump()
+    update_data["updated_at"] = datetime.now(timezone.utc).isoformat()
+    
+    await db.interventions.update_one(
+        {"id": intervention_id},
+        {"$set": update_data}
+    )
+    
+    # Fetch updated intervention
+    updated = await db.interventions.find_one({"id": intervention_id}, {"_id": 0})
+    
+    # Add patient info
+    patient = await db.patients.find_one({"id": updated["patient_id"]}, {"_id": 0})
+    updated["patient_name"] = patient.get("full_name") if patient else "Unknown"
+    updated["patient_dob"] = patient.get("permanent_info", {}).get("date_of_birth") if patient else None
+    
+    logger.info(f"Intervention {intervention_id} updated by nurse {nurse['id']}")
+    return InterventionResponse(**updated)
+
 @api_router.delete("/interventions/{intervention_id}")
 async def delete_intervention(intervention_id: str, nurse: dict = Depends(get_current_nurse)):
     result = await db.interventions.delete_one({"id": intervention_id, "nurse_id": nurse["id"]})
